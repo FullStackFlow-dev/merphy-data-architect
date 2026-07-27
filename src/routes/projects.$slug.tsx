@@ -43,7 +43,7 @@ function ProjectDetail() {
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">{project.summary}</p>
         <div className="mt-6 flex flex-wrap gap-1.5">
-          {project.tags.map((t) => (
+          {project.tags.map((t: string) => (
             <span
               key={t}
               className="text-xs rounded-md border border-border px-2 py-0.5 text-muted-foreground"
