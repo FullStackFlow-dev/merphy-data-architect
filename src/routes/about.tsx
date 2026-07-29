@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
+import { MotionCard } from "../components/motion";
+import profileAsset from "../assets/profile.png.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -44,7 +46,8 @@ const skills = {
 function AboutPage() {
   return (
     <SiteLayout>
-      <section className="mx-auto max-w-3xl px-6 pt-20 pb-10">
+      <section className="mx-auto max-w-3xl px-6 pt-20 pb-10 flex flex-col sm:flex-row sm:items-center gap-8">
+        <div className="flex-1">
         <p className="text-sm uppercase tracking-widest text-muted-foreground mb-3">
           À propos
         </p>
@@ -56,13 +59,21 @@ function AboutPage() {
           d'apprentissage automatique, de l'idée à la mise en production. À
           remplacer par votre présentation.
         </p>
+        </div>
+        <MotionCard className="w-40 sm:w-48 shrink-0 rounded-2xl border border-border bg-card overflow-hidden">
+          <img
+            src={profileAsset.url}
+            alt="Portrait de l'auteur du portfolio"
+            className="w-full aspect-square object-cover"
+          />
+        </MotionCard>
       </section>
 
       <section className="mx-auto max-w-3xl px-6 py-10">
         <h2 className="text-2xl font-semibold tracking-tight">Expériences</h2>
         <div className="mt-6 space-y-6">
-          {experiences.map((e) => (
-            <div key={e.period} className="border-l-2 border-border pl-5">
+          {experiences.map((e, i) => (
+            <MotionCard key={e.period} delay={i * 80} className="border-l-2 border-border pl-5 rounded-r-xl">
               <div className="text-xs uppercase tracking-wider text-muted-foreground">
                 {e.period}
               </div>
@@ -70,7 +81,7 @@ function AboutPage() {
                 {e.role} · <span className="text-muted-foreground">{e.org}</span>
               </div>
               <p className="mt-1 text-sm text-muted-foreground">{e.desc}</p>
-            </div>
+            </MotionCard>
           ))}
         </div>
       </section>
@@ -78,8 +89,8 @@ function AboutPage() {
       <section className="mx-auto max-w-3xl px-6 py-10">
         <h2 className="text-2xl font-semibold tracking-tight">Compétences</h2>
         <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          {Object.entries(skills).map(([cat, items]) => (
-            <div key={cat} className="rounded-xl border border-border bg-card p-5">
+          {Object.entries(skills).map(([cat, items], i) => (
+            <MotionCard key={cat} delay={i * 80} className="rounded-xl border border-border bg-card p-5">
               <h3 className="font-semibold">{cat}</h3>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {items.map((s) => (
@@ -91,7 +102,7 @@ function AboutPage() {
                   </span>
                 ))}
               </div>
-            </div>
+            </MotionCard>
           ))}
         </div>
       </section>

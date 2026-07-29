@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteLayout } from "../components/SiteLayout";
+import { MotionCard } from "../components/motion";
 
 export const Route = createFileRoute("/demos")({
   head: () => ({
@@ -58,8 +59,8 @@ function DemosPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-10 grid gap-6 md:grid-cols-2">
-        {demos.map((d) => (
-          <div key={d.id} className="rounded-xl border border-border bg-card p-6">
+        {demos.map((d, i) => (
+          <MotionCard key={d.id} delay={(i % 2) * 90} className="rounded-xl border border-border bg-card p-6">
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center rounded-full bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium">
                 {d.tag}
@@ -70,7 +71,7 @@ function DemosPage() {
             <div className="mt-5">
               <DemoRunner id={d.id} />
             </div>
-          </div>
+          </MotionCard>
         ))}
       </section>
     </SiteLayout>
