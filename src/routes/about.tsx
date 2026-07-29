@@ -9,7 +9,7 @@ import { Download } from "lucide-react";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "À propos & CV — Portfolio" },
+      { title: "À propos & CV — Merphy Mademba" },
       { name: "description", content: "Parcours, compétences et expériences." },
       { property: "og:title", content: "À propos & CV" },
       { property: "og:description", content: "Parcours, compétences et expériences." },

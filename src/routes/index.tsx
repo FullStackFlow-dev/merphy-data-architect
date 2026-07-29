@@ -10,13 +10,13 @@ import { Download } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Portfolio — Ingénieur logiciel, Data Scientist & IA" },
+      { title: "Merphy Mademba — Ingénieur logiciel, Data & IA" },
       {
         name: "description",
         content:
           "Portfolio d'un ingénieur logiciel généraliste, data scientist et ingénieur IA en machine learning et deep learning.",
       },
-      { property: "og:title", content: "Portfolio — Dev, Data & IA" },
+      { property: "og:title", content: "Merphy Mademba — Dev, Data & IA" },
       {
         property: "og:description",
         content: "Projets, démos IA, articles et parcours.",
