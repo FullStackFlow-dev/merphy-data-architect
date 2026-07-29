@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { projects } from "../data/projects";
-import { MotionCard, Reveal } from "../components/motion";
+import { MotionCard } from "../components/motion";
 import profileAsset from "../assets/profile.png.asset.json";
 
 export const Route = createFileRoute("/")({
