@@ -57,7 +57,7 @@ function Index() {
         <div className="mx-auto max-w-6xl px-6 pt-24 pb-20 grid gap-12 md:grid-cols-[1.4fr_1fr] md:items-center">
           <div>
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
-            Portfolio
+            Merphy Mademba
           </p>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight max-w-4xl">
             Ingénieur logiciel, Data Scientist &{" "}
