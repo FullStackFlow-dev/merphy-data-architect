@@ -3,6 +3,9 @@ import { SiteLayout } from "../components/SiteLayout";
 import { projects } from "../data/projects";
 import { MotionCard } from "../components/motion";
 import profileAsset from "../assets/profile.png.asset.json";
+import cvAsset from "../assets/cv.pdf.asset.json";
+import { Download } from "lucide-react";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -78,7 +81,15 @@ function Index() {
             >
               Essayer les démos IA
             </Link>
+            <a
+              href={cvAsset.url}
+              download="CV-Merphy.pdf"
+              className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-medium hover:bg-accent"
+            >
+              <Download className="h-4 w-4" /> Télécharger le CV
+            </a>
           </div>
+
           </div>
           <MotionCard className="mx-auto w-56 md:w-full max-w-xs rounded-2xl border border-border bg-card overflow-hidden">
             <img
