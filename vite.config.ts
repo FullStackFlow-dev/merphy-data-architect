@@ -21,7 +21,12 @@ const postSlugs = [
   "architecture-full-stack-moderne",
 ];
 
+// Static export mode (GitHub Pages CI): skip the nitro server build and emit
+// prerendered HTML into dist/client.
+const staticExport = process.env.STATIC_EXPORT === "1";
+
 export default defineConfig({
+  nitro: staticExport ? false : undefined,
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
