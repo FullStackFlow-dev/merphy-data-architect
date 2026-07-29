@@ -31,17 +31,19 @@ export default defineConfig({
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
-    // Static prerendering so the site can be served by static hosts (e.g. GitHub Pages).
-    prerender: { enabled: true, crawlLinks: false },
-    pages: [
-      "/",
-      "/projects",
-      "/demos",
-      "/blog",
-      "/about",
-      "/contact",
-      ...projectSlugs.map((s) => `/projects/${s}`),
-      ...postSlugs.map((s) => `/blog/${s}`),
-    ].map((path) => ({ path, prerender: { enabled: true } })),
+    // Static prerendering (GitHub Pages only) so the site can be served by a static host.
+    prerender: { enabled: staticExport, crawlLinks: false },
+    pages: staticExport
+      ? [
+          "/",
+          "/projects",
+          "/demos",
+          "/blog",
+          "/about",
+          "/contact",
+          ...projectSlugs.map((s) => `/projects/${s}`),
+          ...postSlugs.map((s) => `/blog/${s}`),
+        ].map((path) => ({ path, prerender: { enabled: true } }))
+      : [],
   },
 });
