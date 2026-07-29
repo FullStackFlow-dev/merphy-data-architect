@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { projects } from "../data/projects";
+import { MotionCard, Reveal } from "../components/motion";
+import profileAsset from "../assets/profile.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,7 +51,8 @@ function Index() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,theme(colors.primary/15),transparent_60%)]" />
-        <div className="mx-auto max-w-6xl px-6 pt-24 pb-20">
+        <div className="mx-auto max-w-6xl px-6 pt-24 pb-20 grid gap-12 md:grid-cols-[1.4fr_1fr] md:items-center">
+          <div>
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
             Portfolio
           </p>
@@ -76,6 +79,15 @@ function Index() {
               Essayer les démos IA
             </Link>
           </div>
+          </div>
+          <MotionCard className="mx-auto w-56 md:w-full max-w-xs rounded-2xl border border-border bg-card overflow-hidden">
+            <img
+              src={profileAsset.url}
+              alt="Photo de profil — ingénieur logiciel, data scientist et ingénieur IA"
+              className="w-full h-full object-cover aspect-square"
+              loading="eager"
+            />
+          </MotionCard>
         </div>
       </section>
 
@@ -90,9 +102,10 @@ function Index() {
           </Link>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {domains.map((d) => (
-            <div
+          {domains.map((d, i) => (
+            <MotionCard
               key={d.tag}
+              delay={i * 90}
               className="rounded-xl border border-border bg-card p-6 hover:border-primary/40 transition-colors"
             >
               <span className="inline-flex items-center rounded-full bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium">
@@ -110,7 +123,7 @@ function Index() {
                   </span>
                 ))}
               </div>
-            </div>
+            </MotionCard>
           ))}
         </div>
       </section>
@@ -126,12 +139,16 @@ function Index() {
           </Link>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {featured.map((p) => (
-            <Link
+          {featured.map((p, i) => (
+            <MotionCard
               key={p.slug}
+              delay={i * 90}
+              className="rounded-xl border border-border bg-card hover:border-primary/40"
+            >
+            <Link
               to="/projects/$slug"
               params={{ slug: p.slug }}
-              className="group rounded-xl border border-border bg-card p-6 hover:border-primary/40 transition-colors"
+              className="group block p-6"
             >
               <div className="text-xs text-muted-foreground">
                 {p.domain} · {p.year}
@@ -141,13 +158,14 @@ function Index() {
               </h3>
               <p className="mt-2 text-sm text-muted-foreground">{p.summary}</p>
             </Link>
+            </MotionCard>
           ))}
         </div>
       </section>
 
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="rounded-2xl border border-border bg-card p-10 text-center">
+        <MotionCard className="rounded-2xl border border-border bg-card p-10 text-center">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
             Un projet en tête ?
           </h2>
@@ -160,7 +178,7 @@ function Index() {
           >
             Prendre contact
           </Link>
-        </div>
+        </MotionCard>
       </section>
     </SiteLayout>
   );

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { projects } from "../data/projects";
+import { MotionCard } from "../components/motion";
 
 export const Route = createFileRoute("/projects/")({
   head: () => ({
@@ -30,12 +31,16 @@ function ProjectsPage() {
         </p>
       </section>
       <section className="mx-auto max-w-6xl px-6 pb-20 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((p) => (
-          <Link
+        {projects.map((p, i) => (
+          <MotionCard
             key={p.slug}
+            delay={(i % 3) * 90}
+            className="rounded-xl border border-border bg-card hover:border-primary/40 flex flex-col"
+          >
+          <Link
             to="/projects/$slug"
             params={{ slug: p.slug }}
-            className="group rounded-xl border border-border bg-card p-6 hover:border-primary/40 transition-colors flex flex-col"
+            className="group p-6 flex flex-col flex-1"
           >
             <div className="text-xs text-muted-foreground">
               {p.domain} · {p.year}
@@ -55,6 +60,7 @@ function ProjectsPage() {
               ))}
             </div>
           </Link>
+          </MotionCard>
         ))}
       </section>
     </SiteLayout>

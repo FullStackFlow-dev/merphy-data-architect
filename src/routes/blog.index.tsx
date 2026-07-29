@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { posts } from "../data/posts";
+import { MotionCard } from "../components/motion";
 
 export const Route = createFileRoute("/blog/")({
   head: () => ({
@@ -28,13 +29,17 @@ function BlogPage() {
           Notes techniques sur le développement, la data science et l'IA.
         </p>
       </section>
-      <section className="mx-auto max-w-3xl px-6 pb-20 divide-y divide-border">
-        {posts.map((post) => (
-          <Link
+      <section className="mx-auto max-w-3xl px-6 pb-20 space-y-5">
+        {posts.map((post, i) => (
+          <MotionCard
             key={post.slug}
+            delay={(i % 3) * 90}
+            className="rounded-xl border border-border bg-card hover:border-primary/40"
+          >
+          <Link
             to="/blog/$slug"
             params={{ slug: post.slug }}
-            className="block py-8 group"
+            className="block p-6 group"
           >
             <div className="text-xs text-muted-foreground">
               {new Date(post.date).toLocaleDateString("fr-FR", {
@@ -58,6 +63,7 @@ function BlogPage() {
               ))}
             </div>
           </Link>
+          </MotionCard>
         ))}
       </section>
     </SiteLayout>
