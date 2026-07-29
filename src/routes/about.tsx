@@ -2,6 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { MotionCard } from "../components/motion";
 import profileAsset from "../assets/profile.png.asset.json";
+import cvAsset from "../assets/cv.pdf.asset.json";
+import { Download } from "lucide-react";
+
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -59,7 +62,15 @@ function AboutPage() {
           d'apprentissage automatique, de l'idée à la mise en production. À
           remplacer par votre présentation.
         </p>
+        <a
+          href={cvAsset.url}
+          download="CV-Merphy.pdf"
+          className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+        >
+          <Download className="h-4 w-4" /> Télécharger mon CV (PDF)
+        </a>
         </div>
+
         <MotionCard className="w-40 sm:w-48 shrink-0 rounded-2xl border border-border bg-card overflow-hidden">
           <img
             src={profileAsset.url}
