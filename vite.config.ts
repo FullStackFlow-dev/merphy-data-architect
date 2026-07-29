@@ -32,7 +32,7 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
     // Static prerendering so the site can be served by static hosts (e.g. GitHub Pages).
-    prerender: { enabled: true, crawlLinks: true },
+    prerender: { enabled: true, crawlLinks: false },
     pages: [
       "/",
       "/projects",
