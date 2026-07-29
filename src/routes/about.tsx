@@ -74,7 +74,7 @@ function AboutPage() {
         </a>
         </div>
 
-        <MotionCard className="w-40 sm:w-48 shrink-0 rounded-2xl border border-border bg-card overflow-hidden">
+        <MotionCard className="w-40 sm:w-64 md:w-72 shrink-0 rounded-2xl border border-border bg-card overflow-hidden">
           <img
             src={profileAsset.url}
             alt="Portrait de l'auteur du portfolio"

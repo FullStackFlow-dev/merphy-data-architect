@@ -13,6 +13,7 @@ const nav = [
 ] as const;
 
 export const LINKEDIN_URL = "https://www.linkedin.com/in/merph-dev";
+export const GITHUB_URL = "https://github.com/FullStackFlow-dev";
 export const EMAIL = "merphy.softwareengineer@gmail.com";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
@@ -107,6 +108,9 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           <div className="flex flex-wrap gap-5">
             <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="hover:text-foreground">
               LinkedIn
+            </a>
+            <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="hover:text-foreground">
+              GitHub
             </a>
             <a href={`mailto:${EMAIL}`} className="hover:text-foreground">
               Email
