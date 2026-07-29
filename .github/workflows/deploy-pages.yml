@@ -29,6 +29,8 @@ jobs:
 
       - name: Build static site
         run: bun run build
+        env:
+          STATIC_EXPORT: "1"
 
       - name: Add SPA fallback and disable Jekyll
         run: |
