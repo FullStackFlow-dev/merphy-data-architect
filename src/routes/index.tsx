@@ -54,7 +54,7 @@ function Index() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,theme(colors.primary/15),transparent_60%)]" />
-        <div className="mx-auto max-w-6xl px-6 pt-24 pb-20 grid gap-12 md:grid-cols-[1.4fr_1fr] md:items-center">
+        <div className="mx-auto max-w-6xl px-6 pt-24 pb-20 grid gap-12 md:grid-cols-[1.15fr_1fr] md:items-center">
           <div>
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
             Merphy Mademba
@@ -91,7 +91,7 @@ function Index() {
           </div>
 
           </div>
-          <MotionCard className="mx-auto w-56 md:w-full max-w-xs rounded-2xl border border-border bg-card overflow-hidden">
+          <MotionCard className="mx-auto w-56 md:w-full max-w-sm lg:max-w-md rounded-2xl border border-border bg-card overflow-hidden">
             <img
               src={profileAsset.url}
               alt="Photo de profil — ingénieur logiciel, data scientist et ingénieur IA"
