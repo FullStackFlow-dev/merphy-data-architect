@@ -9,7 +9,7 @@ import { Download } from "lucide-react";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "À propos & CV — Portfolio" },
+      { title: "À propos & CV — Merphy Mademba" },
       { name: "description", content: "Parcours, compétences et expériences." },
       { property: "og:title", content: "À propos & CV" },
       { property: "og:description", content: "Parcours, compétences et expériences." },
@@ -55,8 +55,11 @@ function AboutPage() {
           À propos
         </p>
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
-          Ingénieur logiciel, data & IA
+          Merphy Mademba
         </h1>
+        <p className="mt-2 text-lg text-muted-foreground">
+          Ingénieur logiciel, data & IA
+        </p>
         <p className="mt-6 text-lg text-muted-foreground">
           Bio provisoire : je construis des produits logiciels et des systèmes
           d'apprentissage automatique, de l'idée à la mise en production. À

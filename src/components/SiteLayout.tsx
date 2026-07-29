@@ -23,7 +23,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
         <div className="mx-auto max-w-6xl px-6 h-16 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 md:flex md:justify-between">
           <Link to="/" className="font-semibold tracking-tight text-lg truncate">
-            <span className="text-primary">◆</span> portfolio
+            <span className="text-primary">◆</span> Merphy Mademba
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             {nav.map((n) => (
@@ -103,16 +103,13 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <footer className="border-t border-border/60 mt-24">
         <div className="mx-auto max-w-6xl px-6 py-10 flex flex-col md:flex-row gap-4 justify-between text-sm text-muted-foreground">
-          <div>© {new Date().getFullYear()} — Portfolio.</div>
+          <div>© {new Date().getFullYear()} — Merphy Mademba.</div>
           <div className="flex flex-wrap gap-5">
             <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="hover:text-foreground">
               LinkedIn
             </a>
             <a href={`mailto:${EMAIL}`} className="hover:text-foreground">
               Email
-            </a>
-            <a href={cvAsset.url} download="CV-Merphy.pdf" className="hover:text-foreground">
-              CV (PDF)
             </a>
           </div>
         </div>
