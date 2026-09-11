@@ -21,21 +21,21 @@ export const Route = createFileRoute("/about")({
 const experiences = [
   {
     period: "2024 — présent",
-    role: "Ingénieur IA / ML",
+    role: "Data Engineer",
     org: "Entreprise (provisoire)",
-    desc: "Conception et mise en production de modèles ML/DL.",
+    desc: "Construction de pipelines ETL/ELT, modélisation et préparation de données.",
   },
   {
     period: "2022 — 2024",
-    role: "Data Scientist",
+    role: "Data Analyste",
     org: "Entreprise (provisoire)",
-    desc: "Pipelines analytiques, modèles prédictifs, dashboards.",
+    desc: "Analyse de données, reporting Power BI/Excel, statistiques et visualisation.",
   },
   {
     period: "2020 — 2022",
-    role: "Ingénieur logiciel full-stack",
+    role: "Développeur Python",
     org: "Entreprise (provisoire)",
-    desc: "Applications web multi-tenant, APIs et infrastructure.",
+    desc: "Applications, scripts d'automatisation, APIs et outils métiers en Python.",
   },
 ];
 
