@@ -1,7 +1,7 @@
 export type Project = {
   slug: string;
   title: string;
-  domain: "Dev" | "Data Science" | "IA / ML";
+  domain: "Développement Python" | "Data Analyste" | "Data Engineer";
   summary: string;
   tags: string[];
   year: string;
@@ -10,69 +10,69 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "plateforme-saas-temps-reel",
-    title: "Plateforme SaaS temps réel",
-    domain: "Dev",
+    slug: "plateforme-api-python",
+    title: "API métier avec FastAPI",
+    domain: "Développement Python",
     summary:
-      "Application full-stack multi-tenant avec collaboration temps réel, auth et facturation.",
-    tags: ["TypeScript", "React", "Node.js", "PostgreSQL", "WebSocket"],
+      "API REST robuste et documentée, authentification, tests et déploiement continu.",
+    tags: ["Python", "FastAPI", "PostgreSQL", "Docker", "Git"],
     year: "2025",
     content:
-      "Architecture modulaire, tests end-to-end, déploiement continu. Contenu provisoire à remplacer.",
+      "Architecture modulaire, tests unitaires et d'intégration, CI/CD. Contenu provisoire à remplacer.",
   },
   {
     slug: "pipeline-data-etl",
     title: "Pipeline ETL analytique",
-    domain: "Data Science",
+    domain: "Data Engineer",
     summary:
       "Ingestion, nettoyage et modélisation de millions de lignes pour dashboards décisionnels.",
-    tags: ["Python", "Airflow", "dbt", "Snowflake", "Pandas"],
+    tags: ["Python", "Airflow", "dbt", "Snowflake", "SQL"],
     year: "2024",
     content:
       "Orchestration robuste, qualité de données monitorée, KPIs métiers. Contenu provisoire à remplacer.",
   },
   {
-    slug: "classification-images-cnn",
-    title: "Classification d'images (CNN)",
-    domain: "IA / ML",
+    slug: "dashboard-ventes-powerbi",
+    title: "Dashboard de ventes Power BI",
+    domain: "Data Analyste",
     summary:
-      "Modèle de vision par ordinateur entraîné sur dataset personnalisé, servi via API.",
-    tags: ["PyTorch", "CNN", "FastAPI", "Docker"],
+      "Analyse descriptive et visualisation interactive des performances commerciales.",
+    tags: ["Power BI", "Excel", "Python", "Pandas", "Statistiques"],
     year: "2024",
     content:
-      "Fine-tuning ResNet, augmentation, MLOps. Contenu provisoire à remplacer.",
+      "Nettoyage de données, modélisation DAX, rapports interactifs. Contenu provisoire à remplacer.",
   },
   {
-    slug: "nlp-analyse-sentiments",
-    title: "Analyse de sentiments NLP",
-    domain: "IA / ML",
+    slug: "analyse-sentiments-reviews",
+    title: "Analyse de sentiments de reviews",
+    domain: "Data Analyste",
     summary:
-      "Modèle transformer fine-tuné pour la classification de textes multi-langues.",
-    tags: ["Transformers", "HuggingFace", "PyTorch"],
+      "Analyse textuelle et statistique d'avis clients pour en extraire les tendances.",
+    tags: ["Python", "Pandas", "NLP", "Statistiques", "Visualisation"],
     year: "2025",
     content:
-      "Distillation, quantization, benchmark. Contenu provisoire à remplacer.",
+      "Collecte, nettoyage, visualisation et interprétation des résultats. Contenu provisoire à remplacer.",
   },
   {
     slug: "moteur-recommandation",
     title: "Moteur de recommandation",
-    domain: "Data Science",
+    domain: "Data Engineer",
     summary:
-      "Système hybride collaboratif + contenu, évalué en A/B testing.",
-    tags: ["Python", "Scikit-learn", "Spark"],
+      "Système de recommandation alimenté par un pipeline de données et des features stores.",
+    tags: ["Python", "Airflow", "SQL", "Spark", "dbt"],
     year: "2023",
     content:
-      "Feature store, embeddings, ranking. Contenu provisoire à remplacer.",
+      "Feature store, embeddings, ranking et livraison des données. Contenu provisoire à remplacer.",
   },
   {
-    slug: "cli-devtools",
-    title: "CLI open source pour devs",
-    domain: "Dev",
-    summary: "Outil en ligne de commande pour automatiser les workflows de dev.",
-    tags: ["Rust", "CLI", "Open source"],
+    slug: "automatisation-etl-python",
+    title: "Automatisation ETL en Python",
+    domain: "Développement Python",
+    summary: "Scripts Python d'extraction, transformation et chargement de données.",
+    tags: ["Python", "Pandas", "SQL", "Airflow", "Git"],
     year: "2023",
     content:
-      "Distribution multi-plateforme, plugins. Contenu provisoire à remplacer.",
+      "Orchestration de tâches, gestion des erreurs, logging et monitoring. Contenu provisoire à remplacer.",
   },
 ];
 

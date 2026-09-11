@@ -6,10 +6,10 @@ import { MotionCard } from "../components/motion";
 export const Route = createFileRoute("/demos")({
   head: () => ({
     meta: [
-      { title: "Démos interactives IA / ML — Portfolio" },
-      { name: "description", content: "Testez en direct des démonstrations de modèles ML et deep learning." },
-      { property: "og:title", content: "Démos IA / ML" },
-      { property: "og:description", content: "Démos interactives de modèles ML et DL." },
+      { title: "Démos interactives — Portfolio" },
+      { name: "description", content: "Testez en direct des démonstrations autour de Python, de la data analyse et du data engineering." },
+      { property: "og:title", content: "Démos interactives" },
+      { property: "og:description", content: "Démos interactives Python, data analyse et data engineering." },
     ],
   }),
   component: DemosPage,

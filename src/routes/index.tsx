@@ -10,16 +10,16 @@ import { Download } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Merphy Mademba — Ingénieur logiciel, Data & IA" },
+      { title: "Merphy Mademba — Développeur Python, Data Analyste & Data Engineer" },
       {
         name: "description",
         content:
-          "Portfolio d'un ingénieur logiciel généraliste, data scientist et ingénieur IA en machine learning et deep learning.",
+          "Portfolio de Merphy Mademba : développeur Python, data analyste (Power BI, Excel, Python, statistiques) et data engineer.",
       },
-      { property: "og:title", content: "Merphy Mademba — Dev, Data & IA" },
+      { property: "og:title", content: "Merphy Mademba — Python, Data & Engineering" },
       {
         property: "og:description",
-        content: "Projets, démos IA, articles et parcours.",
+        content: "Projets, démos, articles et parcours autour de Python, l'analyse de données et le data engineering.",
       },
     ],
   }),
@@ -28,22 +28,22 @@ export const Route = createFileRoute("/")({
 
 const domains = [
   {
-    title: "Ingénierie logicielle",
-    tag: "Dev",
-    desc: "Applications web et back-ends robustes, scalables et testés. Full-stack TypeScript, Python, Rust.",
-    skills: ["React", "Node.js", "PostgreSQL", "Docker", "CI/CD"],
+    title: "Développeur Python",
+    tag: "Python",
+    desc: "Applications, scripts et APIs en Python : automatisation, back-ends, web scraping et outils métiers robustes.",
+    skills: ["Python", "FastAPI", "Django", "SQL", "Git", "Web scraping"],
   },
   {
-    title: "Data Science",
+    title: "Data Analyste",
     tag: "Data",
-    desc: "De l'ingestion à la modélisation : pipelines, analyse, visualisation et prise de décision.",
-    skills: ["Python", "SQL", "Pandas", "Airflow", "dbt"],
+    desc: "Exploration, visualisation et analyse de données avec Power BI, Excel, Python et des méthodes statistiques.",
+    skills: ["Power BI", "Excel", "Python", "Pandas", "Statistiques", "SQL"],
   },
   {
-    title: "IA — Machine & Deep Learning",
-    tag: "IA",
-    desc: "Modèles ML/DL en production : vision, NLP, systèmes de recommandation, LLMs.",
-    skills: ["PyTorch", "Transformers", "MLOps", "FastAPI"],
+    title: "Data Engineer",
+    tag: "Engineering",
+    desc: "Construction de pipelines de données fiables : ingestion, transformation, modélisation et préparation à la décision.",
+    skills: ["ETL/ELT", "Airflow", "dbt", "SQL", "Snowflake", "Docker"],
   },
 ];
 
@@ -60,13 +60,13 @@ function Index() {
             Merphy Mademba
           </p>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight max-w-4xl">
-            Ingénieur logiciel, Data Scientist &{" "}
-            <span className="text-primary">ingénieur IA</span>.
+            Développeur Python, Data Analyste &{" "}
+            <span className="text-primary">Data Engineer</span>.
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
-            Je conçois des produits logiciels, des pipelines de données et des
-            modèles de machine learning et de deep learning — du prototype à la
-            mise en production.
+            Je conçois des applications Python, j'analyse des données avec Power
+            BI, Excel et des statistiques, et je bâtis des pipelines de données
+            fiables pour transformer la donnée brute en décision.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -94,7 +94,7 @@ function Index() {
           <MotionCard className="mx-auto w-56 md:w-full max-w-sm lg:max-w-md rounded-2xl border border-border bg-card overflow-hidden">
             <img
               src={profileAsset.url}
-              alt="Photo de profil — ingénieur logiciel, data scientist et ingénieur IA"
+              alt="Photo de profil — développeur Python, data analyste et data engineer"
               className="w-full h-full object-cover aspect-square"
               loading="eager"
             />

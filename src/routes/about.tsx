@@ -21,29 +21,52 @@ export const Route = createFileRoute("/about")({
 const experiences = [
   {
     period: "2024 — présent",
-    role: "Ingénieur IA / ML",
+    role: "Data Engineer",
     org: "Entreprise (provisoire)",
-    desc: "Conception et mise en production de modèles ML/DL.",
+    desc: "Construction de pipelines ETL/ELT, modélisation et préparation de données.",
   },
   {
     period: "2022 — 2024",
-    role: "Data Scientist",
+    role: "Data Analyste",
     org: "Entreprise (provisoire)",
-    desc: "Pipelines analytiques, modèles prédictifs, dashboards.",
+    desc: "Analyse de données, reporting Power BI/Excel, statistiques et visualisation.",
   },
   {
     period: "2020 — 2022",
-    role: "Ingénieur logiciel full-stack",
+    role: "Développeur Python",
     org: "Entreprise (provisoire)",
-    desc: "Applications web multi-tenant, APIs et infrastructure.",
+    desc: "Applications, scripts d'automatisation, APIs et outils métiers en Python.",
   },
 ];
 
 const skills = {
-  Développement: ["TypeScript", "React", "Node.js", "Python", "Rust", "SQL"],
-  "Data Science": ["Pandas", "Airflow", "dbt", "Spark", "Snowflake"],
-  "IA / ML": ["PyTorch", "TensorFlow", "Transformers", "MLOps", "FastAPI"],
-  DevOps: ["Docker", "Kubernetes", "CI/CD", "AWS", "GCP"],
+  "Développement Python": [
+    "Python",
+    "FastAPI",
+    "Django",
+    "Flask",
+    "SQL",
+    "Git",
+    "Web scraping",
+  ],
+  "Data Analyste": [
+    "Power BI",
+    "Excel",
+    "Pandas",
+    "Python",
+    "Statistiques",
+    "Visualisation",
+    "SQL",
+  ],
+  "Data Engineer": [
+    "ETL/ELT",
+    "Airflow",
+    "dbt",
+    "Snowflake",
+    "BigQuery",
+    "SQL",
+    "Docker",
+  ],
 };
 
 function AboutPage() {
@@ -58,12 +81,12 @@ function AboutPage() {
           Merphy Mademba
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Ingénieur logiciel, data & IA
+          Développeur Python, Data Analyste & Data Engineer
         </p>
         <p className="mt-6 text-lg text-muted-foreground">
-          Bio provisoire : je construis des produits logiciels et des systèmes
-          d'apprentissage automatique, de l'idée à la mise en production. À
-          remplacer par votre présentation.
+          Je conçois des applications et scripts Python, j'analyse des données
+          avec Power BI, Excel et des méthodes statistiques, et je construis des
+          pipelines de données fiables pour préparer et valoriser l'information.
         </p>
         <a
           href={cvAsset.url}
