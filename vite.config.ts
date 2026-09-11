@@ -7,18 +7,18 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 const projectSlugs = [
-  "plateforme-saas-temps-reel",
+  "plateforme-api-python",
   "pipeline-data-etl",
-  "classification-images-cnn",
-  "nlp-analyse-sentiments",
+  "dashboard-ventes-powerbi",
+  "analyse-sentiments-reviews",
   "moteur-recommandation",
-  "cli-devtools",
+  "automatisation-etl-python",
 ];
 
 const postSlugs = [
-  "mlops-en-2026",
-  "transformers-pour-tabulaire",
-  "architecture-full-stack-moderne",
+  "pipelines-donnees-2026",
+  "powerbi-vs-python-analyse",
+  "automatisation-python-entreprise",
 ];
 
 // Static export mode (GitHub Pages CI): skip the nitro server build and emit
