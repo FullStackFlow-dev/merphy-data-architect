@@ -40,10 +40,33 @@ const experiences = [
 ];
 
 const skills = {
-  Développement: ["TypeScript", "React", "Node.js", "Python", "Rust", "SQL"],
-  "Data Science": ["Pandas", "Airflow", "dbt", "Spark", "Snowflake"],
-  "IA / ML": ["PyTorch", "TensorFlow", "Transformers", "MLOps", "FastAPI"],
-  DevOps: ["Docker", "Kubernetes", "CI/CD", "AWS", "GCP"],
+  "Développement Python": [
+    "Python",
+    "FastAPI",
+    "Django",
+    "Flask",
+    "SQL",
+    "Git",
+    "Web scraping",
+  ],
+  "Data Analyste": [
+    "Power BI",
+    "Excel",
+    "Pandas",
+    "Python",
+    "Statistiques",
+    "Visualisation",
+    "SQL",
+  ],
+  "Data Engineer": [
+    "ETL/ELT",
+    "Airflow",
+    "dbt",
+    "Snowflake",
+    "BigQuery",
+    "SQL",
+    "Docker",
+  ],
 };
 
 function AboutPage() {
