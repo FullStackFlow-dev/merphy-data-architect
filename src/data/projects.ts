@@ -6,6 +6,7 @@ export type Project = {
   tags: string[];
   year: string;
   content: string;
+  embedUrl?: string;
 };
 
 export const projects: Project[] = [
@@ -41,6 +42,7 @@ export const projects: Project[] = [
     year: "2024",
     content:
       "Nettoyage de données, modélisation DAX, rapports interactifs. Contenu provisoire à remplacer.",
+    embedUrl: "https://playground.powerbi.com/sampleReportEmbed",
   },
   {
     slug: "analyse-sentiments-reviews",

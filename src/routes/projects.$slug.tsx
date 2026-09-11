@@ -61,6 +61,22 @@ function ProjectDetail() {
           <h2>Résultats</h2>
           <p>Impact et métriques — contenu provisoire.</p>
         </div>
+        {project.embedUrl ? (
+          <section className="mt-12" aria-labelledby="power-bi-demo-title">
+            <h2 id="power-bi-demo-title" className="text-2xl font-semibold">
+              Rapport interactif Power BI
+            </h2>
+            <div className="mt-5 aspect-video w-full overflow-hidden rounded-lg border border-border bg-card">
+              <iframe
+                title="Démonstration du rapport Power BI"
+                src={project.embedUrl}
+                className="h-full w-full"
+                frameBorder="0"
+                allowFullScreen
+              />
+            </div>
+          </section>
+        ) : null}
       </article>
     </SiteLayout>
   );
