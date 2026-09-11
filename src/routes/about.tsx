@@ -81,12 +81,12 @@ function AboutPage() {
           Merphy Mademba
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Ingénieur logiciel, data & IA
+          Développeur Python, Data Analyste & Data Engineer
         </p>
         <p className="mt-6 text-lg text-muted-foreground">
-          Bio provisoire : je construis des produits logiciels et des systèmes
-          d'apprentissage automatique, de l'idée à la mise en production. À
-          remplacer par votre présentation.
+          Je conçois des applications et scripts Python, j'analyse des données
+          avec Power BI, Excel et des méthodes statistiques, et je construis des
+          pipelines de données fiables pour préparer et valoriser l'information.
         </p>
         <a
           href={cvAsset.url}
