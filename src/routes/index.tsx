@@ -28,22 +28,22 @@ export const Route = createFileRoute("/")({
 
 const domains = [
   {
-    title: "Ingénierie logicielle",
-    tag: "Dev",
-    desc: "Applications web et back-ends robustes, scalables et testés. Full-stack TypeScript, Python, Rust.",
-    skills: ["React", "Node.js", "PostgreSQL", "Docker", "CI/CD"],
+    title: "Développeur Python",
+    tag: "Python",
+    desc: "Applications, scripts et APIs en Python : automatisation, back-ends, web scraping et outils métiers robustes.",
+    skills: ["Python", "FastAPI", "Django", "SQL", "Git", "Web scraping"],
   },
   {
-    title: "Data Science",
+    title: "Data Analyste",
     tag: "Data",
-    desc: "De l'ingestion à la modélisation : pipelines, analyse, visualisation et prise de décision.",
-    skills: ["Python", "SQL", "Pandas", "Airflow", "dbt"],
+    desc: "Exploration, visualisation et analyse de données avec Power BI, Excel, Python et des méthodes statistiques.",
+    skills: ["Power BI", "Excel", "Python", "Pandas", "Statistiques", "SQL"],
   },
   {
-    title: "IA — Machine & Deep Learning",
-    tag: "IA",
-    desc: "Modèles ML/DL en production : vision, NLP, systèmes de recommandation, LLMs.",
-    skills: ["PyTorch", "Transformers", "MLOps", "FastAPI"],
+    title: "Data Engineer",
+    tag: "Engineering",
+    desc: "Construction de pipelines de données fiables : ingestion, transformation, modélisation et préparation à la décision.",
+    skills: ["ETL/ELT", "Airflow", "dbt", "SQL", "Snowflake", "Docker"],
   },
 ];
 
