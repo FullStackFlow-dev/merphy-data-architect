@@ -60,13 +60,13 @@ function Index() {
             Merphy Mademba
           </p>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight max-w-4xl">
-            Ingénieur logiciel, Data Scientist &{" "}
-            <span className="text-primary">ingénieur IA</span>.
+            Développeur Python, Data Analyste &{" "}
+            <span className="text-primary">Data Engineer</span>.
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
-            Je conçois des produits logiciels, des pipelines de données et des
-            modèles de machine learning et de deep learning — du prototype à la
-            mise en production.
+            Je conçois des applications Python, j'analyse des données avec Power
+            BI, Excel et des statistiques, et je bâtis des pipelines de données
+            fiables pour transformer la donnée brute en décision.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
