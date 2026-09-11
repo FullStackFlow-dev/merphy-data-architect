@@ -94,7 +94,7 @@ function Index() {
           <MotionCard className="mx-auto w-56 md:w-full max-w-sm lg:max-w-md rounded-2xl border border-border bg-card overflow-hidden">
             <img
               src={profileAsset.url}
-              alt="Photo de profil — ingénieur logiciel, data scientist et ingénieur IA"
+              alt="Photo de profil — développeur Python, data analyste et data engineer"
               className="w-full h-full object-cover aspect-square"
               loading="eager"
             />
