@@ -26,7 +26,7 @@ function BlogPage() {
           Articles & retours d'expérience
         </h1>
         <p className="mt-4 text-muted-foreground">
-          Notes techniques sur le développement, la data science et l'IA.
+          Notes techniques sur le développement Python, l'analyse de données et le data engineering.
         </p>
       </section>
       <section className="mx-auto max-w-3xl px-6 pb-20 space-y-5">

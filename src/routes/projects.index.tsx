@@ -26,8 +26,8 @@ function ProjectsPage() {
           Une sélection de réalisations
         </h1>
         <p className="mt-4 text-muted-foreground max-w-2xl">
-          Projets personnels, open source et professionnels — dev, data science
-          et IA.
+          Projets personnels, open source et professionnels — développement
+          Python, data analyse et data engineering.
         </p>
       </section>
       <section className="mx-auto max-w-6xl px-6 pb-20 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
