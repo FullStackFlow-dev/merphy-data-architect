@@ -27,13 +27,13 @@ export const certGroups: CertGroup[] = [
         name: "IBM Data Engineering Professional",
         provider: "IBM",
         platform: "Coursera",
-        status: "certifie",
+        status: "en-cours",
       },
       {
         name: "Meta Database Engineer",
         provider: "Meta",
         platform: "Coursera",
-        status: "certifie",
+        status: "en-cours",
       },
       {
         name: "Data Engineer Python & SQL",
@@ -43,7 +43,7 @@ export const certGroups: CertGroup[] = [
       {
         name: "PostgreSQL Administrator",
         provider: "DataCamp",
-        status: "en-cours",
+        status: "certifie",
       },
     ],
   },
@@ -55,6 +55,7 @@ export const certGroups: CertGroup[] = [
       {
         name: "Microsoft Certified Python Developer",
         provider: "Microsoft",
+        platform: "Coursera",
         status: "certifie",
       },
       {
@@ -65,7 +66,7 @@ export const certGroups: CertGroup[] = [
       {
         name: "Associate Python Developer",
         provider: "DataCamp",
-        status: "en-cours",
+        status: "certifie",
       },
     ],
   },
@@ -77,13 +78,14 @@ export const certGroups: CertGroup[] = [
       {
         name: "Microsoft Power BI Data Analyst",
         provider: "Microsoft",
+        platform: "Coursera",
         status: "certifie",
       },
       {
         name: "IBM Data Analyst with Python",
         provider: "IBM",
         platform: "Coursera",
-        status: "certifie",
+        status: "en-cours",
       },
     ],
   },
