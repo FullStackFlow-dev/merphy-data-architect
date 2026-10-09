@@ -204,7 +204,7 @@ function Index() {
               <MotionCard
                 key={g.title}
                 delay={i * 90}
-                className="luminous rounded-xl bg-card p-6"
+                className="luminous flex flex-col rounded-xl bg-card p-6"
               >
                 <div className="flex items-start gap-3">
                   <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
@@ -228,7 +228,7 @@ function Index() {
                       />
                       <span className="min-w-0 flex-1">
                         <span className="block text-sm leading-snug">{c.name}</span>
-                        <span className="mt-1 block text-[11px] uppercase tracking-wider text-muted-foreground">
+                        <span className="mt-1 block text-xs uppercase tracking-wider text-muted-foreground">
                           {c.provider}
                           {c.platform ? ` · ${c.platform}` : ""}
                         </span>
@@ -238,7 +238,7 @@ function Index() {
                   ))}
                 </ul>
 
-                <p className="mt-4 text-[11px] uppercase tracking-wider text-muted-foreground">
+                <p className="mt-auto pt-4 text-[11px] uppercase tracking-wider text-muted-foreground">
                   {done} certifi{done > 1 ? "ées" : "ée"}
                   {wip > 0 ? ` · ${wip} en cours` : ""}
                 </p>
