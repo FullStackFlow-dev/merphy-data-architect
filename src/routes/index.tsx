@@ -53,6 +53,28 @@ const domains = [
   },
 ];
 
+const groupIcons = {
+  database: TbDatabase,
+  code: TbCode,
+  chart: TbChartBar,
+} as const;
+
+function StatusBadge({ status }: { status: CertStatus }) {
+  const done = status === "certifie";
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${
+        done
+          ? "border-success/35 bg-success/12 text-success"
+          : "border-warning/35 bg-warning/12 text-warning"
+      }`}
+    >
+      {done ? <TbCheck className="h-3 w-3" /> : <TbClock className="h-3 w-3" />}
+      {done ? "Certifié" : "En cours"}
+    </span>
+  );
+}
+
 function Index() {
   const featured = projects.slice(0, 3);
   return (
