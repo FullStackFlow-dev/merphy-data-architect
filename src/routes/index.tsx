@@ -5,6 +5,10 @@ import { MotionCard } from "../components/motion";
 import profileAsset from "../assets/profile.png.asset.json";
 import cvAsset from "../assets/cv.pdf.asset.json";
 import { Download } from "lucide-react";
+import { FaLinkedin } from "react-icons/fa";
+import { SiGithub } from "react-icons/si";
+import { TechIcon } from "../components/TechIcon";
+import { LINKEDIN_URL, GITHUB_URL } from "../components/SiteLayout";
 
 
 export const Route = createFileRoute("/")({
@@ -28,22 +32,22 @@ export const Route = createFileRoute("/")({
 
 const domains = [
   {
-    title: "Développeur Python",
+    title: "Data Engineer / Architecture",
+    tag: "Engineering",
+    desc: "Construction de pipelines de données fiables : ingestion, transformation, modélisation (Silver/Gold) et préparation à la décision.",
+    skills: ["PostgreSQL", "NiFi", "Spark", "Docker", "Airflow", "dbt", "SQL", "Snowflake"],
+  },
+  {
+    title: "Développeur Python & APIs",
     tag: "Python",
-    desc: "Applications, scripts et APIs en Python : automatisation, back-ends, web scraping et outils métiers robustes.",
+    desc: "Applications, scripts et APIs robustes : automatisation, back-ends, web scraping et outils métiers performants.",
     skills: ["Python", "FastAPI", "Django", "SQL", "Git", "Web scraping"],
   },
   {
-    title: "Data Analyste",
+    title: "Data Analytics & BI",
     tag: "Data",
-    desc: "Exploration, visualisation et analyse de données avec Power BI, Excel, Python et des méthodes statistiques.",
-    skills: ["Power BI", "Excel", "Python", "Pandas", "Statistiques", "SQL"],
-  },
-  {
-    title: "Data Engineer",
-    tag: "Engineering",
-    desc: "Construction de pipelines de données fiables : ingestion, transformation, modélisation et préparation à la décision.",
-    skills: ["ETL/ELT", "Airflow", "dbt", "SQL", "Snowflake", "Docker"],
+    desc: "Exploration, visualisation et analyse de données : modélisation décisionnelle et création de dashboards impactants.",
+    skills: ["Power BI", "Cubes OLAP/ROLAP", "SQL", "Pandas", "Statistiques", "Excel"],
   },
 ];
 
@@ -59,21 +63,24 @@ function Index() {
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
             Merphy Mademba
           </p>
-          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight max-w-4xl">
-            Développeur Python, Data Analyste &{" "}
-            <span className="text-primary">Data Engineer</span>.
+          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight max-w-4xl [text-wrap:balance]">
+            Développeur Python &amp;{" "}
+            <span className="text-primary whitespace-nowrap">Data Engineer</span>
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
             Je conçois des applications Python, j'analyse des données avec Power
             BI, Excel et des statistiques, et je bâtis des pipelines de données
             fiables pour transformer la donnée brute en décision.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <p className="mt-3 text-xs uppercase tracking-wider text-primary/80">
+            Pipelines ETL, ELT conçus · Visualisations BI · Modèles IA locaux
+          </p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
               to="/projects"
               className="inline-flex items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
             >
-              Voir les projets
+              Découvrir mes projets
             </Link>
             <Link
               to="/demos"
@@ -87,6 +94,14 @@ function Index() {
               className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-medium hover:bg-accent"
             >
               <Download className="h-4 w-4" /> Télécharger le CV
+            </a>
+            <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border hover:bg-accent hover:text-primary">
+              <FaLinkedin className="h-5 w-5" />
+            </a>
+            <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border hover:bg-accent hover:text-primary">
+              <SiGithub className="h-5 w-5" />
             </a>
           </div>
 
@@ -128,8 +143,9 @@ function Index() {
                 {d.skills.map((s) => (
                   <span
                     key={s}
-                    className="text-xs rounded-md border border-border px-2 py-0.5 text-muted-foreground"
+                    className="inline-flex items-center gap-1 text-xs rounded-md border border-border px-2 py-0.5 text-muted-foreground"
                   >
+                    <TechIcon name={s} className="h-3.5 w-3.5 text-primary" />
                     {s}
                   </span>
                 ))}
