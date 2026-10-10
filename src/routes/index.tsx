@@ -3,7 +3,7 @@ import { SiteLayout } from "../components/SiteLayout";
 import { projects } from "../data/projects";
 import { MotionCard, Reveal } from "../components/motion";
 import { certGroups, type CertStatus } from "../data/certifications";
-import { TbDatabase, TbCode, TbChartBar, TbCheck, TbClock, TbBadgeCheck } from "react-icons/tb";
+import { TbDatabase, TbCode, TbChartBar, TbCheck, TbClock, TbCertificate } from "react-icons/tb";
 import profileAsset from "../assets/profile.png.asset.json";
 import cvAsset from "../assets/cv.pdf.asset.json";
 import { Download } from "lucide-react";
@@ -239,7 +239,7 @@ function Index() {
                             rel="noreferrer"
                             className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
                           >
-                            <TbBadgeCheck className="h-3.5 w-3.5" />
+                            <TbCertificate className="h-3.5 w-3.5" />
                             Vérifier la certification
                           </a>
                         ) : null}
