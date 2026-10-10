@@ -35,7 +35,7 @@ export const certGroups: CertGroup[] = [
         provider: "IBM",
         platform: "Coursera",
         status: "en-cours",
-        verifyUrl: "https://www.coursera.org/",
+        verifyUrl: "",
       },
       {
         name: "Meta Database Engineer Professional Certificate",
