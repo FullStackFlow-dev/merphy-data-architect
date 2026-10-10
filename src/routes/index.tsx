@@ -3,7 +3,7 @@ import { SiteLayout } from "../components/SiteLayout";
 import { projects } from "../data/projects";
 import { MotionCard, Reveal } from "../components/motion";
 import { certGroups, type CertStatus } from "../data/certifications";
-import { TbDatabase, TbCode, TbChartBar, TbCheck, TbClock } from "react-icons/tb";
+import { TbDatabase, TbCode, TbChartBar, TbCheck, TbClock, TbBadgeCheck } from "react-icons/tb";
 import profileAsset from "../assets/profile.png.asset.json";
 import cvAsset from "../assets/cv.pdf.asset.json";
 import { Download } from "lucide-react";
