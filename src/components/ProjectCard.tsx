@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ExternalLink, Github } from "lucide-react";
 import type { Project } from "../data/projects";
+import { GITHUB_URL } from "./SiteLayout";
 import { MotionCard } from "./motion";
 import { Button } from "./ui/button";
 
