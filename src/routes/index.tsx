@@ -11,6 +11,8 @@ import { FaLinkedin } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
 import { TechIcon } from "../components/TechIcon";
 import { LINKEDIN_URL, GITHUB_URL } from "../components/SiteLayout";
+import { ProjectCard } from "../components/ProjectCard";
+import { Button } from "../components/ui/button";
 
 
 export const Route = createFileRoute("/")({
@@ -23,6 +25,8 @@ export const Route = createFileRoute("/")({
           "Portfolio de Merphy Mademba : développeur Python, data analyste (Power BI, Excel, Python, statistiques) et data engineer.",
       },
       { property: "og:title", content: "Merphy Mademba — Python, Data & Engineering" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
         content: "Projets, démos, articles et parcours autour de Python, l'analyse de données et le data engineering.",
@@ -233,15 +237,17 @@ function Index() {
                           {c.platform ? ` · ${c.platform}` : ""}
                         </span>
                         {c.verifyUrl ? (
+                          <Button asChild variant="link" size="sm" className="mt-1.5 h-auto justify-start whitespace-normal px-0 py-1 text-left text-xs">
                           <a
                             href={c.verifyUrl}
                             target="_blank"
-                            rel="noreferrer"
-                            className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+                            rel="noopener noreferrer"
+                            aria-label={`Vérifier ${c.name} (nouvel onglet)`}
                           >
                             <TbCertificate className="h-3.5 w-3.5" />
                             Vérifier la certification
                           </a>
+                          </Button>
                         ) : null}
                       </span>
                       <StatusBadge status={c.status} />
@@ -271,25 +277,7 @@ function Index() {
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {featured.map((p, i) => (
-            <MotionCard
-              key={p.slug}
-              delay={i * 90}
-              className="rounded-xl border border-border bg-card hover:border-primary/40"
-            >
-            <Link
-              to="/projects/$slug"
-              params={{ slug: p.slug }}
-              className="group block p-6"
-            >
-              <div className="text-xs text-muted-foreground">
-                {p.domain} · {p.year}
-              </div>
-              <h3 className="mt-2 text-lg font-semibold group-hover:text-primary transition-colors">
-                {p.title}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">{p.summary}</p>
-            </Link>
-            </MotionCard>
+            <ProjectCard key={p.slug} project={p} delay={i * 90} />
           ))}
         </div>
       </section>

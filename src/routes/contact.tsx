@@ -7,10 +7,12 @@ import cvAsset from "../assets/cv.pdf.asset.json";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Portfolio" },
+      { title: "Contact — Merphy Mademba" },
       { name: "description", content: "Prenez contact pour un projet Python, data analyse ou data engineering." },
-      { property: "og:title", content: "Contact — Portfolio" },
+      { property: "og:title", content: "Contact — Merphy Mademba" },
       { property: "og:description", content: "Prenez contact pour un projet Python, data analyse ou data engineering." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ContactPage,

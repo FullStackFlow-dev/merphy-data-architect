@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { getProject } from "../data/projects";
+import { ProjectActions, ProjectPreview } from "../components/ProjectCard";
 
 export const Route = createFileRoute("/projects/$slug")({
   loader: ({ params }) => {
@@ -10,7 +11,7 @@ export const Route = createFileRoute("/projects/$slug")({
   },
   head: ({ loaderData }) => {
     const p = loaderData?.project;
-    const title = p ? `${p.title} — Projet` : "Projet";
+    const title = p ? `${p.title} — Merphy Mademba` : "Projet — Merphy Mademba";
     const desc = p?.summary ?? "Projet du portfolio.";
     return {
       meta: [
@@ -18,6 +19,8 @@ export const Route = createFileRoute("/projects/$slug")({
         { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
     };
   },
@@ -42,6 +45,8 @@ function ProjectDetail() {
           {project.title}
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">{project.summary}</p>
+        <div className="mt-6"><ProjectActions project={project} /></div>
+        <div className="mt-8 overflow-hidden rounded-lg border border-border"><ProjectPreview project={project} /></div>
         <div className="mt-6 flex flex-wrap gap-1.5">
           {project.tags.map((t: string) => (
             <span

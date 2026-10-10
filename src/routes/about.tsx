@@ -11,8 +11,10 @@ export const Route = createFileRoute("/about")({
     meta: [
       { title: "À propos & CV — Merphy Mademba" },
       { name: "description", content: "Parcours, compétences et expériences." },
-      { property: "og:title", content: "À propos & CV" },
+      { property: "og:title", content: "À propos & CV — Merphy Mademba" },
       { property: "og:description", content: "Parcours, compétences et expériences." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AboutPage,

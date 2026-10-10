@@ -1,3 +1,7 @@
+import pythonPreview from "../assets/project-python.jpg";
+import engineeringPreview from "../assets/project-engineering.jpg";
+import analyticsPreview from "../assets/project-analytics.jpg";
+
 export type Project = {
   slug: string;
   title: string;
@@ -7,11 +11,21 @@ export type Project = {
   year: string;
   content: string;
   embedUrl?: string;
+  /** URLs publiques exactes. Laisser vide si elles ne sont pas disponibles. */
+  githubUrl?: string;
+  demoUrl?: string;
+  /** Remplacer par une capture réelle lorsque disponible. */
+  previewImage: string;
+  previewIsIllustration?: boolean;
 };
 
 export const projects: Project[] = [
   {
     slug: "plateforme-api-python",
+    githubUrl: "",
+    demoUrl: "",
+    previewImage: pythonPreview,
+    previewIsIllustration: true,
     title: "API métier avec FastAPI",
     domain: "Développement Python",
     summary:
@@ -23,6 +37,10 @@ export const projects: Project[] = [
   },
   {
     slug: "pipeline-data-etl",
+    githubUrl: "",
+    demoUrl: "",
+    previewImage: engineeringPreview,
+    previewIsIllustration: true,
     title: "Pipeline ETL analytique",
     domain: "Data Engineer",
     summary:
@@ -34,6 +52,10 @@ export const projects: Project[] = [
   },
   {
     slug: "dashboard-ventes-powerbi",
+    githubUrl: "",
+    demoUrl: "https://playground.powerbi.com/sampleReportEmbed",
+    previewImage: analyticsPreview,
+    previewIsIllustration: true,
     title: "Dashboard de ventes Power BI",
     domain: "Data Analyste",
     summary:
@@ -46,6 +68,10 @@ export const projects: Project[] = [
   },
   {
     slug: "analyse-sentiments-reviews",
+    githubUrl: "",
+    demoUrl: "",
+    previewImage: analyticsPreview,
+    previewIsIllustration: true,
     title: "Analyse de sentiments de reviews",
     domain: "Data Analyste",
     summary:
@@ -57,6 +83,10 @@ export const projects: Project[] = [
   },
   {
     slug: "moteur-recommandation",
+    githubUrl: "",
+    demoUrl: "",
+    previewImage: engineeringPreview,
+    previewIsIllustration: true,
     title: "Moteur de recommandation",
     domain: "Data Engineer",
     summary:
@@ -68,6 +98,10 @@ export const projects: Project[] = [
   },
   {
     slug: "automatisation-etl-python",
+    githubUrl: "",
+    demoUrl: "",
+    previewImage: pythonPreview,
+    previewIsIllustration: true,
     title: "Automatisation ETL en Python",
     domain: "Développement Python",
     summary: "Scripts Python d'extraction, transformation et chargement de données.",

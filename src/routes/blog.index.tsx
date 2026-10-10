@@ -6,10 +6,12 @@ import { MotionCard } from "../components/motion";
 export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
-      { title: "Blog — Portfolio" },
+      { title: "Blog Python & Data — Merphy Mademba" },
       { name: "description", content: "Articles techniques sur le dev, la data et l'IA." },
-      { property: "og:title", content: "Blog — Portfolio" },
+      { property: "og:title", content: "Blog Python & Data — Merphy Mademba" },
       { property: "og:description", content: "Articles dev, data et IA." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: BlogPage,
