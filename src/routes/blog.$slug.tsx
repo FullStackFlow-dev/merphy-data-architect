@@ -10,7 +10,7 @@ export const Route = createFileRoute("/blog/$slug")({
   },
   head: ({ loaderData }) => {
     const p = loaderData?.post;
-    const title = p ? `${p.title} — Blog` : "Article";
+    const title = p ? `${p.title} — Blog Merphy Mademba` : "Article — Merphy Mademba";
     const desc = p?.excerpt ?? "Article du blog.";
     return {
       meta: [
@@ -18,6 +18,8 @@ export const Route = createFileRoute("/blog/$slug")({
         { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
+        { property: "og:type", content: "article" },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
     };
   },

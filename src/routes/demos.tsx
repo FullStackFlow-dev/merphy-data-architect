@@ -6,10 +6,12 @@ import { MotionCard } from "../components/motion";
 export const Route = createFileRoute("/demos")({
   head: () => ({
     meta: [
-      { title: "Démos interactives — Portfolio" },
+      { title: "Démos interactives Python & Data — Merphy Mademba" },
       { name: "description", content: "Testez en direct des démonstrations autour de Python, de la data analyse et du data engineering." },
-      { property: "og:title", content: "Démos interactives" },
+      { property: "og:title", content: "Démos interactives Python & Data — Merphy Mademba" },
       { property: "og:description", content: "Démos interactives Python, data analyse et data engineering." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: DemosPage,

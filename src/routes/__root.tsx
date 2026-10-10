@@ -78,14 +78,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Merphy Mademba — Portfolio Python & Data" },
+      { name: "description", content: "Portfolio de Merphy Mademba : développement Python, analyse de données et data engineering." },
+      { name: "author", content: "Merphy Mademba" },
+      { property: "og:title", content: "Merphy Mademba — Portfolio Python & Data" },
+      { property: "og:description", content: "Projets et parcours de Merphy Mademba en Python et data engineering." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
