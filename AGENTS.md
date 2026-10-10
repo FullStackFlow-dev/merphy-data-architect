@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep project URLs and preview images in the shared project data and render them through ProjectCard/ProjectActions/ProjectPreview so home, listings and details remain consistent; unavailable URLs must never be replaced with invented destinations.
