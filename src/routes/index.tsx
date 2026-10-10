@@ -232,6 +232,17 @@ function Index() {
                           {c.provider}
                           {c.platform ? ` · ${c.platform}` : ""}
                         </span>
+                        {c.verifyUrl ? (
+                          <a
+                            href={c.verifyUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+                          >
+                            <TbBadgeCheck className="h-3.5 w-3.5" />
+                            Vérifier la certification
+                          </a>
+                        ) : null}
                       </span>
                       <StatusBadge status={c.status} />
                     </li>
