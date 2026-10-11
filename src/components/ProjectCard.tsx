@@ -17,23 +17,28 @@ export function ProjectPreview({ project }: { project: Project }) {
 }
 
 export function ProjectActions({ project }: { project: Project }) {
-  const links = [
-    { label: "GitHub", url: project.githubUrl, Icon: Github },
-    { label: "Démo", url: project.demoUrl, Icon: ExternalLink },
-  ];
+  // GitHub : toujours cliquable — dépôt précis si renseigné, sinon profil GitHub.
+  const githubUrl = project.githubUrl || GITHUB_URL;
   return (
     <div className="flex flex-wrap gap-2" aria-label={`Liens — ${project.title}`}>
-      {links.map(({ label, url, Icon }) => url ? (
-        <Button key={label} asChild variant="outline" size="sm">
-          <a href={url} target="_blank" rel="noopener noreferrer" aria-label={`${label} — ${project.title} (nouvel onglet)`}>
-            <Icon aria-hidden="true" />{label}
+      <Button asChild variant="outline" size="sm">
+        <a href={githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`GitHub — ${project.title} (nouvel onglet)`}>
+          <Github aria-hidden="true" />GitHub
+        </a>
+      </Button>
+      {project.demoUrl ? (
+        <Button asChild variant="outline" size="sm">
+          <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Démo — ${project.title} (nouvel onglet)`}>
+            <ExternalLink aria-hidden="true" />Démo
           </a>
         </Button>
       ) : (
-        <Button key={label} variant="outline" size="sm" disabled title={`Lien ${label} à venir`} aria-label={`${label} — ${project.title} : lien à venir`}>
-          <Icon aria-hidden="true" />{label}<span className="text-[10px]">À venir</span>
+        <Button asChild variant="outline" size="sm">
+          <Link to="/projects/$slug" params={{ slug: project.slug }} aria-label={`Démo — ${project.title} : voir la fiche projet`}>
+            <ExternalLink aria-hidden="true" />Démo
+          </Link>
         </Button>
-      ))}
+      )}
     </div>
   );
 }
