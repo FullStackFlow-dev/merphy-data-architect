@@ -248,7 +248,16 @@ function Index() {
                             Vérifier la certification
                           </a>
                           </Button>
-                        ) : null}
+                        ) : (
+                          <span
+                            aria-disabled="true"
+                            title="Lien de vérification bientôt disponible"
+                            className="mt-1.5 inline-flex cursor-not-allowed items-center gap-1.5 py-1 text-xs text-muted-foreground"
+                          >
+                            <TbCertificate className="h-3.5 w-3.5" />
+                            Vérifier la certification · À venir
+                          </span>
+                        )}
                       </span>
                       <StatusBadge status={c.status} />
                     </li>
