@@ -9,8 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as DemosRouteImport } from './routes/demos'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BlogAdminRouteImport } from './routes/blog-admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
@@ -18,6 +20,11 @@ import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemosRoute = DemosRouteImport.update({
   id: '/demos',
   path: '/demos',
@@ -26,6 +33,11 @@ const DemosRoute = DemosRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogAdminRoute = BlogAdminRouteImport.update({
+  id: '/blog-admin',
+  path: '/blog-admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -62,8 +74,10 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog-admin': typeof BlogAdminRoute
   '/contact': typeof ContactRoute
   '/demos': typeof DemosRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -72,8 +86,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog-admin': typeof BlogAdminRoute
   '/contact': typeof ContactRoute
   '/demos': typeof DemosRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -83,8 +99,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog-admin': typeof BlogAdminRoute
   '/contact': typeof ContactRoute
   '/demos': typeof DemosRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -95,8 +113,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/blog-admin'
     | '/contact'
     | '/demos'
+    | '/reset-password'
     | '/blog/$slug'
     | '/projects/$slug'
     | '/blog/'
@@ -105,8 +125,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/blog-admin'
     | '/contact'
     | '/demos'
+    | '/reset-password'
     | '/blog/$slug'
     | '/projects/$slug'
     | '/blog'
@@ -115,8 +137,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/blog-admin'
     | '/contact'
     | '/demos'
+    | '/reset-password'
     | '/blog/$slug'
     | '/projects/$slug'
     | '/blog/'
@@ -126,8 +150,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  BlogAdminRoute: typeof BlogAdminRoute
   ContactRoute: typeof ContactRoute
   DemosRoute: typeof DemosRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -136,6 +162,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demos': {
       id: '/demos'
       path: '/demos'
@@ -148,6 +181,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog-admin': {
+      id: '/blog-admin'
+      path: '/blog-admin'
+      fullPath: '/blog-admin'
+      preLoaderRoute: typeof BlogAdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -198,8 +238,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  BlogAdminRoute: BlogAdminRoute,
   ContactRoute: ContactRoute,
   DemosRoute: DemosRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   BlogSlugRoute: BlogSlugRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
   BlogIndexRoute: BlogIndexRoute,

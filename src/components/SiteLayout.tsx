@@ -24,7 +24,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
         <div className="mx-auto max-w-6xl px-6 h-16 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 md:flex md:justify-between">
           <Link to="/" className="font-semibold tracking-tight text-lg truncate">
-            <span className="text-primary">◆</span> Merphy Mademba
+            Merphy Mademba
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             {nav.map((n) => (
