@@ -9,28 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as DemosRouteImport } from './routes/demos'
-import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BlogAdminRouteImport } from './routes/blog-admin'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemosRoute = DemosRouteImport.update({
@@ -38,14 +30,24 @@ const DemosRoute = DemosRouteImport.update({
   path: '/demos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
+const BlogAdminRoute = BlogAdminRouteImport.update({
+  id: '/blog-admin',
+  path: '/blog-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
@@ -53,17 +55,29 @@ const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
   path: '/projects/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
   id: '/projects/$slug',
   path: '/projects/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog-admin': typeof BlogAdminRoute
   '/contact': typeof ContactRoute
   '/demos': typeof DemosRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -72,8 +86,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog-admin': typeof BlogAdminRoute
   '/contact': typeof ContactRoute
   '/demos': typeof DemosRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -83,8 +99,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog-admin': typeof BlogAdminRoute
   '/contact': typeof ContactRoute
   '/demos': typeof DemosRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -95,8 +113,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/blog-admin'
     | '/contact'
     | '/demos'
+    | '/reset-password'
     | '/blog/$slug'
     | '/projects/$slug'
     | '/blog/'
@@ -105,8 +125,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/blog-admin'
     | '/contact'
     | '/demos'
+    | '/reset-password'
     | '/blog/$slug'
     | '/projects/$slug'
     | '/blog'
@@ -115,8 +137,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/blog-admin'
     | '/contact'
     | '/demos'
+    | '/reset-password'
     | '/blog/$slug'
     | '/projects/$slug'
     | '/blog/'
@@ -126,8 +150,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  BlogAdminRoute: typeof BlogAdminRoute
   ContactRoute: typeof ContactRoute
   DemosRoute: typeof DemosRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -136,25 +162,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demos': {
@@ -164,18 +176,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemosRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
+    '/blog-admin': {
+      id: '/blog-admin'
+      path: '/blog-admin'
+      fullPath: '/blog-admin'
+      preLoaderRoute: typeof BlogAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects/': {
@@ -185,11 +211,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects/$slug': {
       id: '/projects/$slug'
       path: '/projects/$slug'
       fullPath: '/projects/$slug'
       preLoaderRoute: typeof ProjectsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -198,8 +238,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  BlogAdminRoute: BlogAdminRoute,
   ContactRoute: ContactRoute,
   DemosRoute: DemosRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   BlogSlugRoute: BlogSlugRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
