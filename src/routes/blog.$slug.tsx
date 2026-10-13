@@ -1,11 +1,14 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { getPost } from "../data/posts";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { blogQuery } from "../lib/blog";
+import { ArticleContent } from "../components/ArticleContent";
 
 export const Route = createFileRoute("/blog/$slug")({
-  loader: ({ params }) => {
-    const post = getPost(params.slug);
-    if (!post) throw notFound();
+  loader: async ({ params, context }) => {
+    const all = await context.queryClient.ensureQueryData(blogQuery);
+    const post = all.find(p => p.slug === params.slug) ?? getPost(params.slug);
     return { post };
   },
   head: ({ loaderData }) => {
@@ -27,7 +30,10 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function PostDetail() {
-  const { post } = Route.useLoaderData();
+  const { data: posts } = useSuspenseQuery(blogQuery);
+  const { slug } = Route.useParams();
+  const post = posts.find(p => p.slug === slug);
+  if (!post) return <SiteLayout><section className="mx-auto max-w-3xl px-6 py-20"><h1 className="text-3xl font-semibold">Article introuvable</h1><Link to="/blog" className="mt-6 inline-block text-primary">Retour au blog</Link></section></SiteLayout>;
   return (
     <SiteLayout>
       <article className="mx-auto max-w-3xl px-6 pt-20 pb-24">
@@ -43,9 +49,8 @@ function PostDetail() {
         </div>
         <h1 className="mt-2 text-4xl font-semibold tracking-tight">{post.title}</h1>
         <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>
-        <div className="mt-10 prose prose-neutral dark:prose-invert max-w-none">
-          <p>{post.content}</p>
-          <p>Contenu détaillé — provisoire, à remplacer par le vrai article.</p>
+        <div className="mt-10">
+          <ArticleContent content={post.content} />
         </div>
       </article>
     </SiteLayout>

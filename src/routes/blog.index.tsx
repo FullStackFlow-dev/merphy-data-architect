@@ -1,9 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
-import { posts } from "../data/posts";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { blogQuery } from "../lib/blog";
+import { Button } from "../components/ui/button";
+import { PenLine } from "lucide-react";
 import { MotionCard } from "../components/motion";
 
 export const Route = createFileRoute("/blog/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(blogQuery),
   head: () => ({
     meta: [
       { title: "Blog Python & Data — Merphy Mademba" },
@@ -18,6 +22,7 @@ export const Route = createFileRoute("/blog/")({
 });
 
 function BlogPage() {
+  const { data: posts } = useSuspenseQuery(blogQuery);
   return (
     <SiteLayout>
       <section className="mx-auto max-w-3xl px-6 pt-20 pb-10">
@@ -30,6 +35,7 @@ function BlogPage() {
         <p className="mt-4 text-muted-foreground">
           Notes techniques sur le développement Python, l'analyse de données et le data engineering.
         </p>
+        <Button asChild variant="outline" className="mt-6"><Link to="/blog-admin"><PenLine /> Espace auteur</Link></Button>
       </section>
       <section className="mx-auto max-w-3xl px-6 pb-20 space-y-5">
         {posts.map((post, i) => (
