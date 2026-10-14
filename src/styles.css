@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "highlight.js/styles/atom-one-dark.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -243,6 +244,23 @@
 .cert-item:hover {
   border-color: color-mix(in oklab, var(--primary) 34%, var(--border));
   background-color: color-mix(in oklab, var(--primary) 6%, transparent);
+}
+
+/* Blocs de code des articles : surface sombre type éditeur, thème highlight.js */
+.code-block {
+  background: color-mix(in oklab, var(--primary) 7%, var(--card));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.code-block pre,
+.code-block .hljs {
+  background: transparent;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.code-block .hljs {
+  color: inherit;
 }
 
 @media (prefers-reduced-motion: reduce) {
