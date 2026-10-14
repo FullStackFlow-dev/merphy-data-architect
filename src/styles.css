@@ -246,6 +246,23 @@
   background-color: color-mix(in oklab, var(--primary) 6%, transparent);
 }
 
+/* Blocs de code des articles : surface sombre type éditeur, thème highlight.js */
+.code-block {
+  background: color-mix(in oklab, var(--primary) 7%, var(--card));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.code-block pre,
+.code-block .hljs {
+  background: transparent;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.code-block .hljs {
+  color: inherit;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
