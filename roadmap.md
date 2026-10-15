@@ -1,4 +1,5 @@
 # Mise à jour du portfolio
+- [ ] Enrichir la rédaction : mise en forme, tableaux modifiables et graphiques, puis vérifier le rendu publié.
 - [x] Retirer l’icône à côté du nom.
 - [ ] Ajouter un espace privé de rédaction, brouillons et publication du blog.
 - [ ] Vérifier publication, lecture publique et protection des brouillons.
