@@ -3,17 +3,26 @@ import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
 import { all } from 'lowlight';
 import { autoFenceCode } from '@/lib/code-detect';
+import { parseChart } from '@/lib/article-tools';
+import { ArticleChart } from '@/components/ArticleChart';
+import { Children, isValidElement } from 'react';
 
 const components: Components = {
-  pre: ({ children }) => (
-    <div className="code-block my-5 overflow-hidden rounded-lg border border-border">
-      <pre className="overflow-x-auto p-4 text-sm leading-6">{children}</pre>
-    </div>
-  ),
+  pre: ({ children }) => {
+    const child = Children.toArray(children)[0];
+    if (isValidElement<{ className?: string; children?: unknown }>(child) && child.props.className?.includes('language-chart')) {
+      const chart = parseChart(String(child.props.children ?? ''));
+      if (chart) return <ArticleChart chart={chart} />;
+      return <p role="alert" className="my-5 text-destructive">Données du graphique invalides.</p>;
+    }
+    return <div className="code-block my-5 overflow-hidden rounded-lg border border-border"><pre className="overflow-x-auto p-4 text-sm leading-6">{children}</pre></div>;
+  },
+  table: ({ children }) => <div className="my-5 overflow-x-auto"><table>{children}</table></div>,
+  img: ({ src, alt }) => <img src={src} alt={alt ?? ''} loading="lazy" className="my-5 max-h-[600px] max-w-full rounded-md object-contain" />,
 };
 
 // All highlight.js languages; unlabeled blocks are auto-detected.
-const highlight: [typeof rehypeHighlight, Parameters<typeof rehypeHighlight>[0]] = [rehypeHighlight, { languages: all, detect: true }];
+const highlight: [typeof rehypeHighlight, Parameters<typeof rehypeHighlight>[0]] = [rehypeHighlight, { languages: all, detect: true, plainText: ['chart'] }];
 
 export function ArticleContent({ content }: { content: string }) {
   return (
