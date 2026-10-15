@@ -13,3 +13,4 @@
 - Blog publication uses Cloud tables protected by author roles and RLS; never grant publication access through self-registration or client metadata, because only approved authors may publish.
 - Public blog reads refresh through a browser Data API after static SSR fallback, so published articles remain accessible on static hosting without server RPCs.
 - Article bodies render as Markdown with raw HTML disabled, so user-authored content cannot execute scripts.
+- Blog editing tools generate Markdown and validated fenced chart JSON; shared ArticleContent renders tables and Recharts visualizations identically in previews and published articles without changing article storage.
