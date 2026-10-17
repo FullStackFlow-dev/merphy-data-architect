@@ -1,4 +1,5 @@
 # Mise à jour du portfolio
+- [ ] Ajouter une aide SEO AI Gateway pour les différents brouillons, réservée aux auteurs, puis vérifier génération et application.
 - [x] Enrichir la rédaction : mise en forme, tableaux modifiables et graphiques, puis vérifier le rendu publié.
 - [x] Retirer l’icône à côté du nom.
 - [x] Ajouter un espace privé de rédaction, brouillons et publication du blog.
