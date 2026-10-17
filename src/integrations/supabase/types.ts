@@ -56,6 +56,27 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_seo_ai_state: {
+        Row: {
+          key: string
+          message: string
+          status: number
+          updated_at: string
+        }
+        Insert: {
+          key: string
+          message: string
+          status: number
+          updated_at?: string
+        }
+        Update: {
+          key?: string
+          message?: string
+          status?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
