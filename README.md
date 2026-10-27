@@ -1,4 +1,4 @@
-# Merphy | Portfolio
+# Merphy - Mademba | Portfolio
 
 ### Ingénieur Data & Database · Développeur Full-Stack Python · Analyste Python & Power BI · IA
 
