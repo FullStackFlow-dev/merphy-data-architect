@@ -22,6 +22,6 @@ describe('SEO Gateway safety', () => {
   it('returns a validated suggestion from structured model output', async () => {
     mocks.generate.mockResolvedValue({ status: 'completed', output: [{ type: 'message', content: [{ type: 'output_text', text: JSON.stringify({ title: ' Pipeline Python ', description: 'Construire un pipeline ETL.' }) }] }] });
     expect(await generateSeo('Un pipeline Python', new Request('http://localhost'))).toEqual({ suggestion: { title: 'Pipeline Python', description: 'Construire un pipeline ETL.' } });
-    expect(mocks.generate).toHaveBeenCalledWith(expect.objectContaining({ model: 'openai/gpt-6-astra', store: false }), expect.objectContaining({ signal: expect.any(AbortSignal) }));
+    expect(mocks.generate).toHaveBeenCalledWith(expect.objectContaining({ model: 'openai/gpt-6-astra' }), expect.objectContaining({ signal: expect.any(AbortSignal) }));
   });
 });
