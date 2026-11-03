@@ -95,6 +95,9 @@ function Index() {
             Data &amp;{" "}
             <span className="text-primary whitespace-nowrap">Database Engineer</span>
           </h1>
+          <p className="mt-4 text-sm tracking-wide text-muted-foreground">
+            Python • SQL • PostgreSQL • Airflow • Power BI
+          </p>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
             Je conçois des pipelines de données fiables, j'administre des bases
             PostgreSQL et je développe des back-ends Python — avec des analyses
