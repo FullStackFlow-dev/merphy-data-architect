@@ -1,5 +1,5 @@
 # Mise à jour du portfolio
-- [ ] Vérifier la génération SEO et son enregistrement avec le compte auteur — bloqué par la base Lovable Cloud en pause ; connexion SDK et tests locaux terminés.
+- [ ] Vérifier la génération SEO et son enregistrement avec le compte auteur — réactivation Lovable Cloud demandée, démarrage encore en cours ; connexion SDK et six tests locaux terminés.
 - [x] Enrichir la rédaction : mise en forme, tableaux modifiables et graphiques, puis vérifier le rendu publié.
 - [x] Retirer l’icône à côté du nom.
 - [x] Ajouter un espace privé de rédaction, brouillons et publication du blog.
