@@ -10,9 +10,9 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "À propos & CV — Merphy Mademba" },
-      { name: "description", content: "Parcours, compétences et expériences." },
+      { name: "description", content: "Parcours, compétences et expériences — Data & Database Engineer (Python, SQL, PostgreSQL, Airflow, Power BI)." },
       { property: "og:title", content: "À propos & CV — Merphy Mademba" },
-      { property: "og:description", content: "Parcours, compétences et expériences." },
+      { property: "og:description", content: "Parcours, compétences et expériences — Data & Database Engineer." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -83,12 +83,15 @@ function AboutPage() {
           Merphy Mademba
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Développeur Python, Data Analyste & Data Engineer
+          Data &amp; Database Engineer
+        </p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Python • SQL • PostgreSQL • Airflow • Power BI
         </p>
         <p className="mt-6 text-lg text-muted-foreground">
-          Je conçois des applications et scripts Python, j'analyse des données
-          avec Power BI, Excel et des méthodes statistiques, et je construis des
-          pipelines de données fiables pour préparer et valoriser l'information.
+          Je conçois des pipelines de données fiables, j'administre des bases
+          PostgreSQL et je développe des back-ends Python — avec des analyses
+          Power BI prêtes pour la décision.
         </p>
         <a
           href={cvAsset.url}

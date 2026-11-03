@@ -18,18 +18,18 @@ import { Button } from "../components/ui/button";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Merphy Mademba — Développeur Python, Data Analyste & Data Engineer" },
+      { title: "Merphy Mademba — Data & Database Engineer | Python • SQL • PostgreSQL • Airflow • Power BI" },
       {
         name: "description",
         content:
-          "Portfolio de Merphy Mademba : développeur Python, data analyste (Power BI, Excel, Python, statistiques) et data engineer.",
+          "Portfolio de Merphy Mademba : Data & Database Engineer — Python, SQL, PostgreSQL, Airflow, Power BI. Pipelines de données & backend.",
       },
-      { property: "og:title", content: "Merphy Mademba — Python, Data & Engineering" },
+      { property: "og:title", content: "Merphy Mademba — Data & Database Engineer" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
-        content: "Projets, démos, articles et parcours autour de Python, l'analyse de données et le data engineering.",
+        content: "Pipelines de données & backend — Python, SQL, PostgreSQL, Airflow, Power BI.",
       },
     ],
   }),
@@ -92,16 +92,19 @@ function Index() {
             Merphy Mademba
           </p>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight max-w-4xl [text-wrap:balance]">
-            Développeur Python &amp;{" "}
-            <span className="text-primary whitespace-nowrap">Data Engineer</span>
+            Data &amp;{" "}
+            <span className="text-primary whitespace-nowrap">Database Engineer</span>
           </h1>
+          <p className="mt-4 text-sm tracking-wide text-muted-foreground">
+            Python • SQL • PostgreSQL • Airflow • Power BI
+          </p>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
-            Je conçois des applications Python, j'analyse des données avec Power
-            BI, Excel et des statistiques, et je bâtis des pipelines de données
-            fiables pour transformer la donnée brute en décision.
+            Je conçois des pipelines de données fiables, j'administre des bases
+            PostgreSQL et je développe des back-ends Python — avec des analyses
+            Power BI prêtes pour la décision.
           </p>
           <p className="mt-3 text-xs uppercase tracking-wider text-primary/80">
-            Pipelines ETL, ELT conçus · Visualisations BI · Modèles IA locaux
+            Pipelines de données &amp; Backend
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
@@ -137,7 +140,7 @@ function Index() {
           <MotionCard className="mx-auto w-56 md:w-full max-w-sm lg:max-w-md rounded-2xl border border-border bg-card overflow-hidden">
             <img
               src={profileAsset.url}
-              alt="Photo de profil — développeur Python, data analyste et data engineer"
+              alt="Photo de profil — Data & Database Engineer"
               className="w-full h-full object-cover aspect-square"
               loading="eager"
             />

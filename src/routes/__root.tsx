@@ -78,11 +78,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Merphy Mademba — Portfolio Python & Data" },
-      { name: "description", content: "Portfolio de Merphy Mademba : développement Python, analyse de données et data engineering." },
+      { title: "Merphy Mademba — Data & Database Engineer" },
+      { name: "description", content: "Portfolio de Merphy Mademba : Data & Database Engineer — Python, SQL, PostgreSQL, Airflow, Power BI. Pipelines de données & backend." },
+
       { name: "author", content: "Merphy Mademba" },
-      { property: "og:title", content: "Merphy Mademba — Portfolio Python & Data" },
-      { property: "og:description", content: "Projets et parcours de Merphy Mademba en Python et data engineering." },
+      { property: "og:title", content: "Merphy Mademba — Data & Database Engineer" },
+      { property: "og:description", content: "Pipelines de données & backend — Python, SQL, PostgreSQL, Airflow, Power BI." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
