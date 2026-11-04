@@ -32,7 +32,9 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
     // Static prerendering (GitHub Pages only) so the site can be served by a static host.
-    prerender: { enabled: staticExport, crawlLinks: false },
+    // maxRedirects > 0: the SSR server redirects "/route" <-> "/route/" during prerender,
+    // so every non-root page needs at least one redirect hop to render.
+    prerender: { enabled: staticExport, crawlLinks: false, maxRedirects: 2 },
     pages: staticExport
       ? [
           "/",
