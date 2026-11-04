@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download } from "lucide-react";
 import { SiteLayout, LINKEDIN_URL, EMAIL } from "../components/SiteLayout";
-import cvPdf from "../assets/project-analytics.jpg";
+import cvPdf from "../assets/cv.pdf";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({

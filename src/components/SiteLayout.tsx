@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { Menu, X, Download } from "lucide-react";
-import cvPdf from "../assets/project-analytics.jpg";
+import cvPdf from "../assets/cv.pdf";
 
 const nav = [
   { to: "/", label: "Accueil" },
