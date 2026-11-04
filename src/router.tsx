@@ -10,6 +10,9 @@ export const getRouter = () => {
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
+    // Keep trailing slashes as-is: the static prerenderer requests "/route/"
+    // and any 307 to "/route" breaks static export (redirects are not followed).
+    trailingSlash: "preserve",
   });
 
   return router;

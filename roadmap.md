@@ -9,4 +9,5 @@
 - [x] Ajouter les accès GitHub et démo à chaque projet, sans inventer d’adresses.
 - [x] Ajouter des aperçus illustrés aux cartes et fiches des projets.
 - [x] Vérifier la navigation, les aperçus et les états des liens.
+- [x] Corriger la photo de profil et le CV pour l'hébergement externe (Vercel/GitHub Pages) — fichiers intégrés au projet.
 - [ ] Connecter les URLs restantes — en attente des liens officiels de certifications et des dépôts/démos fournis par Merphy.

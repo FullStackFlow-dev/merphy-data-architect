@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download } from "lucide-react";
 import { SiteLayout, LINKEDIN_URL, EMAIL } from "../components/SiteLayout";
-import cvAsset from "../assets/cv.pdf.asset.json";
+import cvPdf from "../assets/cv.pdf";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -72,7 +72,7 @@ function ContactPage() {
             <div className="mt-1 font-medium">/in/merph-dev</div>
           </a>
           <a
-            href={cvAsset.url}
+            href={cvPdf}
             download="CV-Merphy.pdf"
             className="rounded-lg border border-border bg-card p-4 hover:border-primary/40"
           >

@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { MotionCard } from "../components/motion";
-import profileAsset from "../assets/profile.png.asset.json";
-import cvAsset from "../assets/cv.pdf.asset.json";
+import profileImg from "../assets/profile.jpg";
+import cvPdf from "../assets/cv.pdf";
 import { Download } from "lucide-react";
 
 
@@ -94,7 +94,7 @@ function AboutPage() {
           Power BI prêtes pour la décision.
         </p>
         <a
-          href={cvAsset.url}
+          href={cvPdf}
           download="CV-Merphy.pdf"
           className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
         >
@@ -104,7 +104,7 @@ function AboutPage() {
 
         <MotionCard className="w-40 sm:w-64 md:w-72 shrink-0 rounded-2xl border border-border bg-card overflow-hidden">
           <img
-            src={profileAsset.url}
+            src={profileImg}
             alt="Portrait de l'auteur du portfolio"
             className="w-full aspect-square object-cover"
           />

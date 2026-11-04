@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { Menu, X, Download } from "lucide-react";
-import cvAsset from "../assets/cv.pdf.asset.json";
+import cvPdf from "../assets/cv.pdf";
 
 const nav = [
   { to: "/", label: "Accueil" },
@@ -41,7 +41,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           </nav>
           <div className="hidden md:flex items-center gap-3">
             <a
-              href={cvAsset.url}
+              href={cvPdf}
               download="CV-Merphy.pdf"
               className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm font-medium hover:bg-accent"
             >
@@ -83,7 +83,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                 </Link>
               ))}
               <a
-                href={cvAsset.url}
+                href={cvPdf}
                 download="CV-Merphy.pdf"
                 onClick={() => setOpen(false)}
                 className="mt-2 inline-flex items-center justify-center gap-2 rounded-md border border-border px-4 py-2.5 font-medium hover:bg-accent"
