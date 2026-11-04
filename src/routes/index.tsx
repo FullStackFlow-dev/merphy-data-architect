@@ -4,8 +4,8 @@ import { projects } from "../data/projects";
 import { MotionCard, Reveal } from "../components/motion";
 import { certGroups, type CertStatus } from "../data/certifications";
 import { TbDatabase, TbCode, TbChartBar, TbCheck, TbClock, TbCertificate } from "react-icons/tb";
-import profileAsset from "../assets/profile.png.asset.json";
-import cvAsset from "../assets/cv.pdf.asset.json";
+import profileImg from "../assets/profile.jpg";
+import cvPdf from "../assets/cv.pdf";
 import { Download } from "lucide-react";
 import { FaLinkedin } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
@@ -120,7 +120,7 @@ function Index() {
               Essayer les démos IA
             </Link>
             <a
-              href={cvAsset.url}
+              href={cvPdf}
               download="CV-Merphy.pdf"
               className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-medium hover:bg-accent"
             >
@@ -139,7 +139,7 @@ function Index() {
           </div>
           <MotionCard className="mx-auto w-56 md:w-full max-w-sm lg:max-w-md rounded-2xl border border-border bg-card overflow-hidden">
             <img
-              src={profileAsset.url}
+              src={profileImg}
               alt="Photo de profil — Data & Database Engineer"
               className="w-full h-full object-cover aspect-square"
               loading="eager"
