@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { MotionCard } from "../components/motion";
-import profileImg from "../assets/profile.jpg";
-import cvPdf from "../assets/cv.pdf";
+import profileImg from "../assets/project-analytics.jpg";
+import cvPdf from "../assets/project-analytics.jpg";
 import { Download } from "lucide-react";
 
 
