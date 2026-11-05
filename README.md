@@ -1,43 +1,7 @@
 # Merphy - Mademba | Portfolio
 
 <div align="center">
-
-<svg width="100%" height="70" viewBox="0 0 750 70" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <!-- Dégradé de couleur fluide et moderne -->
-    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#38BDF8">
-        <animate attributeName="stop-color" values="#38BDF8;#818CF8;#C084FC;#38BDF8" dur="6s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="50%" stop-color="#818CF8">
-        <animate attributeName="stop-color" values="#818CF8;#C084FC;#38BDF8;#818CF8" dur="6s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="100%" stop-color="#C084FC">
-        <animate attributeName="stop-color" values="#C084FC;#38BDF8;#818CF8;#C084FC" dur="6s" repeatCount="indefinite"/>
-      </stop>
-    </linearGradient>
-    
-    <!-- Ombre portée lumineuse -->
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
-  </defs>
-
-  <!-- Texte centré avec animation subtile de pulsation -->
-  <text x="50%" y="45" 
-        text-anchor="middle" 
-        fill="url(#textGradient)" 
-        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
-        font-size="16.5" 
-        font-weight="700" 
-        letter-spacing="0.5"
-        filter="url(#glow)">
-    Ingénieur Data &amp; Database &bull; Développeur Full-Stack Python &bull; Analyste Python &amp; Power BI &bull; IA
-    <animate attributeName="opacity" values="0.9;1;0.9" dur="3s" repeatCount="indefinite"/>
-  </text>
-</svg>
-
+  <img src="./assets/banner.svg" alt="Ingénieur Data & Database · Développeur Full-Stack Python · Analyste Python & Power BI · IA" width="100%" />
 </div>
 
 ### Ingénieur Data & Database · Développeur Full-Stack Python · Analyste Python & Power BI · IA
@@ -50,7 +14,7 @@
 ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=white)
 
-**Site en ligne :** [merphy-data-architect.vercel.app]
+**Site en ligne :** [merphy-data-architect.vercel.app](https://merphy-data-architect.vercel.app)
 
 ---
 
