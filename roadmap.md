@@ -1,4 +1,6 @@
 # Mise à jour du portfolio
+- [ ] Animer le titre SVG comme une saisie au clavier et vérifier les tailles d’écran.
+- [ ] Ajouter le certificat Johns Hopkins, le lien officiel et le PDF dans le portfolio et les documents.
 - [x] Traduire le titre et l’afficher en SVG intégré avec texte HTML accessible.
 - [x] Enrichir les compétences, l’expérience et les projets à partir du README fourni, puis vérifier sur ordinateur et mobile.
 - [ ] Vérifier la génération SEO et son enregistrement avec le compte auteur — réactivation Lovable Cloud demandée, démarrage encore en cours ; connexion SDK et six tests locaux terminés.

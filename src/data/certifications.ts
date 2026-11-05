@@ -1,6 +1,8 @@
+import analysisCertificate from "../assets/certificat-gestion-analyse-donnees.pdf";
+
 export type CertStatus = "certifie" | "en-cours";
 
-export type CertProvider = "IBM" | "Meta" | "Microsoft" | "DataCamp";
+export type CertProvider = "IBM" | "Meta" | "Microsoft" | "DataCamp" | "Johns Hopkins University";
 
 export type Certification = {
   name: string;
@@ -15,6 +17,8 @@ export type Certification = {
    * n'est pas disponible — le bouton est alors masqué.
    */
   verifyUrl?: string;
+  documentUrl?: string;
+  issuedOn?: string;
 };
 
 export type CertGroup = {
@@ -89,6 +93,15 @@ export const certGroups: CertGroup[] = [
     desc: "Analyse descriptive, modélisation et restitution décisionnelle.",
     icon: "chart",
     items: [
+      {
+        name: "Gestion de l’analyse des données",
+        provider: "Johns Hopkins University",
+        platform: "Coursera",
+        status: "certifie",
+        issuedOn: "25 septembre 2026",
+        verifyUrl: "https://coursera.org/verify/H6O4G54P7Z43",
+        documentUrl: analysisCertificate,
+      },
       {
         name: "Microsoft Power BI Data Analyst",
         provider: "Microsoft",
