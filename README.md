@@ -44,13 +44,13 @@
 
 > Je conçois des pipelines de données et des applications fiables, documentés et prêts pour la production, du stockage jusqu'à l'interface.
 
-[![Portfolio](https://img.shields.io/badge/portfolio-merph--dev.vercel.app-000000?logo=vercel&logoColor=white)](https://merphy-data-architect.vercel.app)
+[![Portfolio](https://img.shields.io/badge/portfolio-merphy--data--architect.vercel.app-000000?logo=vercel&logoColor=white)](https://merphy-data-architect.vercel.app)
 ![TanStack Start](https://img.shields.io/badge/TanStack%20Start-FF4154)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=white)
 
-**Site en ligne :** [merphy-data-architect.vercel.app](https://merphy-data-architect.vercel.app)
+**Site en ligne :** [merphy-data-architect.vercel.app]
 
 ---
 
