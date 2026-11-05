@@ -120,7 +120,7 @@ Ce dépôt contient le code source de mon portfolio personnel.
 | **Serveur MCP + base de connaissances locale** | Serveur Python adossé à SQLite, utilisable avec un assistant IA | Python, SQLite, MCP |
 | **python-email-manager** | API Flask structurée, avec suite de tests et intégration continue | Python, Flask, pytest, GitHub Actions |
 
-> Les détails et liens vers les dépôts sont disponibles sur [mon portfolio](https://merph-dev.vercel.app) et sur mon profil GitHub.
+> Les détails et liens vers les dépôts sont disponibles sur [mon portfolio](https://merphy-data-architect.vercel.app) et sur mon profil GitHub.
 
 ---
 
@@ -143,7 +143,7 @@ Ce dépôt contient le code source de mon portfolio personnel.
 | **Data & bases de données** | PostgreSQL, Snowflake, Apache Airflow, Docker, ETL/ELT, modélisation Bronze/Silver/Gold |
 | **Back-end** | Python, Flask, APIs REST, pytest |
 | **Front-end** | TypeScript, React, TanStack Start, Tailwind CSS |
-| **Data Science & IA** | Pandas, NumPy, Scikit-learn, Statsmodels, Ollama, OpenRouter, MCP |
+| **Data Engineer & IA** | Pandas, NumPy, Scikit-learn, Statsmodels, Ollama, OpenRouter, MCP |
 | **DevOps & outillage** | Git, GitHub Actions, Docker Desktop, WSL, VS Code, Vercel |
 
 ---
@@ -198,13 +198,13 @@ L'application est alors disponible en local (l'adresse exacte s'affiche dans le 
 
 ## Déploiement
 
-Le portfolio est déployé sur **Vercel** : [merph-dev.vercel.app](https://merph-dev.vercel.app).
+Le portfolio est déployé sur **Vercel** : [merph-data-architect.vercel.app](https://merphy-data-architect.vercel.app).
 
 ---
 
 ## Contact
 
-- **Portfolio :** [merph-dev.vercel.app](https://merph-dev.vercel.app)
+- **Portfolio :** [merphy-data-architect.vercel.app](https://merphy-data-architect.vercel.app)
 - **GitHub :** [FullStackFlow-dev](https://github.com/FullStackFlow-dev)
 - **Localisation :** Dakar, Sénégal
 - **Disponibilité :** ouvert aux opportunités en ingénierie de données, bases de données et développement Full-Stack
