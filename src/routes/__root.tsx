@@ -78,11 +78,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Merphy Mademba — Data & Database Engineer" },
-      { name: "description", content: "Portfolio de Merphy Mademba : Data & Database Engineer — Python, SQL, PostgreSQL, Airflow, Power BI. Pipelines de données & backend." },
+      { title: "Merphy Mademba — Ingénieur de données et de bases de données" },
+      { name: "description", content: "Portfolio de Merphy Mademba : ingénieur de données et de bases de données — Python, SQL, PostgreSQL, Airflow, Power BI. Pipelines de données & backend." },
 
       { name: "author", content: "Merphy Mademba" },
-      { property: "og:title", content: "Merphy Mademba — Data & Database Engineer" },
+      { property: "og:title", content: "Merphy Mademba — Ingénieur de données et de bases de données" },
       { property: "og:description", content: "Pipelines de données & backend — Python, SQL, PostgreSQL, Airflow, Power BI." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -103,7 +103,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <HeadContent />
       </head>

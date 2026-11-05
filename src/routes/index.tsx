@@ -13,18 +13,19 @@ import { TechIcon } from "../components/TechIcon";
 import { LINKEDIN_URL, GITHUB_URL } from "../components/SiteLayout";
 import { ProjectCard } from "../components/ProjectCard";
 import { Button } from "../components/ui/button";
+import { ProfileTitle } from "../components/ProfileTitle";
 
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Merphy Mademba — Data & Database Engineer | Python • SQL • PostgreSQL • Airflow • Power BI" },
+      { title: "Merphy Mademba — Ingénieur de données et de bases de données" },
       {
         name: "description",
         content:
-          "Portfolio de Merphy Mademba : Data & Database Engineer — Python, SQL, PostgreSQL, Airflow, Power BI. Pipelines de données & backend.",
+          "Portfolio de Merphy Mademba : ingénieur de données et de bases de données. Python, SQL, PostgreSQL, Airflow, Power BI ; pipelines Bronze/Silver/Gold et backend.",
       },
-      { property: "og:title", content: "Merphy Mademba — Data & Database Engineer" },
+      { property: "og:title", content: "Merphy Mademba — Ingénieur de données et de bases de données" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       {
@@ -38,21 +39,21 @@ export const Route = createFileRoute("/")({
 
 const domains = [
   {
-    title: "Data Engineer / Architecture",
+    title: "Ingénierie de données / Architecture",
     tag: "Engineering",
     desc: "Construction de pipelines de données fiables : ingestion, transformation, modélisation (Silver/Gold) et préparation à la décision.",
-    skills: ["PostgreSQL", "NiFi", "Spark", "Docker", "Airflow", "dbt", "SQL", "Snowflake"],
+    skills: ["PostgreSQL", "NiFi", "Spark", "Docker", "Airflow", "dbt", "SQL", "Snowflake", "Kafka", "Databricks"],
   },
   {
     title: "Développeur Python & APIs",
     tag: "Python",
     desc: "Applications, scripts et APIs robustes : automatisation, back-ends, web scraping et outils métiers performants.",
-    skills: ["Python", "FastAPI", "Django", "SQL", "Git", "Web scraping"],
+    skills: ["Python", "FastAPI", "Django", "Flask", "SQL", "Git", "Web scraping"],
   },
   {
     title: "Data Analytics & BI",
     tag: "Data",
-    desc: "Exploration, visualisation et analyse de données : modélisation décisionnelle et création de dashboards impactants.",
+    desc: "Exploration et nettoyage avec Pandas et NumPy, modélisation décisionnelle et tableaux de bord Power BI pour produire des indicateurs métier fiables.",
     skills: ["Power BI", "Cubes OLAP/ROLAP", "SQL", "Pandas", "Statistiques", "Excel"],
   },
 ];
@@ -91,17 +92,14 @@ function Index() {
           <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
             Merphy Mademba
           </p>
-          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight max-w-4xl [text-wrap:balance]">
-            Data &amp;{" "}
-            <span className="text-primary whitespace-nowrap">Database Engineer</span>
-          </h1>
+          <ProfileTitle />
           <p className="mt-4 text-sm tracking-wide text-muted-foreground">
             Python • SQL • PostgreSQL • Airflow • Power BI
           </p>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
-            Je conçois des pipelines de données fiables, j'administre des bases
-            PostgreSQL et je développe des back-ends Python — avec des analyses
-            Power BI prêtes pour la décision.
+            Je modélise, optimise et sécurise les bases de données, puis conçois
+            des pipelines Bronze / Silver / Gold robustes, des back-ends Python
+            et des analyses Power BI prêtes pour la décision.
           </p>
           <p className="mt-3 text-xs uppercase tracking-wider text-primary/80">
             Pipelines de données &amp; Backend
@@ -140,7 +138,7 @@ function Index() {
           <MotionCard className="mx-auto w-56 md:w-full max-w-sm lg:max-w-md rounded-2xl border border-border bg-card overflow-hidden">
             <img
               src={profileImg}
-              alt="Photo de profil — Data & Database Engineer"
+              alt="Merphy Mademba — ingénieur de données et de bases de données"
               className="w-full h-full object-cover aspect-square"
               loading="eager"
             />

@@ -2,6 +2,7 @@ import type { IconType } from "react-icons";
 import {
   SiPython, SiPostgresql, SiApachenifi, SiApachespark, SiDocker, SiApacheairflow,
   SiSnowflake, SiFastapi, SiDjango, SiGit, SiPandas, SiCoursera, SiDatacamp, SiMeta,
+  SiFlask, SiApachekafka, SiDatabricks,
 } from "react-icons/si";
 import { PiMicrosoftExcelLogo } from "react-icons/pi";
 import {
@@ -18,6 +19,7 @@ const map: Record<string, IconType> = {
   // Fournisseurs de certifications
   Coursera: SiCoursera, DataCamp: SiDatacamp, Meta: SiMeta,
   Microsoft: TbBrandWindows, IBM: TbBuildingSkyscraper,
+  Flask: SiFlask, Kafka: SiApachekafka, Databricks: SiDatabricks,
 };
 
 export function TechIcon({ name, className }: { name: string; className?: string }) {
