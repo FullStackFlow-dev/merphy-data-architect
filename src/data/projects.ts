@@ -21,6 +21,18 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "mobilite-urbaine-senegal",
+    title: "Mobilité urbaine au Sénégal",
+    domain: "Data Engineer",
+    summary: "Données synthétiques réalistes de VTC au Sénégal et pipeline Bronze / Silver / Gold pour tester une plateforme BI multi-sources.",
+    tags: ["Python", "Faker", "SQL Server", "ETL/ELT", "pytest"],
+    year: "2026",
+    githubUrl: "https://github.com/merphy-mademba/Mirah-BI-Urban-Mobility-Analytics",
+    previewImage: engineeringPreview,
+    previewIsIllustration: true,
+    content: "Projet de référence reproduisant le fonctionnement des plateformes de VTC au Sénégal : chauffeurs, passagers, véhicules, courses, paiements, zones de Dakar, évaluations et incidents. La génération est reproductible grâce à une graine (seed) et une volumétrie paramétrable, avec des heures de pointe et une tarification en FCFA.\n\nL’architecture distingue les données brutes et métadonnées d’ingestion (Bronze), le nettoyage, le typage et l’enrichissement (Silver), puis les agrégats, KPI et modèles analytiques (Gold). SQL Server est le SGBD cible. Les contrôles d’intégrité, de cohérence temporelle et de plausibilité, ainsi que les tests pytest, servent à valider la qualité et la robustesse de la plateforme BI sans utiliser de données personnelles réelles.",
+  },
+  {
     slug: "plateforme-api-python",
     githubUrl: "",
     demoUrl: "",
