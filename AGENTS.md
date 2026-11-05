@@ -18,4 +18,4 @@
 - Blog editing tools generate Markdown and validated fenced chart JSON; shared ArticleContent renders tables and Recharts visualizations identically in previews and published articles without changing article storage.
 - Blog SEO suggestions use the AI Gateway SDK with generated model contracts inside an author-verified server function; authors explicitly apply suggestions to existing title/excerpt fields to preserve publication storage and metadata consistency.
 - AI provider access denials are persisted in a service-only state table and cleared only after confirmed access restoration, preventing repeated denied requests across reloads.
-- Render the home professional title through ProfileTitle using inline SVG foreignObject HTML and an accessible heading; keep font sizes fixed at breakpoints so long titles wrap instead of shrinking with the viewport.
+- Render the home professional title through ProfileTitle using local inline SVG foreignObject HTML, reserved character layout and a reduced-motion-aware typing animation; retain a complete accessible heading and fixed breakpoint font sizes to prevent animation layout shifts or external SVG dependencies.

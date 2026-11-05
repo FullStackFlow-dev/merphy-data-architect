@@ -263,7 +263,22 @@
   color: inherit;
 }
 
+.typing-letter { position: relative; }
+.typing-pending { opacity: 0; }
+.typing-cursor::after {
+  content: "";
+  position: absolute;
+  right: -0.08em;
+  top: 0.1em;
+  height: 1em;
+  border-right: 2px solid var(--primary);
+  animation: typing-blink 0.7s step-end infinite;
+}
+@keyframes typing-blink { 50% { opacity: 0; } }
+
 @media (prefers-reduced-motion: reduce) {
+  .typing-pending { opacity: 1; }
+  .typing-cursor::after { display: none; animation: none; }
   .reveal {
     opacity: 1;
     transform: none;
