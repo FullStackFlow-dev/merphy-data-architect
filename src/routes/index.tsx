@@ -237,6 +237,7 @@ function Index() {
                           {c.provider}
                           {c.platform ? ` · ${c.platform}` : ""}
                         </span>
+                        {c.issuedOn ? <span className="mt-1 block text-xs text-muted-foreground">Certificat de cours · {c.issuedOn}</span> : null}
                         {c.verifyUrl ? (
                           <Button asChild variant="link" size="sm" className="mt-1.5 h-auto justify-start whitespace-normal px-0 py-1 text-left text-xs">
                           <a
@@ -259,6 +260,13 @@ function Index() {
                             Vérifier la certification · À venir
                           </span>
                         )}
+                        {c.documentUrl ? (
+                          <Button asChild variant="link" size="sm" className="mt-1 h-auto justify-start whitespace-normal px-0 py-1 text-left text-xs">
+                            <a href={c.documentUrl} download="Certificat-Gestion-analyse-donnees-Merphy-Mademba.pdf">
+                              <Download className="h-3.5 w-3.5" /> Télécharger le certificat (PDF)
+                            </a>
+                          </Button>
+                        ) : null}
                       </span>
                       <StatusBadge status={c.status} />
                     </li>
