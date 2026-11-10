@@ -1,4 +1,5 @@
 # Mise à jour du portfolio
+- [ ] Ajouter Dakar Weather Intelligence (DWI), ses quatre modules et les captures fournies ; vérifier accueil, liste et fiche.
 - [ ] Animer le titre SVG comme une saisie au clavier et vérifier les tailles d’écran.
 - [ ] Ajouter le certificat Johns Hopkins, le lien officiel et le PDF dans le portfolio et les documents.
 - [x] Traduire le titre et l’afficher en SVG intégré avec texte HTML accessible.
