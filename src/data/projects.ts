@@ -1,6 +1,10 @@
 import pythonPreview from "../assets/project-python.jpg";
 import engineeringPreview from "../assets/project-engineering.jpg";
 import analyticsPreview from "../assets/project-analytics.jpg";
+import dwiWeather from "../assets/dwi-weather-intelligence.jpg";
+import dwiCold from "../assets/dwi-cold-weather.jpg";
+import dwiEtl from "../assets/dwi-etl-pipeline.jpg";
+import dwiAnalytics from "../assets/dwi-analytics.jpg";
 
 export type Project = {
   slug: string;
@@ -17,9 +21,36 @@ export type Project = {
   /** Remplacer par une capture réelle lorsque disponible. */
   previewImage: string;
   previewIsIllustration?: boolean;
+  status?: "En développement";
+  modules?: { name: string; description: string }[];
+  gallery?: { image: string; caption: string }[];
 };
 
 export const projects: Project[] = [
+  {
+    slug: "dakar-weather-intelligence",
+    title: "Dakar Weather Intelligence (DWI)",
+    domain: "Data Engineer",
+    summary: "Plateforme intelligente de collecte, d'analyse et de prévision météorologique pour Dakar.",
+    tags: ["Data Engineering", "ETL", "Analyse de données", "Power BI", "Météorologie"],
+    year: "2026",
+    status: "En développement",
+    previewImage: dwiWeather,
+    previewIsIllustration: false,
+    content: "Dakar Weather Intelligence (DWI) est un projet en cours de développement à la croisée de l’ingénierie des données, de l’analyse et de la Business Intelligence. La plateforme vise à collecter, analyser et prévoir les conditions météorologiques de Dakar. Elle s’organise autour de quatre modules complémentaires.",
+    modules: [
+      { name: "Weather Intelligence", description: "Collecte, analyse et prévision météorologique pour Dakar." },
+      { name: "Cold Weather Intelligence", description: "Analyse des épisodes de froid et des risques associés." },
+      { name: "ETL Data Pipeline", description: "Extraction, transformation et chargement des données pour alimenter les analyses." },
+      { name: "Power BI Analytics", description: "Tableaux de bord et visualisations des données météorologiques." },
+    ],
+    gallery: [
+      { image: dwiWeather, caption: "Weather Intelligence — aperçu fourni" },
+      { image: dwiCold, caption: "Cold Weather Intelligence — aperçu fourni" },
+      { image: dwiEtl, caption: "ETL Data Pipeline — aperçu fourni" },
+      { image: dwiAnalytics, caption: "Power BI Analytics — aperçu fourni" },
+    ],
+  },
   {
     slug: "mobilite-urbaine-senegal",
     title: "Mobilité urbaine au Sénégal",
@@ -126,3 +157,8 @@ export const projects: Project[] = [
 
 export const getProject = (slug: string) =>
   projects.find((p) => p.slug === slug);
+
+export const getProjectLinks = (project: Project) => ({
+  github: project.githubUrl || undefined,
+  demo: project.demoUrl || undefined,
+});

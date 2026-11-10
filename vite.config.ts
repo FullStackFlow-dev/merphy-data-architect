@@ -7,6 +7,7 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 const projectSlugs = [
+  "dakar-weather-intelligence",
   "mobilite-urbaine-senegal",
   "plateforme-api-python",
   "pipeline-data-etl",

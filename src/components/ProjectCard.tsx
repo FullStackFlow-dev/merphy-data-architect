@@ -1,14 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { ExternalLink, Github } from "lucide-react";
-import type { Project } from "../data/projects";
-import { GITHUB_URL } from "./SiteLayout";
+import { getProjectLinks, type Project } from "../data/projects";
 import { MotionCard } from "./motion";
 import { Button } from "./ui/button";
 
 export function ProjectPreview({ project }: { project: Project }) {
   return (
     <div className="relative aspect-[8/5] w-full overflow-hidden bg-secondary">
-      <img src={project.previewImage} alt={`Aperçu ${project.previewIsIllustration ? "illustré" : "du projet"} — ${project.title}`} width={1024} height={640} loading="lazy" className="h-full w-full object-cover" />
+      <img src={project.previewImage} alt={`Aperçu ${project.previewIsIllustration ? "illustré" : "du projet"} — ${project.title}`} width={1024} height={640} loading="lazy" className={`h-full w-full ${project.previewIsIllustration ? "object-cover" : "object-contain"}`} />
       {project.previewIsIllustration && (
         <span className="absolute bottom-3 left-3 rounded-md border border-border bg-background/90 px-2 py-1 text-xs text-muted-foreground">Illustration</span>
       )}
@@ -17,27 +16,22 @@ export function ProjectPreview({ project }: { project: Project }) {
 }
 
 export function ProjectActions({ project }: { project: Project }) {
-  // GitHub : toujours cliquable — dépôt précis si renseigné, sinon profil GitHub.
-  const githubUrl = project.githubUrl || GITHUB_URL;
+  const links = getProjectLinks(project);
   return (
     <div className="flex flex-wrap gap-2" aria-label={`Liens — ${project.title}`}>
-      <Button asChild variant="outline" size="sm">
-        <a href={githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`GitHub — ${project.title} (nouvel onglet)`}>
+      {links.github ? <Button asChild variant="outline" size="sm">
+        <a href={links.github} target="_blank" rel="noopener noreferrer" aria-label={`GitHub — ${project.title} (nouvel onglet)`}>
           <Github aria-hidden="true" />GitHub
         </a>
-      </Button>
-      {project.demoUrl ? (
+      </Button> : <Button variant="outline" size="sm" disabled><Github aria-hidden="true" />GitHub · À venir</Button>}
+      {links.demo ? (
         <Button asChild variant="outline" size="sm">
-          <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Démo — ${project.title} (nouvel onglet)`}>
+          <a href={links.demo} target="_blank" rel="noopener noreferrer" aria-label={`Démo — ${project.title} (nouvel onglet)`}>
             <ExternalLink aria-hidden="true" />Démo
           </a>
         </Button>
       ) : (
-        <Button asChild variant="outline" size="sm">
-          <Link to="/projects/$slug" params={{ slug: project.slug }} aria-label={`Démo — ${project.title} : voir la fiche projet`}>
-            <ExternalLink aria-hidden="true" />Démo
-          </Link>
-        </Button>
+        <Button variant="outline" size="sm" disabled><ExternalLink aria-hidden="true" />Démo · À venir</Button>
       )}
     </div>
   );
@@ -51,6 +45,7 @@ export function ProjectCard({ project, delay = 0 }: { project: Project; delay?: 
       </Link>
       <div className="flex flex-1 flex-col p-6">
         <div className="text-xs text-muted-foreground">{project.domain} · {project.year}</div>
+        {project.status ? <span className="mt-2 self-start rounded-md border border-warning/35 bg-warning/12 px-2 py-1 text-xs text-warning">{project.status}</span> : null}
         <Link to="/projects/$slug" params={{ slug: project.slug }} className="mt-2 hover:text-primary transition-colors">
           <h3 className="text-lg font-semibold">{project.title}</h3>
         </Link>

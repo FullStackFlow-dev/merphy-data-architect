@@ -45,6 +45,7 @@ function ProjectDetail() {
           {project.title}
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">{project.summary}</p>
+        {project.status ? <p className="mt-4 text-sm font-medium text-warning">{project.status}</p> : null}
         <div className="mt-6"><ProjectActions project={project} /></div>
         <div className="mt-8 overflow-hidden rounded-lg border border-border"><ProjectPreview project={project} /></div>
         <div className="mt-6 flex flex-wrap gap-1.5">
@@ -59,13 +60,35 @@ function ProjectDetail() {
         </div>
         <div className="mt-10 prose prose-neutral dark:prose-invert max-w-none">
           <p>{project.content}</p>
+          {project.modules ? null : <>
           <h2>Contexte</h2>
           <p>Contexte du projet — contenu provisoire à remplacer.</p>
           <h2>Approche</h2>
           <p>Choix techniques et méthodologiques — contenu provisoire.</p>
           <h2>Résultats</h2>
           <p>Impact et métriques — contenu provisoire.</p>
+          </>}
         </div>
+        {project.modules ? <section className="mt-10" aria-labelledby="project-modules-title">
+          <h2 id="project-modules-title" className="text-2xl font-semibold">Modules du projet</h2>
+          <dl className="mt-5 divide-y divide-border">
+            {project.modules.map(module => <div key={module.name} className="py-5">
+              <dt className="font-semibold text-primary">{module.name}</dt>
+              <dd className="mt-2 text-sm text-muted-foreground">{module.description}</dd>
+            </div>)}
+          </dl>
+        </section> : null}
+        {project.gallery ? <section className="mt-10" aria-labelledby="project-gallery-title">
+          <h2 id="project-gallery-title" className="text-2xl font-semibold">Aperçus du projet</h2>
+          <div className="mt-6 space-y-8">
+            {project.gallery.map(item => <figure key={item.caption}>
+              <a href={item.image} target="_blank" rel="noopener noreferrer" aria-label={`Agrandir : ${item.caption}`}>
+                <img src={item.image} alt={item.caption} loading="lazy" className="h-auto w-full rounded-lg border border-border" />
+              </a>
+              <figcaption className="mt-3 text-sm text-muted-foreground">{item.caption}</figcaption>
+            </figure>)}
+          </div>
+        </section> : null}
         {project.embedUrl ? (
           <section className="mt-12" aria-labelledby="power-bi-demo-title">
             <h2 id="power-bi-demo-title" className="text-2xl font-semibold">
