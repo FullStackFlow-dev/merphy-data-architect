@@ -2,10 +2,10 @@ import { describe, expect, it } from "vitest";
 import { getProject, getProjectLinks } from "./projects";
 
 describe("Pending project destinations", () => {
-  it("keeps DWI GitHub and deployment unavailable until official URLs are supplied", () => {
+  it("uses the official DWI GitHub repository and keeps deployment pending", () => {
     const project = getProject("dakar-weather-intelligence");
     if (!project) throw new Error("DWI project missing");
-    expect(getProjectLinks(project)).toEqual({ github: undefined, demo: undefined });
+    expect(getProjectLinks(project)).toEqual({ github: "https://github.com/FullStackFlow-dev/Dakar-Weather-Intelligence_-DWI-", demo: undefined });
   });
   it("uses supplied official URLs without substituting destinations", () => {
     const project = getProject("mobilite-urbaine-senegal");
