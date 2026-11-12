@@ -35,6 +35,7 @@ export const projects: Project[] = [
     tags: ["Data Engineering", "ETL", "Analyse de données", "Power BI", "Météorologie"],
     year: "2026",
     status: "En développement",
+    githubUrl: "https://github.com/FullStackFlow-dev/Dakar-Weather-Intelligence_-DWI-",
     previewImage: dwiWeather,
     previewIsIllustration: false,
     content: "Dakar Weather Intelligence (DWI) est un projet en cours de développement à la croisée de l’ingénierie des données, de l’analyse et de la Business Intelligence. La plateforme vise à collecter, analyser et prévoir les conditions météorologiques de Dakar. Elle s’organise autour de quatre modules complémentaires.",
