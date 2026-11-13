@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 const lines = ["Ingénieur de données", "et architecte de", "de bases de données"];
 const title = lines.join(" ");
 
-const offsets = lines.map((_, i) =>
-  i === 0 ? 0 : offsets[i - 1] + lines[i - 1].length + 1,
-);
+const offsets = lines.reduce<number[]>((acc, _line, i) => {
+  acc.push(i === 0 ? 0 : acc[i - 1] + lines[i - 1].length + 1);
+  return acc;
+}, []);
 
 export function ProfileTitle() {
   const [visible, setVisible] = useState(title.length);
