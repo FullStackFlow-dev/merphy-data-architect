@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-const title = "Ingénieur de données et de bases de données";
+const title = "Ingénieur de données et architecte de bases de données";
 const firstLine = "Ingénieur de données";
-const secondLine = "et de bases de données";
+const secondLine = "et architecte de bases de données";
 
 export function ProfileTitle() {
   const [visible, setVisible] = useState(title.length);

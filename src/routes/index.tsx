@@ -19,18 +19,18 @@ import { ProfileTitle } from "../components/ProfileTitle";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Merphy Mademba — Ingénieur de données et de bases de données" },
+      { title: "Merphy Mademba — Ingénieur de données et architecte de bases de données" },
       {
         name: "description",
         content:
-          "Portfolio de Merphy Mademba : ingénieur de données et de bases de données. Python, SQL, PostgreSQL, Airflow, Power BI ; pipelines Bronze/Silver/Gold et backend.",
+          "Portfolio de Merphy Mademba : ingénieur de données et architecte de bases de données. Python, SQL, PostgreSQL, MySQL, SQL Server, Airflow, Power BI ; conception de pipelines ETL & ELT.",
       },
-      { property: "og:title", content: "Merphy Mademba — Ingénieur de données et de bases de données" },
+      { property: "og:title", content: "Merphy Mademba — Ingénieur de données et architecte de bases de données" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
-        content: "Pipelines de données & backend — Python, SQL, PostgreSQL, Airflow, Power BI.",
+        content: "Conception de pipelines ETL & ELT — Python, SQL, PostgreSQL, MySQL, SQL Server, Airflow, Power BI.",
       },
     ],
   }),
@@ -94,7 +94,7 @@ function Index() {
           </p>
           <ProfileTitle />
           <p className="mt-4 text-sm tracking-wide text-muted-foreground">
-            Python • SQL • PostgreSQL • Airflow • Power BI
+            Python • SQL • PostgreSQL • MySQL • SQL Server • Airflow • Power BI
           </p>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
             Je modélise, optimise et sécurise les bases de données, puis conçois
@@ -102,7 +102,7 @@ function Index() {
             et des analyses Power BI prêtes pour la décision.
           </p>
           <p className="mt-3 text-xs uppercase tracking-wider text-primary/80">
-            Pipelines de données &amp; Backend
+            Conception de pipelines ETL &amp; ELT
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
