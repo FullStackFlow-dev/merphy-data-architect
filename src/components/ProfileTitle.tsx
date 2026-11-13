@@ -68,11 +68,11 @@ export function ProfileTitle() {
       <svg
         aria-hidden="true"
         width="100%"
-        className="block h-[130px] sm:h-[185px] md:h-[130px] lg:h-[185px] xl:h-[200px]"
+        className="block h-[120px] sm:h-[185px] md:h-[130px] lg:h-[185px] xl:h-[200px]"
         xmlns="http://www.w3.org/2000/svg"
       >
         <foreignObject width="100%" height="100%">
-          <div className="text-[30px] sm:text-[44px] md:text-[30px] lg:text-[44px] xl:text-5xl leading-tight font-semibold tracking-normal">
+          <div className="text-[28px] sm:text-[44px] md:text-[30px] lg:text-[44px] xl:text-5xl leading-tight font-semibold tracking-normal">
             {lines.map((line, i) => (
               <span key={line} className={i === 0 ? "" : "text-primary"}>
                 {letters(line, offsets[i])}
