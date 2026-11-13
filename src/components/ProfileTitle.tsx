@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const lines = ["Ingénieur de données", "et architecte de", "de bases de données"];
+const lines = ["Ingénieur de données", "et architecte", "de bases de données"];
 const title = lines.join(" ");
 
 const offsets = lines.reduce<number[]>((acc, _line, i) => {
