@@ -60,6 +60,44 @@ function DemosPage() {
         </p>
       </section>
 
+      <section className="mx-auto max-w-6xl px-6 pb-10">
+        <MotionCard className="rounded-xl border border-border bg-card p-6">
+          <div className="flex items-center justify-between">
+            <span className="inline-flex items-center rounded-full bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium">
+              SQL
+            </span>
+          </div>
+          <h2 className="mt-3 text-lg font-semibold">Éditeur SQL PostgreSQL</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Écrivez et exécutez vos requêtes SQL directement dans le navigateur.
+          </p>
+          <figure className="mt-5 overflow-hidden rounded-lg border border-border">
+            <iframe
+              src="https://coddy.tech/embed-editor?lang=postgresql&theme=dark&code=U0VMRUNUIG5hbWUsIHNhbGFyeSBGUk9NIGVtcGxveWVlcwpXSEVSRSBuYW1lIElMSUtFICdhJScKT1JERVIgQlkgc2FsYXJ5IERFU0M7Cg&credit=0"
+              width="100%"
+              height="480"
+              className="block w-full border-0"
+              title="Éditeur de code PostgreSQL par Coddy"
+              loading="lazy"
+            />
+            <figcaption
+              dir="ltr"
+              className="border-t border-border bg-muted/60 px-3 py-1.5 text-right text-[11px] leading-snug text-muted-foreground"
+            >
+              Propulsé par{" "}
+              <a
+                href="https://coddy.tech/embed"
+                target="_blank"
+                rel="noopener"
+                className="font-semibold text-primary hover:underline"
+              >
+                Coddy
+              </a>
+            </figcaption>
+          </figure>
+        </MotionCard>
+      </section>
+
       <section className="mx-auto max-w-6xl px-6 pb-10 grid gap-6 md:grid-cols-2">
         {demos.map((d, i) => (
           <MotionCard key={d.id} delay={(i % 2) * 90} className="rounded-xl border border-border bg-card p-6">
