@@ -77,7 +77,7 @@ function DemosPage() {
               width="100%"
               height="480"
               className="block w-full border-0"
-              title="Éditeur de code PostgreSQL par Coddy"
+              title="Éditeur de code PostgreSQL — Merphy Mademba"
               loading="lazy"
             />
             <figcaption
