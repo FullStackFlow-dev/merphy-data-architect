@@ -138,7 +138,7 @@ function Index() {
           <MotionCard className="mx-auto w-56 md:w-full max-w-sm lg:max-w-md rounded-2xl border border-border bg-card overflow-hidden">
             <img
               src={profileImg}
-              alt="Merphy Mademba — ingénieur de données et de bases de données"
+              alt="Merphy Mademba — ingénieur de données et architecte de bases de données"
               className="w-full h-full object-cover aspect-square"
               loading="eager"
             />
