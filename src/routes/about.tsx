@@ -11,9 +11,9 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "À propos & CV — Merphy Mademba" },
-      { name: "description", content: "Parcours de Merphy Mademba, ingénieur de données et de bases de données : plateforme BI multi-sources, Python, SQL, pipelines et intelligence artificielle." },
+      { name: "description", content: "Parcours de Merphy Mademba, ingénieur de données et architecte de bases de données : plateforme BI multi-sources, Python, SQL, conception de pipelines ETL & ELT et intelligence artificielle." },
       { property: "og:title", content: "À propos & CV — Merphy Mademba" },
-      { property: "og:description", content: "Ingénieur de données et de bases de données : expérience BI multi-sources, backend Python et compétences data, cloud et IA." },
+      { property: "og:description", content: "Ingénieur de données et architecte de bases de données : expérience BI multi-sources, conception de pipelines ETL & ELT et compétences data, cloud et IA." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/about")({
 const experiences = [
   {
     period: "Depuis août 2026 · Stage",
-    role: "Ingénieur de données et de bases de données",
+    role: "Ingénieur de données et architecte de bases de données",
     org: "Plateforme de Business Intelligence multi-sources",
     desc: "Création de bases de test et génération de données synthétiques réalistes avec Faker. Tests de volumétrie et de robustesse des ingestions et DAGs Airflow, stabilisation des connexions, gouvernance des accès et contrôles qualité dans une architecture Bronze / Silver / Gold.",
   },
@@ -77,10 +77,10 @@ function AboutPage() {
           Merphy Mademba
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Ingénieur de données et de bases de données
+          Ingénieur de données et architecte de bases de données
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Python • SQL • PostgreSQL • Airflow • Power BI
+          Python • SQL • PostgreSQL • MySQL • SQL Server • Airflow • Power BI
         </p>
         <p className="mt-6 text-lg text-muted-foreground">
           Basé au Sénégal, je modélise, optimise et sécurise les données,
