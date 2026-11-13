@@ -2,14 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteLayout } from "../components/SiteLayout";
 import { MotionCard } from "../components/motion";
+import { codeEditors } from "../data/code-editors";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 
 export const Route = createFileRoute("/demos")({
   head: () => ({
     meta: [
       { title: "Démos IA & Éditeur SQL — Merphy Mademba" },
-      { name: "description", content: "Testez en direct des démonstrations IA et un éditeur SQL PostgreSQL interactif." },
+      { name: "description", content: "Testez des démonstrations IA et un éditeur interactif PostgreSQL, Python, Matplotlib et SQL." },
       { property: "og:title", content: "Démos IA & Éditeur SQL — Merphy Mademba" },
-      { property: "og:description", content: "Démos interactives IA et éditeur SQL PostgreSQL en ligne." },
+      { property: "og:description", content: "Démos IA et éditeur PostgreSQL, Python, Matplotlib et SQL en ligne." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -45,6 +47,9 @@ const demos = [
 ];
 
 function DemosPage() {
+  const [editorId, setEditorId] = useState("postgresql");
+  const editor = codeEditors.find((item) => item.id === editorId) ?? codeEditors[0];
+  if (!editor) return null;
   return (
     <SiteLayout>
       <section className="mx-auto max-w-6xl px-6 pt-20 pb-10">
@@ -62,22 +67,35 @@ function DemosPage() {
 
       <section className="mx-auto max-w-6xl px-6 pb-10">
         <div className="rounded-xl border border-border bg-card p-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <span className="inline-flex items-center rounded-full bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium">
               SQL
             </span>
+            <Select value={editorId} onValueChange={setEditorId}>
+              <SelectTrigger aria-label="Langage de l’éditeur" className="w-52 max-w-full bg-background">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {codeEditors.map((item) => (
+                  <SelectItem key={item.id} value={item.id}>{item.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <h2 className="mt-3 text-lg font-semibold">Éditeur SQL PostgreSQL</h2>
+          <h2 className="mt-3 text-lg font-semibold">Éditeur de code — {editor.label}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Écrivez et exécutez vos requêtes SQL directement dans le navigateur.
+            {editorId === "sql" || editorId === "postgresql"
+              ? "Écrivez et exécutez vos requêtes SQL directement dans le navigateur."
+              : "Écrivez et exécutez votre code Python directement dans le navigateur."}
           </p>
           <figure className="mt-5 overflow-hidden rounded-lg border border-border">
             <iframe
-              src="https://coddy.tech/embed-editor?lang=postgresql&theme=dark&code=U0VMRUNUIG5hbWUsIHNhbGFyeSBGUk9NIGVtcGxveWVlcwpXSEVSRSBuYW1lIElMSUtFICdhJScKT1JERVIgQlkgc2FsYXJ5IERFU0M7Cg&credit=0"
+              key={editor.id}
+              src={editor.src}
               width="100%"
               height="480"
               className="block w-full border-0"
-              title="Éditeur de code PostgreSQL — Merphy Mademba"
+              title={`Éditeur de code ${editor.label} — Merphy Mademba`}
               loading="lazy"
             />
             <figcaption
