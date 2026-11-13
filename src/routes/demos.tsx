@@ -49,7 +49,7 @@ function DemosPage() {
     <SiteLayout>
       <section className="mx-auto max-w-6xl px-6 pt-20 pb-10">
         <p className="text-sm uppercase tracking-widest text-muted-foreground mb-3">
-          Démos IA / ML
+          Démos IA &amp; SQL
         </p>
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
           Testez les modèles en direct
