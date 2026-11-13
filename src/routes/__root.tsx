@@ -78,12 +78,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Merphy Mademba — Ingénieur de données et de bases de données" },
-      { name: "description", content: "Portfolio de Merphy Mademba : ingénieur de données et de bases de données — Python, SQL, PostgreSQL, Airflow, Power BI. Pipelines de données & backend." },
+      { title: "Merphy Mademba — Ingénieur de données et architecte de bases de données" },
+      { name: "description", content: "Portfolio de Merphy Mademba : ingénieur de données et architecte de bases de données — Python, SQL, PostgreSQL, MySQL, SQL Server, Airflow, Power BI. Conception de pipelines ETL & ELT." },
 
       { name: "author", content: "Merphy Mademba" },
-      { property: "og:title", content: "Merphy Mademba — Ingénieur de données et de bases de données" },
-      { property: "og:description", content: "Pipelines de données & backend — Python, SQL, PostgreSQL, Airflow, Power BI." },
+      { property: "og:title", content: "Merphy Mademba — Ingénieur de données et architecte de bases de données" },
+      { property: "og:description", content: "Conception de pipelines ETL & ELT — Python, SQL, PostgreSQL, MySQL, SQL Server, Airflow, Power BI." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
