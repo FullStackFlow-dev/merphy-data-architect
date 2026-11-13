@@ -61,7 +61,7 @@ function DemosPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-10">
-        <MotionCard className="rounded-xl border border-border bg-card p-6">
+        <div className="rounded-xl border border-border bg-card p-6">
           <div className="flex items-center justify-between">
             <span className="inline-flex items-center rounded-full bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium">
               SQL
@@ -77,7 +77,7 @@ function DemosPage() {
               width="100%"
               height="480"
               className="block w-full border-0"
-              title="Éditeur de code PostgreSQL par Coddy"
+              title="Éditeur de code PostgreSQL — Merphy Mademba"
               loading="lazy"
             />
             <figcaption
@@ -85,17 +85,10 @@ function DemosPage() {
               className="border-t border-border bg-muted/60 px-3 py-1.5 text-right text-[11px] leading-snug text-muted-foreground"
             >
               Propulsé par{" "}
-              <a
-                href="https://coddy.tech/embed"
-                target="_blank"
-                rel="noopener"
-                className="font-semibold text-primary hover:underline"
-              >
-                Coddy
-              </a>
+              <span className="font-semibold text-primary">Merphy Mademba</span>
             </figcaption>
           </figure>
-        </MotionCard>
+        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-10 grid gap-6 md:grid-cols-2">
