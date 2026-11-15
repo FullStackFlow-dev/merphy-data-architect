@@ -20,4 +20,6 @@
 - Blog SEO suggestions use the AI Gateway SDK with generated model contracts inside an author-verified server function; authors explicitly apply suggestions to existing title/excerpt fields to preserve publication storage and metadata consistency.
 - AI provider access denials are persisted in a service-only state table and cleared only after confirmed access restoration, preventing repeated denied requests across reloads.
 - Render the home professional title through ProfileTitle using local inline SVG foreignObject HTML, reserved character layout and a reduced-motion-aware typing animation; retain a complete accessible heading and fixed breakpoint font sizes to prevent animation layout shifts or external SVG dependencies.
-- Keep embedded editor choices in a shared data catalog and render the selected URL in one stationary iframe container so additional languages require no duplicate editor cards.
+- Keep editor modes in the shared catalog and one stationary CodeWorkspace; run Python/PGlite in a dedicated browser worker so local files, cancellation and output remain under app control without cross-origin iframe limitations.
+- Workspace sharing encodes only the selected document in the URL fragment; history stays in localStorage and uploaded binary files are never included, keeping this tool usable on static hosting.
+- Excel mode edits and round-trips workbook cell values through SheetJS (not formulas or formatting); DAX is edit/export only because execution requires a Power BI model.
