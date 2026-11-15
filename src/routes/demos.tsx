@@ -2,16 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteLayout } from "../components/SiteLayout";
 import { MotionCard } from "../components/motion";
-import { codeEditors } from "../data/code-editors";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+import { CodeWorkspace } from "../components/CodeWorkspace";
 
 export const Route = createFileRoute("/demos")({
   head: () => ({
     meta: [
       { title: "Démos IA & Éditeur SQL — Merphy Mademba" },
-      { name: "description", content: "Testez des démonstrations IA et un éditeur interactif PostgreSQL, Python, Matplotlib et SQL." },
+      { name: "description", content: "Testez des démonstrations IA et un éditeur interactif PostgreSQL, Python, Pandas, NumPy, Matplotlib, Excel, DAX et SQL." },
       { property: "og:title", content: "Démos IA & Éditeur SQL — Merphy Mademba" },
-      { property: "og:description", content: "Démos IA et éditeur PostgreSQL, Python, Matplotlib et SQL en ligne." },
+      { property: "og:description", content: "Démos IA et éditeur PostgreSQL, Python, Pandas, NumPy, Matplotlib, Excel, DAX et SQL en ligne." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -47,9 +46,6 @@ const demos = [
 ];
 
 function DemosPage() {
-  const [editorId, setEditorId] = useState("postgresql");
-  const editor = codeEditors.find((item) => item.id === editorId) ?? codeEditors[0];
-  if (!editor) return null;
   return (
     <SiteLayout>
       <section className="mx-auto max-w-6xl px-6 pt-20 pb-10">
@@ -66,47 +62,7 @@ function DemosPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-10">
-        <div className="rounded-xl border border-border bg-card p-6">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="inline-flex items-center rounded-full bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium">
-              SQL
-            </span>
-            <Select value={editorId} onValueChange={setEditorId}>
-              <SelectTrigger aria-label="Langage de l’éditeur" className="w-52 max-w-full bg-background">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {codeEditors.map((item) => (
-                  <SelectItem key={item.id} value={item.id}>{item.label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <h2 className="mt-3 text-lg font-semibold">Éditeur de code — {editor.label}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {editorId === "sql" || editorId === "postgresql"
-              ? "Écrivez et exécutez vos requêtes SQL directement dans le navigateur."
-              : "Écrivez et exécutez votre code Python directement dans le navigateur."}
-          </p>
-          <figure className="mt-5 overflow-hidden rounded-lg border border-border">
-            <iframe
-              key={editor.id}
-              src={editor.src}
-              width="100%"
-              height="480"
-              className="block w-full border-0"
-              title={`Éditeur de code ${editor.label} — Merphy Mademba`}
-              loading="lazy"
-            />
-            <figcaption
-              dir="ltr"
-              className="border-t border-border bg-muted/60 px-3 py-1.5 text-right text-[11px] leading-snug text-muted-foreground"
-            >
-              Propulsé par{" "}
-              <span className="font-semibold text-primary">Merphy Mademba</span>
-            </figcaption>
-          </figure>
-        </div>
+        <CodeWorkspace />
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-10 grid gap-6 md:grid-cols-2">

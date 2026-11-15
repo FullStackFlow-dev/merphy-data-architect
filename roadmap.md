@@ -1,4 +1,5 @@
 # Mise à jour du portfolio
+- [ ] Enrichir l’éditeur unique avec Pandas, NumPy, Excel, DAX, partage, sauvegardes, historique et fichiers locaux ; vérifier les actions.
 - [ ] Ajouter les choix Python, Matplotlib et SQL dans le même éditeur que PostgreSQL et vérifier le changement de langage.
 - [x] Ajouter Dakar Weather Intelligence (DWI), ses quatre modules et les captures fournies ; vérifier accueil, liste et fiche.
 - [ ] Animer le titre SVG comme une saisie au clavier et vérifier les tailles d’écran.
