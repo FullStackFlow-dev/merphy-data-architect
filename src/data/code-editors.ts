@@ -1,4 +1,4 @@
-export const codeEditors = [
+const embeddedEditors = [
   {
     "id": "postgresql",
     "label": "PostgreSQL",
@@ -19,4 +19,12 @@ export const codeEditors = [
     "label": "SQL",
     "src": "https://coddy.tech/embed-editor?lang=sql&theme=dark&code=U0VMRUNUIGUubmFtZSwgZS5kZXBhcnRtZW50LCBlLnNhbGFyeSwgZC5idWRnZXQKRlJPTSBlbXBsb3llZXMgQVMgZQpKT0lOIGRlcGFydG1lbnRzIEFTIGQgT04gZC5uYW1lID0gZS5kZXBhcnRtZW50Ck9SREVSIEJZIGUuc2FsYXJ5IERFU0M7Cg&credit=0"
   }
+];
+
+export const codeEditors = [
+  ...embeddedEditors.map((editor) => ({ ...editor, extension: editor.id === "sql" || editor.id === "postgresql" ? "sql" : "py", code: "" })),
+  { id: "pandas", label: "Python · Pandas", extension: "py", code: 'import pandas as pd\n\ndf = pd.DataFrame({"Ville": ["Dakar", "Thiès"], "Température": [28, 30]})\nprint(df)\nprint(df.describe())\n' },
+  { id: "numpy", label: "Python · NumPy", extension: "py", code: 'import numpy as np\n\nvaleurs = np.array([24, 26, 28, 30])\nprint("Moyenne :", np.mean(valeurs))\nprint("Écart-type :", np.std(valeurs))\n' },
+  { id: "excel", label: "Excel", extension: "xlsx", code: "" },
+  { id: "dax", label: "DAX", extension: "dax", code: 'Total Ventes = SUM(Ventes[Montant])\n\nVentes Année Précédente =\nCALCULATE([Total Ventes], SAMEPERIODLASTYEAR(Calendrier[Date]))\n' },
 ];
