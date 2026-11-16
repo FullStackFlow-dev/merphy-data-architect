@@ -44,7 +44,7 @@ self.onmessage = async (event: MessageEvent<{ editorId: string; code: string; st
       packages.add("numpy");
       packages.add("matplotlib");
     }
-    const hasSpreadsheet = files.some((file) => /\\.xlsx?$/i.test(file.name));
+    const hasSpreadsheet = files.some((file) => /\.xlsx?$/i.test(file.name));
     if (hasSpreadsheet) packages.add("pandas");
     if (packages.size > 0) {
       self.postMessage({ status: "Chargement des bibliothèques…" });
@@ -53,7 +53,7 @@ self.onmessage = async (event: MessageEvent<{ editorId: string; code: string; st
     for (const file of files) python.FS.writeFile(file.name.replace(/[/\\]/g, "_"), file.bytes);
     if (hasSpreadsheet) {
       self.postMessage({ status: "Chargement de la prise en charge Excel…" });
-      await python.runPythonAsync("import micropip\\nawait micropip.install('openpyxl')");
+      await python.runPythonAsync("import micropip\nawait micropip.install('openpyxl')");
     }
     await python.runPythonAsync("import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nplt.close('all')");
     const value = await python.runPythonAsync(code);
