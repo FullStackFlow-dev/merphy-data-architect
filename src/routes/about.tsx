@@ -70,10 +70,13 @@ function AboutPage() {
               <div className="text-xs uppercase tracking-wider text-muted-foreground">
                 {e.period}
               </div>
-              <div className="mt-1 font-semibold">
-                {e.role} · <span className="text-muted-foreground">{e.org}</span>
+              <div className="mt-1 flex flex-wrap items-center gap-2 font-semibold">
+                <span>{e.role}</span>
+                {e.type ? <span className="rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">{e.type}</span> : null}
               </div>
-              <p className="mt-1 text-sm text-muted-foreground">{e.desc}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{e.org}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{e.desc}</p>
+              {e.responsibilities?.length ? <ul className="mt-4 space-y-2 text-sm text-muted-foreground">{e.responsibilities.map((item) => <li key={item} className="flex gap-2"><span aria-hidden="true" className="text-primary">•</span><span>{item}</span></li>)}</ul> : null}
             </MotionCard>
           ))}
         </div>
