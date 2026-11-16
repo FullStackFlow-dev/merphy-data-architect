@@ -19,6 +19,43 @@ function sample(id: string) {
   return "";
 }
 
+function escapeHtml(value: string) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function highlightCode(source: string, editorId: string) {
+  const language = ["sql", "postgresql"].includes(editorId) ? "sql" : editorId === "dax" ? "dax" : "python";
+  const keywords = language === "sql"
+    ? new Set("select from where and or not like ilike order by desc asc limit offset join inner left right outer on group having count sum avg min max as distinct insert into values update set delete create table drop alter returning null is case when then else end union all with".split(" "))
+    : language === "dax"
+      ? new Set("calculate sum sumx average averagex count countrows filter all allexcept related relatedtable divide if switch return var true false blank".split(" "))
+      : new Set("and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield True False None".split(" "));
+
+  const tokenPattern = /(\\/\\*[\\s\\S]*?\\*\\/|--[^\\n]*|#[^\\n]*)|("""[\\s\\S]*?"""|'''[\\s\\S]*?'''|'(?:\\\\.|[^'\\\\])*'|"(?:\\\\.|[^"\\\\])*")|(\\b\\d+(?:\\.\\d+)?\\b)|([A-Za-z_][A-Za-z0-9_]*)/g;
+  let html = "";
+  let cursor = 0;
+
+  for (const match of source.matchAll(tokenPattern)) {
+    const token = match[0];
+    const index = match.index ?? 0;
+    html += escapeHtml(source.slice(cursor, index));
+    let color = "";
+
+    if (match[1]) color = "text-amber-300";
+    else if (match[2]) color = "text-emerald-300";
+    else if (match[3]) color = "text-sky-300";
+    else if (match[4]) {
+      if (keywords.has(token.toLowerCase()) || keywords.has(token)) color = "text-purple-300";
+      else if (/\\s*\\(/.test(source.slice(index + token.length))) color = "text-cyan-300";
+    }
+
+    html += color ? `<span class="${color}">${escapeHtml(token)}</span>` : escapeHtml(token);
+    cursor = index + token.length;
+  }
+
+  return html + escapeHtml(source.slice(cursor));
+}
+
 export function CodeWorkspace() {
   const [editorId, setEditorId] = useState("postgresql");
   const [code, setCode] = useState("");
@@ -156,7 +193,10 @@ export function CodeWorkspace() {
     {editorId === "excel" ? <div className="p-4">
       <div className="mb-3 flex gap-2"><Button size="sm" variant="outline" onClick={() => setRows([...rows, Array(Math.max(1, ...rows.map((r) => r.length))).fill("")])}><Plus />Ligne</Button><Button size="sm" variant="outline" onClick={() => setRows(rows.map((r) => [...r, ""]))}><Plus />Colonne</Button></div>
       <div className="max-h-[420px] overflow-auto"><table className="w-full border-collapse text-sm"><tbody>{rows.map((row, i) => <tr key={i}><th className="border border-border bg-muted px-2 text-muted-foreground">{i + 1}</th>{row.map((cell, j) => <td key={j} className="min-w-32 border border-border"><input className="w-full bg-background p-2" aria-label={`Cellule ${i + 1}, ${j + 1}`} value={cell} onChange={(e) => setRows(rows.map((r, ri) => ri === i ? r.map((c, ci) => ci === j ? e.target.value : c) : r))} /></td>)}</tr>)}</tbody></table></div>
-    </div> : <textarea spellCheck={false} aria-label="Code source" value={code} onChange={(e) => setCode(e.target.value)} className="block h-[360px] w-full resize-y bg-background p-4 font-mono text-sm leading-6 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-ring" />}
+    </div> : <div className="relative h-[360px] w-full resize-y overflow-hidden bg-background">
+      <pre aria-hidden="true" className="pointer-events-none absolute inset-0 m-0 overflow-auto whitespace-pre p-4 font-mono text-sm leading-6 text-foreground"><code dangerouslySetInnerHTML={{ __html: highlightCode(code, editorId) + "\\n" }} /></pre>
+      <textarea spellCheck={false} aria-label="Code source" value={code} onChange={(e) => setCode(e.target.value)} onScroll={(e) => { const layer = e.currentTarget.previousElementSibling; if (layer instanceof HTMLElement) { layer.scrollTop = e.currentTarget.scrollTop; layer.scrollLeft = e.currentTarget.scrollLeft; } }} className="absolute inset-0 z-10 block h-full w-full resize-none overflow-auto bg-transparent p-4 font-mono text-sm leading-6 text-transparent caret-foreground selection:bg-primary/25 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-ring" />
+    </div>}
     {["python", "pandas", "numpy", "matplotlib"].includes(editorId) && <div className="border-t border-border p-4"><label className="text-xs text-muted-foreground" htmlFor="workspace-stdin">Entrées standard</label><textarea id="workspace-stdin" value={stdin} onChange={(e) => setStdin(e.target.value)} className="mt-1 block h-16 w-full rounded border border-input bg-background px-2 py-1 font-mono text-sm" /></div>}
     {files.length > 0 && <div className="flex flex-wrap gap-2 border-t border-border px-4 py-2">{files.map((f) => <span key={f.name} className="inline-flex max-w-full items-center gap-1 text-xs text-muted-foreground"><span className="truncate">{f.name}</span><Button variant="ghost" size="icon" aria-label={`Retirer ${f.name}`} title="Retirer le fichier" onClick={() => setFiles(files.filter((file) => file.name !== f.name))}><Trash2 /></Button></span>)}</div>}
     {output && <pre aria-label="Résultat d’exécution" aria-live="polite" className="max-h-80 overflow-auto whitespace-pre-wrap break-words border-t border-border bg-muted/30 p-4 font-mono text-sm">{output}</pre>}
