@@ -8,8 +8,8 @@ import { ProjectCard } from "../components/ProjectCard";
 export const Route = createFileRoute("/projects/")({
   head: () => ({
     meta: [
-      { title: "Projets Python & Data — Merphy Mademba" },
-      { name: "description", content: "Sélection de projets en ingénierie des données, bases de données, BI et développement full stack." },
+      { title: "Projets Data & Développement — Merphy Mademba" },
+      { name: "description", content: "Projets en ingénierie des données, bases de données, BI, backend et full stack." },
       { property: "og:title", content: "Projets Python & Data — Merphy Mademba" },
       { property: "og:description", content: "Projets en ingénierie des données, bases de données, BI et développement full stack." },
       { property: "og:type", content: "website" },
@@ -28,7 +28,7 @@ function ProjectsPage() {
   const visibleProjects = useMemo(() => {
     const query = searchQuery.trim().toLocaleLowerCase("fr");
     return projects.filter((project) => {
-      const legacyDomains = project.domain === "Data Engineer" ? ["Data Engineering"] : project.domain === "Data Analyste" ? ["BI"] : ["Backend", "Full Stack"];
+      const legacyDomains = project.domain === "Data Engineer" ? ["Data Engineering"] : project.domain === "Data Analyste" ? ["BI"] : ["Backend"];
       const matchesDomain = activeDomain === "Tous" || (project.domains ?? legacyDomains).includes(activeDomain);
       const searchableText = [project.title, project.summary, project.domain, ...(project.domains ?? legacyDomains), ...project.tags]
         .join(" ")
