@@ -9,9 +9,9 @@ export const Route = createFileRoute("/projects/")({
   head: () => ({
     meta: [
       { title: "Projets Python & Data — Merphy Mademba" },
-      { name: "description", content: "Sélection de projets en développement, data science et IA." },
+      { name: "description", content: "Sélection de projets en ingénierie des données, bases de données, BI et développement full stack." },
       { property: "og:title", content: "Projets Python & Data — Merphy Mademba" },
-      { property: "og:description", content: "Sélection de projets dev, data et IA." },
+      { property: "og:description", content: "Projets en ingénierie des données, bases de données, BI et développement full stack." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/projects/")({
   component: ProjectsPage,
 });
 
-const domainFilters = ["Tous", "Data Engineer", "Data Analyste", "Développement Python"] as const;
+const domainFilters = ["Tous", "Data Engineering", "Database Engineering", "BI", "Backend", "Full Stack"] as const;
 
 function ProjectsPage() {
   const [activeDomain, setActiveDomain] = useState<(typeof domainFilters)[number]>("Tous");
@@ -28,8 +28,9 @@ function ProjectsPage() {
   const visibleProjects = useMemo(() => {
     const query = searchQuery.trim().toLocaleLowerCase("fr");
     return projects.filter((project) => {
-      const matchesDomain = activeDomain === "Tous" || project.domain === activeDomain;
-      const searchableText = [project.title, project.summary, project.domain, ...project.tags]
+      const legacyDomains = project.domain === "Data Engineer" ? ["Data Engineering"] : project.domain === "Data Analyste" ? ["BI"] : ["Backend", "Full Stack"];
+      const matchesDomain = activeDomain === "Tous" || (project.domains ?? legacyDomains).includes(activeDomain);
+      const searchableText = [project.title, project.summary, project.domain, ...(project.domains ?? legacyDomains), ...project.tags]
         .join(" ")
         .toLocaleLowerCase("fr");
       return matchesDomain && (!query || searchableText.includes(query));
@@ -44,7 +45,7 @@ function ProjectsPage() {
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary">Portfolio · Réalisations</p>
           <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">Des projets concrets, de la donnée à l’usage.</h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            Explorez les travaux en ingénierie de données, analyse et développement Python.
+            Explorez les projets en ingénierie des données, bases de données, BI, backend et full stack.
             Filtrez par domaine ou recherchez une technologie.
           </p>
           <p className="mt-5 text-sm text-muted-foreground"><span className="font-semibold text-foreground">{projects.length}</span> projets présentés</p>
