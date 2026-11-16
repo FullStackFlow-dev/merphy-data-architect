@@ -11,6 +11,7 @@ import { Download, Code2, Database, BarChart3, BrainCircuit, Cloud, GitBranch, L
 import { FaLinkedin } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
 import { TechIcon } from "../components/TechIcon";
+import { SiNumpy, SiMysql, SiMariadb, SiMicrosoftsqlserver, SiOracle, SiMongodb, SiGooglebigquery, SiApachehadoop, SiPowerbi, SiScikitlearn, SiTensorflow, SiKeras, SiNodedotjs, SiExpress, SiGithubactions, SiAmazonaws, SiGooglecloud } from "react-icons/si";
 import { LINKEDIN_URL, GITHUB_URL } from "../components/SiteLayout";
 import { ProjectCard } from "../components/ProjectCard";
 import { Button } from "../components/ui/button";
@@ -217,27 +218,38 @@ function SkillGrid() {
 }
 
 function SkillMark({ name }: { name: string }) {
+  const logos: Record<string, React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>> = {
+    NumPy: SiNumpy, MySQL: SiMysql, MariaDB: SiMariadb, "SQL Server": SiMicrosoftsqlserver,
+    Oracle: SiOracle, MongoDB: SiMongodb, BigQuery: SiGooglebigquery, Hadoop: SiApachehadoop,
+    "Power BI": SiPowerbi, "Scikit-learn": SiScikitlearn, TensorFlow: SiTensorflow, Keras: SiKeras,
+    "Node.js": SiNodedotjs, Express: SiExpress, "GitHub Actions": SiGithubactions,
+    AWS: SiAmazonaws, GCP: SiGooglecloud,
+  };
+  const Logo = logos[name];
+  if (Logo) return <Logo aria-hidden="true" className="h-7 w-7" />;
+
   const aliases: Record<string, string> = {
     "Apache Airflow": "Airflow",
     "Apache Spark": "Spark",
     "Apache Kafka": "Kafka",
+    "Apache Hadoop": "Hadoop",
   };
   const iconName = aliases[name] ?? name;
   const brandedNames = new Set([
     "Python", "PostgreSQL", "Spark", "Docker", "Airflow", "dbt", "SQL", "Snowflake",
-    "FastAPI", "Django", "Git", "Pandas", "Power BI", "Excel", "Flask", "Kafka", "Databricks",
+    "FastAPI", "Django", "Git", "Pandas", "Excel", "Flask", "Kafka", "Databricks",
   ]);
   if (brandedNames.has(iconName)) return <TechIcon name={iconName} className="h-7 w-7" />;
 
-  const Icon = /SQL|base|MySQL|MariaDB|Oracle|MongoDB/i.test(name)
+  const Icon = /SQL|base|modélisation|architecture/i.test(name)
     ? Database
     : /statistique|KPI|visualisation/i.test(name)
       ? Sigma
-      : /Machine|Deep Learning|LLM|TensorFlow|Keras|Scikit/i.test(name)
+      : /Machine|Deep Learning|LLM/i.test(name)
         ? BrainCircuit
-        : /ETL|dbt|Hadoop|BigQuery|NumPy|Faker/i.test(name)
+        : /ETL|Faker/i.test(name)
           ? Layers3
-          : /Docker|cloud|GCP|AWS|Git|CI|tests/i.test(name)
+          : /cloud|CI|tests/i.test(name)
             ? GitBranch
             : Code2;
   return <Icon aria-hidden="true" className="h-7 w-7" />;
