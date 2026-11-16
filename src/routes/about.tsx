@@ -12,9 +12,9 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "À propos & CV — Merphy Mademba" },
-      { name: "description", content: "Parcours de Merphy Mademba, ingénieur de données et architecte de bases de données : plateforme BI multi-sources, Python, SQL, conception de pipelines ETL & ELT et intelligence artificielle." },
+      { name: "description", content: "Parcours de Merphy Mademba, ingénieur de données et architecte de bases de données : plateforme BI multi-sources, Python, SQL et conception de pipelines ETL & ELT." },
       { property: "og:title", content: "À propos & CV — Merphy Mademba" },
-      { property: "og:description", content: "Ingénieur de données et architecte de bases de données : expérience BI multi-sources, conception de pipelines ETL & ELT et compétences data, cloud et IA." },
+      { property: "og:description", content: "Ingénieur de données et architecte de bases de données : expérience BI multi-sources, conception de pipelines ETL & ELT et compétences data et cloud." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -106,10 +106,6 @@ function AboutPage() {
           <div>
             <div className="font-semibold">Développement logiciel, données & bases de données</div>
             <div className="text-muted-foreground">Parcours de formation et apprentissage continu auprès de Meta, IBM, Microsoft et DataCamp.</div>
-          </div>
-          <div>
-            <div className="font-semibold">Objectifs de spécialisation</div>
-            <div className="text-muted-foreground">DevOps & Software Engineering, Machine Learning et Deep Learning avec DeepLearning.AI.</div>
           </div>
         </div>
         <blockquote className="mt-8 border-l-2 border-primary pl-5 text-muted-foreground">
