@@ -11,7 +11,7 @@ import { Download, Code2, Database, BarChart3, Cloud, GitBranch, Layers3, Sigma,
 import { FaLinkedin } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
 import { TechIcon } from "../components/TechIcon";
-import { SiNumpy, SiMysql, SiMariadb, SiMongodb, SiGooglebigquery, SiApachehadoop, SiScikitlearn, SiTensorflow, SiKeras, SiNodedotjs, SiExpress, SiGithubactions, SiGooglecloud } from "react-icons/si";
+import { SiNumpy, SiMysql, SiMariadb, SiMongodb, SiGooglebigquery, SiApachehadoop, SiNodedotjs, SiExpress, SiGithubactions, SiGooglecloud } from "react-icons/si";
 import { LINKEDIN_URL, GITHUB_URL } from "../components/SiteLayout";
 import { ProjectCard } from "../components/ProjectCard";
 import { Button } from "../components/ui/button";
@@ -234,9 +234,7 @@ function SkillMark({ name }: { name: string }) {
     ? Database
     : /statistique|KPI|visualisation/i.test(name)
       ? Sigma
-      : /Machine|Deep Learning|LLM/i.test(name)
-        ? Layers3
-        : /ETL|Faker/i.test(name)
+      : /ETL|Faker/i.test(name)
           ? Layers3
           : /cloud|CI|tests/i.test(name)
             ? GitBranch
