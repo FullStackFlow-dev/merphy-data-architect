@@ -11,7 +11,7 @@ import { Download, Code2, Database, BarChart3, BrainCircuit, Cloud, GitBranch, L
 import { FaLinkedin } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
 import { TechIcon } from "../components/TechIcon";
-import { SiNumpy, SiMysql, SiMariadb, SiMicrosoftsqlserver, SiOracle, SiMongodb, SiGooglebigquery, SiApachehadoop, SiPowerbi, SiScikitlearn, SiTensorflow, SiKeras, SiNodedotjs, SiExpress, SiGithubactions, SiAmazonaws, SiGooglecloud } from "react-icons/si";
+import { SiNumpy, SiMysql, SiMariadb, SiMongodb, SiGooglebigquery, SiApachehadoop, SiScikitlearn, SiTensorflow, SiKeras, SiNodedotjs, SiExpress, SiGithubactions, SiGooglecloud } from "react-icons/si";
 import { LINKEDIN_URL, GITHUB_URL } from "../components/SiteLayout";
 import { ProjectCard } from "../components/ProjectCard";
 import { Button } from "../components/ui/button";
@@ -219,11 +219,9 @@ function SkillGrid() {
 
 function SkillMark({ name }: { name: string }) {
   const logos: Record<string, ComponentType<{ className?: string; "aria-hidden"?: boolean }>> = {
-    NumPy: SiNumpy, MySQL: SiMysql, MariaDB: SiMariadb, "SQL Server": SiMicrosoftsqlserver,
-    Oracle: SiOracle, MongoDB: SiMongodb, BigQuery: SiGooglebigquery, Hadoop: SiApachehadoop,
-    "Power BI": SiPowerbi, "Scikit-learn": SiScikitlearn, TensorFlow: SiTensorflow, Keras: SiKeras,
+    NumPy: SiNumpy, MySQL: SiMysql, MariaDB: SiMariadb, MongoDB: SiMongodb, BigQuery: SiGooglebigquery, Hadoop: SiApachehadoop, "Scikit-learn": SiScikitlearn, TensorFlow: SiTensorflow, Keras: SiKeras,
     "Node.js": SiNodedotjs, Express: SiExpress, "GitHub Actions": SiGithubactions,
-    AWS: SiAmazonaws, GCP: SiGooglecloud,
+    GCP: SiGooglecloud,
   };
   const Logo = logos[name];
   if (Logo) return <Logo aria-hidden="true" className="h-7 w-7" />;
