@@ -37,6 +37,12 @@ const capabilities = [
     available: false,
   },
   {
+    title: "Tableur Excel & CSV",
+    tag: "Édition disponible",
+    description: "Importer un fichier XLSX ou CSV, modifier les cellules et exporter la feuille en XLSX. Le nettoyage avancé, les graphiques et l’export CSV restent à intégrer.",
+    available: true,
+  },
+  {
     title: "Visualisation et pipelines",
     tag: "En préparation",
     description: "Les tableaux, graphiques et étapes ETL seront affichés à partir de résultats réels lorsque leurs traitements seront intégrés.",
