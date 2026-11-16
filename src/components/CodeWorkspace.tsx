@@ -31,7 +31,7 @@ function highlightCode(source: string, editorId: string) {
       ? new Set("calculate sum sumx average averagex count countrows filter all allexcept related relatedtable divide if switch return var true false blank".split(" "))
       : new Set("and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield True False None".split(" "));
 
-  const tokenPattern = /(\\/\\*[\\s\\S]*?\\*\\/|--[^\\n]*|#[^\\n]*)|("""[\\s\\S]*?"""|'''[\\s\\S]*?'''|'(?:\\\\.|[^'\\\\])*'|"(?:\\\\.|[^"\\\\])*")|(\\b\\d+(?:\\.\\d+)?\\b)|([A-Za-z_][A-Za-z0-9_]*)/g;
+  const tokenPattern = /(\/\*[\s\S]*?\*\/|--[^\n]*|#[^\n]*)|("""[\s\S]*?"""|'''[\s\S]*?'''|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")|(\b\d+(?:\.\d+)?\b)|([A-Za-z_][A-Za-z0-9_]*)/g;
   let html = "";
   let cursor = 0;
 
@@ -46,7 +46,7 @@ function highlightCode(source: string, editorId: string) {
     else if (match[3]) color = "text-sky-300";
     else if (match[4]) {
       if (keywords.has(token.toLowerCase()) || keywords.has(token)) color = "text-purple-300";
-      else if (/\\s*\\(/.test(source.slice(index + token.length))) color = "text-cyan-300";
+      else if (/\s*\(/.test(source.slice(index + token.length))) color = "text-cyan-300";
     }
 
     html += color ? `<span class="${color}">${escapeHtml(token)}</span>` : escapeHtml(token);
