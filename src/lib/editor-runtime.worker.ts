@@ -16,10 +16,12 @@ self.onmessage = async (event: MessageEvent<{ editorId: string; code: string; st
   try {
     if (editorId === "sql" || editorId === "postgresql") {
       if (!database) {
+        self.postMessage({ status: "Initialisation du moteur PostgreSQL…" });
         const { PGlite } = await import("@electric-sql/pglite");
         database = new PGlite();
         await database.exec("CREATE TABLE employees (name TEXT, department TEXT, salary INTEGER); INSERT INTO employees VALUES ('Alice', 'Data', 65000), ('Amadou', 'BI', 58000), ('Fatou', 'Data', 72000); CREATE TABLE departments (name TEXT, budget INTEGER); INSERT INTO departments VALUES ('Data', 200000), ('BI', 120000);");
       }
+      self.postMessage({ status: "Exécution de la requête…" });
       const results = await database.exec(code);
       self.postMessage({ output: results.map((r) => r.rows.length ? JSON.stringify(r.rows, null, 2) : `${r.affectedRows ?? 0} ligne(s) affectée(s)`).join("\n"), done: true });
       return;
@@ -35,10 +37,24 @@ self.onmessage = async (event: MessageEvent<{ editorId: string; code: string; st
     python.setStderr({ batched: (s) => logs.push(s) });
     const inputs = stdin.split("\n");
     python.setStdin({ stdin: () => inputs.shift() ?? null });
-    // All Python modes support the same scientific packages and uploaded spreadsheets.
-    self.postMessage({ status: "Chargement des bibliothèques…" });
-    await python.loadPackage(["pandas", "numpy", "matplotlib", "openpyxl"]);
+    const packages = new Set<string>();
+    if (editorId === "pandas") packages.add("pandas");
+    if (editorId === "numpy") packages.add("numpy");
+    if (editorId === "matplotlib") {
+      packages.add("numpy");
+      packages.add("matplotlib");
+    }
+    const hasSpreadsheet = files.some((file) => /\\.xlsx?$/i.test(file.name));
+    if (hasSpreadsheet) packages.add("pandas");
+    if (packages.size > 0) {
+      self.postMessage({ status: "Chargement des bibliothèques…" });
+      await python.loadPackage([...packages]);
+    }
     for (const file of files) python.FS.writeFile(file.name.replace(/[/\\]/g, "_"), file.bytes);
+    if (hasSpreadsheet) {
+      self.postMessage({ status: "Chargement de la prise en charge Excel…" });
+      await python.runPythonAsync("import micropip\\nawait micropip.install('openpyxl')");
+    }
     await python.runPythonAsync("import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nplt.close('all')");
     const value = await python.runPythonAsync(code);
     if (value !== undefined && value !== null) logs.push(String(value));
