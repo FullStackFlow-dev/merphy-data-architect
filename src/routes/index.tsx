@@ -335,9 +335,13 @@ function Index() {
               <MotionCard key={experience.period} delay={index * 80} className="grid gap-5 rounded-2xl border border-border/80 bg-card p-6 md:grid-cols-[190px_1fr] md:p-8">
                 <p className="text-sm font-medium text-primary">{experience.period}</p>
                 <div>
-                  <h3 className="text-lg font-semibold">{experience.role}</h3>
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <h3 className="text-lg font-semibold">{experience.role}</h3>
+                    {experience.type ? <span className="rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">{experience.type}</span> : null}
+                  </div>
                   <p className="mt-1 text-sm text-muted-foreground">{experience.org}</p>
                   <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{experience.desc}</p>
+                  {experience.responsibilities?.length ? <ul className="mt-4 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">{experience.responsibilities.map((item) => <li key={item} className="flex gap-2"><span aria-hidden="true" className="text-primary">•</span><span>{item}</span></li>)}</ul> : null}
                 </div>
               </MotionCard>
             ))}
