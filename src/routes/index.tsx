@@ -14,6 +14,7 @@ import { LINKEDIN_URL, GITHUB_URL } from "../components/SiteLayout";
 import { ProjectCard } from "../components/ProjectCard";
 import { Button } from "../components/ui/button";
 import { ProfileTitle } from "../components/ProfileTitle";
+import { experiences, skills } from "../data/profile";
 
 
 export const Route = createFileRoute("/")({
@@ -36,27 +37,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
-
-const domains = [
-  {
-    title: "Ingénierie de données / Architecture",
-    tag: "Engineering",
-    desc: "Construction de pipelines de données fiables : ingestion, transformation, modélisation (Silver/Gold) et préparation à la décision.",
-    skills: ["PostgreSQL", "NiFi", "Spark", "Docker", "Airflow", "dbt", "SQL", "Snowflake", "Kafka", "Databricks"],
-  },
-  {
-    title: "Développeur Python & APIs",
-    tag: "Python",
-    desc: "Applications, scripts et APIs robustes : automatisation, back-ends, web scraping et outils métiers performants.",
-    skills: ["Python", "FastAPI", "Django", "Flask", "SQL", "Git", "Web scraping"],
-  },
-  {
-    title: "Data Analytics & BI",
-    tag: "Data",
-    desc: "Exploration et nettoyage avec Pandas et NumPy, modélisation décisionnelle et tableaux de bord Power BI pour produire des indicateurs métier fiables.",
-    skills: ["Power BI", "Cubes OLAP/ROLAP", "SQL", "Pandas", "Statistiques", "Excel"],
-  },
-];
 
 const groupIcons = {
   database: TbDatabase,
@@ -115,7 +95,7 @@ function Index() {
               </a>
             </div>
             <div className="mt-10 grid max-w-xl grid-cols-3 gap-3 border-t border-border/70 pt-6">
-              <div><p className="text-2xl font-semibold tabular-nums">{domains.length}</p><p className="mt-1 text-xs text-muted-foreground">domaines d’expertise</p></div>
+              <div><p className="text-2xl font-semibold tabular-nums">{Object.keys(skills).length}</p><p className="mt-1 text-xs text-muted-foreground">domaines d’expertise</p></div>
               <div><p className="text-2xl font-semibold tabular-nums">{projects.length}</p><p className="mt-1 text-xs text-muted-foreground">projets présentés</p></div>
               <div><p className="text-2xl font-semibold tabular-nums">{certGroups.flatMap((group) => group.items).filter((item) => item.status === "certifie").length}</p><p className="mt-1 text-xs text-muted-foreground">certifications obtenues</p></div>
             </div>
@@ -133,41 +113,64 @@ function Index() {
         </div>
       </section>
 
-      {/* Domains */}
+      {/* Featured projects */}
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="flex items-end justify-between mb-10">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
-            Trois domaines, une approche
+            Projets à la une
           </h2>
-          <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground">
-            À propos →
+          <Link to="/projects" className="text-sm text-muted-foreground hover:text-foreground">
+            Tous les projets →
           </Link>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {domains.map((d, i) => (
-            <MotionCard
-              key={d.tag}
-              delay={i * 90}
-              className="rounded-xl border border-border bg-card p-6 hover:border-primary/40 transition-colors"
-            >
-              <span className="inline-flex items-center rounded-full bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium">
-                {d.tag}
-              </span>
-              <h3 className="mt-4 text-lg font-semibold">{d.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{d.desc}</p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {d.skills.map((s) => (
-                  <span
-                    key={s}
-                    className="inline-flex items-center gap-1 text-xs rounded-md border border-border px-2 py-0.5 text-muted-foreground"
-                  >
-                    <TechIcon name={s} className="h-3.5 w-3.5 text-primary" />
-                    {s}
-                  </span>
+          {featured.map((p, i) => (
+            <ProjectCard key={p.slug} project={p} delay={i * 90} />
+          ))}
+        </div>
+      </section>
+
+      {/* Compétences */}
+      <section id="competences" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-16 md:py-20">
+        <div className="mb-10 max-w-2xl">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary">Savoir-faire</p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">Compétences</h2>
+          <p className="mt-4 text-muted-foreground">Un aperçu des technologies et méthodes que je mobilise dans mes projets de données et de développement.</p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {Object.entries(skills).map(([category, items], index) => (
+            <MotionCard key={category} delay={(index % 3) * 70} className="rounded-2xl border border-border/80 bg-card/70 p-5 transition-colors hover:border-primary/40">
+              <h3 className="font-semibold">{category}</h3>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {items.map((skill) => (
+                  <span key={skill} className="rounded-full border border-border bg-background/60 px-2.5 py-1 text-xs text-muted-foreground">{skill}</span>
                 ))}
               </div>
             </MotionCard>
           ))}
+        </div>
+      </section>
+
+      {/* Expérience */}
+      <section id="experience" className="border-y border-border/60 bg-card/25">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
+          <div className="mb-10 max-w-2xl">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary">Parcours professionnel</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">Expérience</h2>
+            <p className="mt-4 text-muted-foreground">Les missions et réalisations qui structurent mon parcours dans la donnée.</p>
+          </div>
+          <div className="space-y-4">
+            {experiences.map((experience, index) => (
+              <MotionCard key={experience.period} delay={index * 80} className="grid gap-5 rounded-2xl border border-border/80 bg-card p-6 md:grid-cols-[190px_1fr] md:p-8">
+                <p className="text-sm font-medium text-primary">{experience.period}</p>
+                <div>
+                  <h3 className="text-lg font-semibold">{experience.role}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{experience.org}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{experience.desc}</p>
+                </div>
+              </MotionCard>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -283,21 +286,16 @@ function Index() {
         </div>
       </section>
 
-      {/* Featured projects */}
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="flex items-end justify-between mb-10">
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
-            Projets à la une
-          </h2>
-          <Link to="/projects" className="text-sm text-muted-foreground hover:text-foreground">
-            Tous les projets →
-          </Link>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {featured.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} delay={i * 90} />
-          ))}
-        </div>
+      {/* Écrits */}
+      <section className="mx-auto max-w-6xl px-6 py-16 md:py-20">
+        <MotionCard className="flex flex-col gap-6 rounded-2xl border border-primary/20 bg-[linear-gradient(135deg,color-mix(in_oklab,var(--primary)_10%,var(--card)),var(--card)_65%)] p-7 md:flex-row md:items-center md:justify-between md:p-10">
+          <div className="max-w-2xl">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary">Notes et retours d’expérience</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight">Écrits</h2>
+            <p className="mt-3 leading-relaxed text-muted-foreground">Articles et ressources en français autour de Python, des bases de données, de l’ingénierie des données et de l’analyse décisionnelle.</p>
+          </div>
+          <Link to="/blog" className="inline-flex shrink-0 items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:opacity-90">Parcourir les écrits →</Link>
+        </MotionCard>
       </section>
 
       {/* CTA */}
