@@ -90,7 +90,7 @@ function highlightCode(source: string, editorId: string) {
 
     const token = source.slice(start, index);
     const escaped = escapeHtml(token);
-    html += color ? \`<span class="\${color}">\${escaped}</span>\` : escaped;
+    html += color ? `<span class="${color}">${escaped}</span>` : escaped;
   }
 
   return html;
@@ -234,7 +234,7 @@ export function CodeWorkspace() {
       <div className="mb-3 flex gap-2"><Button size="sm" variant="outline" onClick={() => setRows([...rows, Array(Math.max(1, ...rows.map((r) => r.length))).fill("")])}><Plus />Ligne</Button><Button size="sm" variant="outline" onClick={() => setRows(rows.map((r) => [...r, ""]))}><Plus />Colonne</Button></div>
       <div className="max-h-[420px] overflow-auto"><table className="w-full border-collapse text-sm"><tbody>{rows.map((row, i) => <tr key={i}><th className="border border-border bg-muted px-2 text-muted-foreground">{i + 1}</th>{row.map((cell, j) => <td key={j} className="min-w-32 border border-border"><input className="w-full bg-background p-2" aria-label={`Cellule ${i + 1}, ${j + 1}`} value={cell} onChange={(e) => setRows(rows.map((r, ri) => ri === i ? r.map((c, ci) => ci === j ? e.target.value : c) : r))} /></td>)}</tr>)}</tbody></table></div>
     </div> : <div className="relative h-[360px] w-full resize-y overflow-hidden bg-background">
-      <pre aria-hidden="true" className="pointer-events-none absolute inset-0 m-0 overflow-auto whitespace-pre p-4 font-mono text-sm leading-6 text-foreground"><code dangerouslySetInnerHTML={{ __html: highlightCode(code, editorId) + "\\n" }} /></pre>
+      <pre aria-hidden="true" className="pointer-events-none absolute inset-0 m-0 overflow-auto whitespace-pre p-4 font-mono text-sm leading-6 text-foreground"><code dangerouslySetInnerHTML={{ __html: highlightCode(code, editorId) + "\n" }} /></pre>
       <textarea spellCheck={false} aria-label="Code source" value={code} onChange={(e) => setCode(e.target.value)} onScroll={(e) => { const layer = e.currentTarget.previousElementSibling; if (layer instanceof HTMLElement) { layer.scrollTop = e.currentTarget.scrollTop; layer.scrollLeft = e.currentTarget.scrollLeft; } }} className="absolute inset-0 z-10 block h-full w-full resize-none overflow-auto bg-transparent p-4 font-mono text-sm leading-6 text-transparent caret-foreground selection:bg-primary/25 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-ring" />
     </div>}
     {["python", "pandas", "numpy", "matplotlib"].includes(editorId) && <div className="border-t border-border p-4"><label className="text-xs text-muted-foreground" htmlFor="workspace-stdin">Entrées standard</label><textarea id="workspace-stdin" value={stdin} onChange={(e) => setStdin(e.target.value)} className="mt-1 block h-16 w-full rounded border border-input bg-background px-2 py-1 font-mono text-sm" /></div>}
