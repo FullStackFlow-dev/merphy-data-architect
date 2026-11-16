@@ -8,6 +8,17 @@ import { decodeWorkspace, encodeWorkspace, type EditorSnapshot } from "../lib/ed
 
 const STORAGE = "merphy-editor-history-v1";
 const initialRows = [["Ville", "Température", "Humidité"], ["Dakar", "28", "75"], ["Thiès", "30", "65"]];
+type SqlRow = Record<string, unknown>;
+function displayCell(value: unknown) {
+  if (value === null || value === undefined) return "NULL";
+  return typeof value === "object" ? JSON.stringify(value) : String(value);
+}
+function displayType(value: unknown) {
+  if (value === null || value === undefined) return "NULL";
+  if (typeof value === "number") return "Numérique";
+  if (typeof value === "boolean") return "Booléen";
+  return value instanceof Date ? "Date" : "Texte";
+}
 function sample(id: string) {
   const item = codeEditors.find((e) => e.id === id);
   if (!item) return "";
@@ -104,6 +115,9 @@ export function CodeWorkspace() {
   const [history, setHistory] = useState<EditorSnapshot[]>([]);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [output, setOutput] = useState("");
+  const [sqlRows, setSqlRows] = useState<SqlRow[] | null>(null);
+  const [executionMs, setExecutionMs] = useState<number | null>(null);
+  const [queryHistory, setQueryHistory] = useState<{ code: string; rowCount: number; durationMs: number; ranAt: string }[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
@@ -112,6 +126,8 @@ export function CodeWorkspace() {
   const worker = useRef<Worker | null>(null);
   const input = useRef<HTMLInputElement | null>(null);
   const drafts = useRef<Record<string, { code: string; name: string }>>({});
+  const latestCode = useRef(code);
+  latestCode.current = code;
   const editor = codeEditors.find((e) => e.id === editorId) ?? codeEditors[0];
 
   useEffect(() => {
@@ -207,12 +223,56 @@ export function CodeWorkspace() {
       worker.current = new Worker(new URL("../lib/editor-runtime.worker.ts", import.meta.url), { type: "module" });
       worker.current.onmessage = (event) => {
         if (event.data.status) setOutput(event.data.status);
-        if (event.data.done) { setOutput(event.data.output); setImages(event.data.images ?? []); setBusy(false); }
+        if (event.data.done) {
+          setOutput(event.data.output);
+          setImages(event.data.images ?? []);
+          setBusy(false);
+          if (Array.isArray(event.data.rows)) {
+            const rows = event.data.rows as SqlRow[];
+            const durationMs = typeof event.data.durationMs === "number" ? event.data.durationMs : 0;
+            setSqlRows(rows);
+            setExecutionMs(durationMs);
+            setQueryHistory((history) => [{ code: latestCode.current, rowCount: rows.length, durationMs, ranAt: new Date().toISOString() }, ...history].slice(0, 10));
+          } else {
+            setSqlRows(null);
+            setExecutionMs(null);
+          }
+        }
       };
       worker.current.onerror = () => { setOutput("Le moteur n’a pas pu démarrer. Vérifiez votre connexion et réessayez."); setBusy(false); worker.current?.terminate(); worker.current = null; };
     }
-    setBusy(true); setOutput("Exécution…"); setImages([]);
+    latestCode.current = code;
+    setBusy(true); setOutput("Exécution…"); setSqlRows(null); setExecutionMs(null); setImages([]);
     worker.current.postMessage({ editorId, code, stdin, files });
+  }
+
+  async function exportSqlRows(format: "csv" | "xlsx") {
+    if (!sqlRows) return;
+    try {
+      let blob: Blob;
+      if (format === "csv") {
+        const columns = Object.keys(sqlRows[0] ?? {});
+        const csv = [columns, ...sqlRows.map((row) => columns.map((column) => displayCell(row[column])))]
+          .map((line) => line.map((value) => `"${value.replace(/"/g, '""')}"`).join(","))
+          .join("\r\n");
+        blob = new Blob(["\\uFEFF", csv], { type: "text/csv;charset=utf-8" });
+      } else {
+        const XLSX = await import("xlsx");
+        const worksheet = XLSX.utils.json_to_sheet(sqlRows);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Résultats");
+        blob = new Blob([XLSX.write(workbook, { type: "array", bookType: "xlsx" })], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `resultats-sql.${format}`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setMessage(`Résultats exportés en ${format.toUpperCase()}.`);
+    } catch {
+      setMessage("L’export des résultats a échoué.");
+    }
   }
 
   return <div className="overflow-hidden rounded-lg border border-border bg-card">
@@ -244,7 +304,28 @@ export function CodeWorkspace() {
     </div>}
     {["python", "pandas", "numpy", "matplotlib"].includes(editorId) && <div className="border-t border-border p-4"><p className="mb-3 rounded-md border border-warning/35 bg-warning/10 px-3 py-2 text-sm text-muted-foreground">L’exécution Python est désactivée dans le navigateur. Un service de bac à sable côté serveur doit être configuré avant de lancer du code.</p><label className="text-xs text-muted-foreground" htmlFor="workspace-stdin">Entrées standard</label><textarea id="workspace-stdin" value={stdin} onChange={(e) => setStdin(e.target.value)} className="mt-1 block h-16 w-full rounded border border-input bg-background px-2 py-1 font-mono text-sm" /></div>}
     {files.length > 0 && <div className="flex flex-wrap gap-2 border-t border-border px-4 py-2">{files.map((f) => <span key={f.name} className="inline-flex max-w-full items-center gap-1 text-xs text-muted-foreground"><span className="truncate">{f.name}</span><Button variant="ghost" size="icon" aria-label={`Retirer ${f.name}`} title="Retirer le fichier" onClick={() => setFiles(files.filter((file) => file.name !== f.name))}><Trash2 /></Button></span>)}</div>}
-    {output && <pre aria-label="Résultat d’exécution" aria-live="polite" className="max-h-80 overflow-auto whitespace-pre-wrap break-words border-t border-border bg-muted/30 p-4 font-mono text-sm">{output}</pre>}
+    {output && (sqlRows ? <section aria-label="Résultat d’exécution" aria-live="polite" className="border-t border-border bg-muted/20">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+        <p className="text-sm font-medium">{sqlRows.length} ligne{sqlRows.length === 1 ? "" : "s"} retournée{sqlRows.length === 1 ? "" : "s"}{executionMs !== null ? ` · ${executionMs} ms` : ""}</p>
+        {sqlRows.length > 0 && <div className="flex gap-2"><Button size="sm" variant="outline" onClick={() => void exportSqlRows("csv")}>Exporter CSV</Button><Button size="sm" variant="outline" onClick={() => void exportSqlRows("xlsx")}>Exporter Excel</Button></div>}
+      </div>
+      {sqlRows.length > 0 ? <div className="max-h-80 overflow-auto border-t border-border">
+        <table className="w-full border-collapse text-left text-sm">
+          <thead className="sticky top-0 bg-muted">
+            <tr>{Object.keys(sqlRows[0]).map((column) => <th key={column} className="border-b border-r border-border px-3 py-2 font-semibold">{column}</th>)}</tr>
+            <tr>{Object.keys(sqlRows[0]).map((column) => <th key={column} className="border-b border-r border-border px-3 py-1 text-[10px] font-normal uppercase tracking-wide text-muted-foreground">{displayType(sqlRows.find((row) => row[column] !== null)?.[column])}</th>)}</tr>
+          </thead>
+          <tbody>{sqlRows.map((row, rowIndex) => <tr key={rowIndex} className="odd:bg-background/50">{Object.keys(sqlRows[0]).map((column) => <td key={column} className="border-b border-r border-border/70 px-3 py-2 font-mono text-xs">{displayCell(row[column])}</td>)}</tr>)}</tbody>
+        </table>
+      </div> : <pre className="whitespace-pre-wrap border-t border-border px-4 py-3 font-mono text-sm">{output}</pre>}
+    </section> : <pre aria-label="Résultat d’exécution" aria-live="polite" className="max-h-80 overflow-auto whitespace-pre-wrap break-words border-t border-border bg-muted/30 p-4 font-mono text-sm">{output}</pre>)}
+    {queryHistory.length > 0 && <details className="border-t border-border px-4 py-3">
+      <summary className="cursor-pointer text-sm font-medium">Historique des requêtes ({queryHistory.length})</summary>
+      <ol className="mt-3 space-y-3">{queryHistory.map((entry, index) => <li key={`${entry.ranAt}-${index}`} className="rounded-md border border-border bg-background/60 p-3">
+        <p className="text-xs text-muted-foreground">{new Date(entry.ranAt).toLocaleString("fr-FR")} · {entry.rowCount} ligne(s) · {entry.durationMs} ms</p>
+        <pre className="mt-2 overflow-auto whitespace-pre-wrap font-mono text-xs">{entry.code}</pre>
+      </li>)}</ol>
+    </details>}
     {images.map((image, i) => <img key={i} src={`data:image/png;base64,${image}`} alt={`Graphique ${i + 1}`} className="max-h-96 w-full object-contain" />)}
     {message && <p role="status" className="border-t border-border px-4 py-2 text-sm text-muted-foreground">{message}</p>}
     <div className="border-t border-border bg-muted/30 px-4 py-2 text-right text-xs text-muted-foreground">Propulsé par <span className="font-semibold text-primary">Merphy Mademba</span></div>
