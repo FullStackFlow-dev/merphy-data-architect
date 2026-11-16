@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, type ComponentType } from "react";
 import { SiteLayout } from "../components/SiteLayout";
 import { projects } from "../data/projects";
 import { MotionCard, Reveal } from "../components/motion";
@@ -218,7 +218,7 @@ function SkillGrid() {
 }
 
 function SkillMark({ name }: { name: string }) {
-  const logos: Record<string, React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>> = {
+  const logos: Record<string, ComponentType<{ className?: string; "aria-hidden"?: boolean }>> = {
     NumPy: SiNumpy, MySQL: SiMysql, MariaDB: SiMariadb, "SQL Server": SiMicrosoftsqlserver,
     Oracle: SiOracle, MongoDB: SiMongodb, BigQuery: SiGooglebigquery, Hadoop: SiApachehadoop,
     "Power BI": SiPowerbi, "Scikit-learn": SiScikitlearn, TensorFlow: SiTensorflow, Keras: SiKeras,
