@@ -85,64 +85,51 @@ function Index() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,theme(colors.primary/15),transparent_60%)]" />
-        <div className="mx-auto max-w-6xl px-6 pt-24 pb-20 grid gap-12 md:grid-cols-[1.15fr_1fr] md:items-center">
+      <section className="relative isolate overflow-hidden border-b border-border/60">
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_18%_0%,color-mix(in_oklab,var(--primary)_18%,transparent),transparent_55%)]" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-[0.12] [background-image:linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(to_bottom,black,transparent_90%)]" />
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-[1.2fr_0.8fr] md:py-24">
           <div>
-          <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
-            Merphy Mademba
-          </p>
-          <ProfileTitle />
-          <p className="mt-4 text-sm tracking-wide text-muted-foreground">
-            Python • SQL • PostgreSQL • MySQL • SQL Server • Airflow • Power BI
-          </p>
-          <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
-            Je modélise, optimise et sécurise les bases de données, puis conçois
-            des pipelines Bronze / Silver / Gold robustes, des back-ends Python
-            et des analyses Power BI prêtes pour la décision.
-          </p>
-          <p className="mt-3 text-xs uppercase tracking-wider text-primary/80">
-            Conception de pipelines ETL &amp; ELT
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Link
-              to="/projects"
-              className="inline-flex items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
-            >
-              Découvrir mes projets
-            </Link>
-            <Link
-              to="/demos"
-              className="inline-flex items-center rounded-md border border-border px-5 py-2.5 text-sm font-medium hover:bg-accent"
-            >
-              Essayer les démos IA
-            </Link>
-            <a
-              href={cvPdf}
-              download="CV-Merphy.pdf"
-              className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-medium hover:bg-accent"
-            >
-              <Download className="h-4 w-4" /> Télécharger le CV
-            </a>
-            <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border hover:bg-accent hover:text-primary">
-              <FaLinkedin className="h-5 w-5" />
-            </a>
-            <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border hover:bg-accent hover:text-primary">
-              <SiGithub className="h-5 w-5" />
-            </a>
+            <p className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.16em] text-primary">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-primary" />
+              Portfolio · Dakar, Sénégal
+            </p>
+            <p className="mt-6 text-sm font-medium tracking-wide text-muted-foreground">Merphy Mademba</p>
+            <ProfileTitle />
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              Je transforme les données en systèmes fiables : bases bien modélisées,
+              pipelines lisibles et outils utiles à la décision.
+            </p>
+            <p className="mt-4 text-xs font-medium uppercase tracking-[0.14em] text-primary/85">
+              Python · SQL · PostgreSQL · Airflow · Power BI
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/projects" className="inline-flex items-center rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/10 transition hover:-translate-y-0.5 hover:opacity-90">
+                Explorer les projets
+              </Link>
+              <Link to="/contact" className="inline-flex items-center rounded-md border border-border bg-background/60 px-5 py-3 text-sm font-medium transition hover:border-primary/40 hover:bg-accent">
+                Me contacter
+              </Link>
+              <a href={cvPdf} download="CV-Merphy.pdf" className="inline-flex items-center gap-2 rounded-md px-3 py-3 text-sm font-medium text-muted-foreground transition hover:text-foreground">
+                <Download className="h-4 w-4" /> Télécharger le CV
+              </a>
+            </div>
+            <div className="mt-10 grid max-w-xl grid-cols-3 gap-3 border-t border-border/70 pt-6">
+              <div><p className="text-2xl font-semibold tabular-nums">{domains.length}</p><p className="mt-1 text-xs text-muted-foreground">domaines d’expertise</p></div>
+              <div><p className="text-2xl font-semibold tabular-nums">{projects.length}</p><p className="mt-1 text-xs text-muted-foreground">projets présentés</p></div>
+              <div><p className="text-2xl font-semibold tabular-nums">{certGroups.flatMap((group) => group.items).filter((item) => item.status === "certifie").length}</p><p className="mt-1 text-xs text-muted-foreground">certifications obtenues</p></div>
+            </div>
           </div>
-
+          <div className="relative mx-auto w-full max-w-sm">
+            <div aria-hidden="true" className="absolute -inset-4 rounded-[2rem] bg-primary/10 blur-2xl" />
+            <MotionCard className="relative overflow-hidden rounded-2xl border border-border/80 bg-card p-2 shadow-2xl shadow-black/20">
+              <img src={profileImg} alt="Merphy Mademba — ingénieur de données et architecte de bases de données" width={640} height={640} className="aspect-square w-full rounded-xl object-cover" loading="eager" />
+              <div className="absolute inset-x-5 bottom-5 rounded-xl border border-white/15 bg-background/85 p-4 backdrop-blur">
+                <p className="text-xs uppercase tracking-[0.15em] text-primary">Data · Architecture · Analytics</p>
+                <p className="mt-1 font-medium">Des fondations solides pour mieux décider.</p>
+              </div>
+            </MotionCard>
           </div>
-          <MotionCard className="mx-auto w-56 md:w-full max-w-sm lg:max-w-md rounded-2xl border border-border bg-card overflow-hidden">
-            <img
-              src={profileImg}
-              alt="Merphy Mademba — ingénieur de données et architecte de bases de données"
-              className="w-full h-full object-cover aspect-square"
-              loading="eager"
-            />
-          </MotionCard>
         </div>
       </section>
 
@@ -199,6 +186,19 @@ function Index() {
             réels.
           </p>
         </Reveal>
+
+        <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-3">
+          {[
+            { label: "Certifications obtenues", value: certGroups.flatMap((group) => group.items).filter((item) => item.status === "certifie").length },
+            { label: "Parcours en cours", value: certGroups.flatMap((group) => group.items).filter((item) => item.status === "en-cours").length },
+            { label: "Domaines de formation", value: certGroups.length },
+          ].map((stat) => (
+            <div key={stat.label} className="rounded-xl border border-border/70 bg-card/60 px-4 py-4">
+              <p className="text-2xl font-semibold tabular-nums">{stat.value}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{stat.label}</p>
+            </div>
+          ))}
+        </div>
 
         <div className="grid gap-6 md:grid-cols-3">
           {certGroups.map((g, i) => {
