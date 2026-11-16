@@ -19,9 +19,14 @@ self.onmessage = async (event: MessageEvent<{ editorId: string; code: string }>)
       await database.exec("CREATE TABLE employees (name TEXT, department TEXT, salary INTEGER); INSERT INTO employees VALUES ('Alice', 'Data', 65000), ('Amadou', 'BI', 58000), ('Fatou', 'Data', 72000); CREATE TABLE departments (name TEXT, budget INTEGER); INSERT INTO departments VALUES ('Data', 200000), ('BI', 120000);");
     }
     self.postMessage({ status: "Exécution de la requête sur les données synthétiques…" });
+    const startedAt = performance.now();
     const results = await database.exec(code);
+    const durationMs = Math.round(performance.now() - startedAt);
+    const lastResult = results[results.length - 1];
     self.postMessage({
       output: results.map((result) => result.rows.length ? JSON.stringify(result.rows, null, 2) : `${result.affectedRows ?? 0} ligne(s) affectée(s)`).join("\n"),
+      rows: lastResult?.rows ?? [],
+      durationMs,
       done: true,
     });
   } catch (error) {
