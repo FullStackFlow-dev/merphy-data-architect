@@ -7,7 +7,7 @@ import { certGroups, type CertStatus } from "../data/certifications";
 import { TbDatabase, TbCode, TbChartBar, TbCheck, TbClock, TbCertificate } from "react-icons/tb";
 import profileImg from "../assets/profile.jpg";
 import cvPdf from "../assets/cv.pdf";
-import { Download, Code2, Database, BarChart3, BrainCircuit, Cloud, GitBranch, Layers3, Sigma, Workflow } from "lucide-react";
+import { Download, Code2, Database, BarChart3, Cloud, GitBranch, Layers3, Sigma, Workflow } from "lucide-react";
 import { FaLinkedin } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
 import { TechIcon } from "../components/TechIcon";
@@ -97,15 +97,6 @@ const skillGroups: { title: string; icon: typeof Database; skills: SkillItem[] }
     skills: [
       { name: "Power BI" }, { name: "Excel" }, { name: "Pandas" }, { name: "Python" },
       { name: "Statistiques" }, { name: "Visualisation de données" }, { name: "KPI" },
-    ],
-  },
-  {
-    title: "IA et apprentissage automatique",
-    icon: BrainCircuit,
-    skills: [
-      { name: "Scikit-learn" }, { name: "TensorFlow" }, { name: "Keras" },
-      { name: "Machine Learning", learning: true }, { name: "Deep Learning", learning: true },
-      { name: "LLM" },
     ],
   },
   {
@@ -244,7 +235,7 @@ function SkillMark({ name }: { name: string }) {
     : /statistique|KPI|visualisation/i.test(name)
       ? Sigma
       : /Machine|Deep Learning|LLM/i.test(name)
-        ? BrainCircuit
+        ? Layers3
         : /ETL|Faker/i.test(name)
           ? Layers3
           : /cloud|CI|tests/i.test(name)
@@ -487,7 +478,7 @@ function Index() {
             Un projet en tête ?
           </h2>
           <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-            Discutons de vos besoins en développement, data ou IA.
+            Discutons de vos besoins en développement et en data.
           </p>
           <Link
             to="/contact"
