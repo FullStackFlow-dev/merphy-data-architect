@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteLayout } from "../components/SiteLayout";
 import { projects } from "../data/projects";
 import { MotionCard, Reveal } from "../components/motion";
@@ -6,7 +7,7 @@ import { certGroups, type CertStatus } from "../data/certifications";
 import { TbDatabase, TbCode, TbChartBar, TbCheck, TbClock, TbCertificate } from "react-icons/tb";
 import profileImg from "../assets/profile.jpg";
 import cvPdf from "../assets/cv.pdf";
-import { Download } from "lucide-react";
+import { Download, Code2, Database, BarChart3, BrainCircuit, Cloud, GitBranch, Layers3, Sigma, Workflow } from "lucide-react";
 import { FaLinkedin } from "react-icons/fa";
 import { SiGithub } from "react-icons/si";
 import { TechIcon } from "../components/TechIcon";
@@ -58,6 +59,179 @@ function StatusBadge({ status }: { status: CertStatus }) {
       {done ? "Certifié" : "En cours"}
     </span>
   );
+}
+
+type SkillItem = {
+  name: string;
+  learning?: boolean;
+  uses?: { slug: string; description: string }[];
+};
+
+const skillGroups: { title: string; icon: typeof Database; skills: SkillItem[] }[] = [
+  {
+    title: "Ingénierie des données",
+    icon: Workflow,
+    skills: [
+      { name: "Python", uses: [{ slug: "dakar-weather-intelligence", description: "Socle applicatif et environnement de développement du projet." }, { slug: "mobilite-urbaine-senegal", description: "Génération des données synthétiques et scripts du projet." }] },
+      { name: "Pandas" }, { name: "NumPy" },
+      { name: "ETL / ELT", uses: [{ slug: "mobilite-urbaine-senegal", description: "Pipeline organisé en couches Bronze, Silver et Gold." }] },
+      { name: "Apache Airflow" }, { name: "dbt" }, { name: "Snowflake" }, { name: "BigQuery" },
+      { name: "Apache Spark" }, { name: "Kafka" }, { name: "Hadoop" }, { name: "Databricks" },
+      { name: "Faker", uses: [{ slug: "mobilite-urbaine-senegal", description: "Création de données synthétiques réalistes pour les scénarios VTC." }] },
+    ],
+  },
+  {
+    title: "Bases de données et architecture",
+    icon: Database,
+    skills: [
+      { name: "PostgreSQL", uses: [{ slug: "dakar-weather-intelligence", description: "Base de données de développement configurée pour le projet." }] },
+      { name: "MySQL" }, { name: "MariaDB" }, { name: "SQL Server", uses: [{ slug: "mobilite-urbaine-senegal", description: "SGBD cible de la plateforme analytique." }] },
+      { name: "Oracle" }, { name: "MongoDB" }, { name: "SQL", uses: [{ slug: "mobilite-urbaine-senegal", description: "Requêtes et structures de données du projet analytique." }] },
+      { name: "Modélisation des données" }, { name: "Architecture des bases de données" },
+    ],
+  },
+  {
+    title: "Analyse de données et BI",
+    icon: BarChart3,
+    skills: [
+      { name: "Power BI" }, { name: "Excel" }, { name: "Pandas" }, { name: "Python" },
+      { name: "Statistiques" }, { name: "Visualisation de données" }, { name: "KPI" },
+    ],
+  },
+  {
+    title: "IA et apprentissage automatique",
+    icon: BrainCircuit,
+    skills: [
+      { name: "Scikit-learn" }, { name: "TensorFlow" }, { name: "Keras" },
+      { name: "Machine Learning", learning: true }, { name: "Deep Learning", learning: true },
+      { name: "LLM" },
+    ],
+  },
+  {
+    title: "Développement backend et API",
+    icon: Code2,
+    skills: [
+      { name: "Python", uses: [{ slug: "dakar-weather-intelligence", description: "Socle applicatif et environnement de développement du projet." }, { slug: "mobilite-urbaine-senegal", description: "Génération des données synthétiques et scripts du projet." }] },
+      { name: "FastAPI" }, { name: "Django" }, { name: "Flask" }, { name: "Node.js" }, { name: "Express" }, { name: "API REST" },
+    ],
+  },
+  {
+    title: "DevOps, cloud et sécurité",
+    icon: Cloud,
+    skills: [
+      { name: "Docker", uses: [{ slug: "dakar-weather-intelligence", description: "Environnement local conteneurisé pour la base PostgreSQL." }] },
+      { name: "Git" }, { name: "GitHub Actions" }, { name: "CI / CD" },
+      { name: "AWS" }, { name: "GCP" },
+      { name: "Tests automatisés", uses: [{ slug: "mobilite-urbaine-senegal", description: "Vérifications automatisées avec pytest." }] },
+    ],
+  },
+];
+
+function SkillGrid() {
+  const [activeSkill, setActiveSkill] = useState<SkillItem | null>(null);
+  const [pinnedSkill, setPinnedSkill] = useState<string | null>(null);
+  const activeUses = activeSkill?.uses ?? [];
+  const selectedProjectItems = activeUses
+    .map((use) => ({ ...use, project: projects.find((project) => project.slug === use.slug) }))
+    .filter((use) => use.project);
+
+  return (
+    <div onKeyDown={(event) => { if (event.key === "Escape") { setActiveSkill(null); setPinnedSkill(null); } }}>
+      <div className="grid gap-5 md:grid-cols-2">
+        {skillGroups.map((group) => {
+          const GroupIcon = group.icon;
+          return (
+            <MotionCard key={group.title} className="rounded-2xl border border-border/80 bg-card/70 p-5 md:p-6">
+              <div className="mb-5 flex items-center gap-3">
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
+                  <GroupIcon aria-hidden="true" className="h-4 w-4" />
+                </span>
+                <h3 className="font-semibold">{group.title}</h3>
+              </div>
+              <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4">
+                {group.skills.map((skill) => {
+                  const selected = activeSkill?.name === skill.name;
+                  return (
+                    <button
+                      key={skill.name}
+                      type="button"
+                      aria-expanded={selected}
+                      aria-controls="skill-project-uses"
+                      onMouseEnter={() => { if (!pinnedSkill) setActiveSkill(skill); }}
+                      onFocus={() => { if (!pinnedSkill) setActiveSkill(skill); }}
+                      onClick={() => {
+                        if (pinnedSkill === skill.name) {
+                          setPinnedSkill(null);
+                          setActiveSkill(null);
+                        } else {
+                          setPinnedSkill(skill.name);
+                          setActiveSkill(skill);
+                        }
+                      }}
+                      className={`group relative flex aspect-square min-w-0 flex-col items-center justify-center gap-2 rounded-xl border p-2 text-center transition duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${selected ? "border-primary/60 bg-primary/10 text-foreground" : "border-border/70 bg-background/50 text-muted-foreground hover:-translate-y-0.5 hover:border-primary/40 hover:bg-accent/60 hover:text-foreground"}`}
+                    >
+                      <SkillMark name={skill.name} />
+                      <span className="line-clamp-2 text-[11px] leading-tight sm:text-xs">{skill.name}</span>
+                      {skill.learning ? <span className="text-[9px] leading-none text-primary">En apprentissage</span> : null}
+                    </button>
+                  );
+                })}
+              </div>
+            </MotionCard>
+          );
+        })}
+      </div>
+      <div
+        id="skill-project-uses"
+        role="region"
+        aria-live="polite"
+        aria-label="Projets utilisant la compétence sélectionnée"
+        onMouseLeave={() => { if (!pinnedSkill) setActiveSkill(null); }}
+        className="mt-5 min-h-24 rounded-2xl border border-border/80 bg-card/60 p-5 md:p-6"
+      >
+        <div className="flex items-start gap-3">
+          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary">
+            <GitBranch aria-hidden="true" className="h-4 w-4" />
+          </span>
+          <div className="min-w-0">
+            <h3 className="font-semibold">Utilisé dans{activeSkill ? ` · ${activeSkill.name}` : ""}</h3>
+            {activeSkill?.learning ? <p className="mt-2 text-sm text-primary">Compétence en apprentissage.</p> : null}
+            {selectedProjectItems.length > 0 ? (
+              <ul className="mt-3 space-y-3">
+                {selectedProjectItems.map(({ slug, description, project }) => (
+                  <li key={slug} className="text-sm">
+                    <Link to="/projects/$slug" params={{ slug }} className="font-medium text-foreground underline decoration-primary/50 underline-offset-4 hover:text-primary">{project!.title}</Link>
+                    <p className="mt-1 text-muted-foreground">{description}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : activeSkill && !activeSkill.learning ? (
+              <p className="mt-2 text-sm text-muted-foreground">Aucun projet présenté ne documente encore cet usage.</p>
+            ) : !activeSkill ? (
+              <p className="mt-2 text-sm text-muted-foreground">Survolez une compétence, ou sélectionnez-la au clavier ou au toucher, pour voir les projets associés.</p>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SkillMark({ name }: { name: string }) {
+  const technologyIcon = <TechIcon name={name} className="h-7 w-7" />;
+  if (technologyIcon.props.children) return technologyIcon;
+  const Icon = /SQL|base|PostgreSQL|MySQL|MariaDB|Oracle|MongoDB/i.test(name)
+    ? Database
+    : /statistique|KPI|Power BI|Excel|visualisation/i.test(name)
+      ? Sigma
+      : /Machine|Deep Learning|LLM|TensorFlow|Keras|Scikit/i.test(name)
+        ? BrainCircuit
+        : /ETL|Airflow|dbt|Spark|Kafka|Hadoop|Databricks|BigQuery|Snowflake|Pandas|NumPy|Faker/i.test(name)
+          ? Layers3
+          : /Docker|cloud|GCP|AWS|Git|CI|tests/i.test(name)
+            ? GitBranch
+            : Code2;
+  return <Icon aria-hidden="true" className="h-7 w-7" />;
 }
 
 function Index() {
@@ -134,21 +308,10 @@ function Index() {
       <section id="competences" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-16 md:py-20">
         <div className="mb-10 max-w-2xl">
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary">Savoir-faire</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">Compétences</h2>
-          <p className="mt-4 text-muted-foreground">Un aperçu des technologies et méthodes que je mobilise dans mes projets de données et de développement.</p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">Compétences &amp; Technologies</h2>
+          <p className="mt-4 text-muted-foreground">Technologies et méthodes classées par domaine. Sélectionnez une tuile pour découvrir où elle est mise en pratique.</p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {Object.entries(skills).map(([category, items], index) => (
-            <MotionCard key={category} delay={(index % 3) * 70} className="rounded-2xl border border-border/80 bg-card/70 p-5 transition-colors hover:border-primary/40">
-              <h3 className="font-semibold">{category}</h3>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {items.map((skill) => (
-                  <span key={skill} className="rounded-full border border-border bg-background/60 px-2.5 py-1 text-xs text-muted-foreground">{skill}</span>
-                ))}
-              </div>
-            </MotionCard>
-          ))}
-        </div>
+        <SkillGrid />
       </section>
 
       {/* Expérience */}
