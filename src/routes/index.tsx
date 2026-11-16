@@ -210,7 +210,7 @@ function SkillGrid() {
 
 function SkillMark({ name }: { name: string }) {
   const logos: Record<string, ComponentType<{ className?: string; "aria-hidden"?: boolean }>> = {
-    NumPy: SiNumpy, MySQL: SiMysql, MariaDB: SiMariadb, MongoDB: SiMongodb, BigQuery: SiGooglebigquery, Hadoop: SiApachehadoop, "Scikit-learn": SiScikitlearn, TensorFlow: SiTensorflow, Keras: SiKeras,
+    NumPy: SiNumpy, MySQL: SiMysql, MariaDB: SiMariadb, MongoDB: SiMongodb, BigQuery: SiGooglebigquery, Hadoop: SiApachehadoop,
     "Node.js": SiNodedotjs, Express: SiExpress, "GitHub Actions": SiGithubactions,
     GCP: SiGooglecloud,
   };
