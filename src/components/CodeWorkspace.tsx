@@ -5,7 +5,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
 import { codeEditors } from "../data/code-editors";
 import { decodeWorkspace, encodeWorkspace, type EditorSnapshot } from "../lib/editor-workspace";
-import { executeDemoSql } from "../lib/datalab.functions";
 
 const STORAGE = "merphy-editor-history-v1";
 const initialRows = [["Ville", "Température", "Humidité"], ["Dakar", "28", "75"], ["Thiès", "30", "65"]];
@@ -213,31 +212,10 @@ export function CodeWorkspace() {
   }
 
   async function run() {
-    if (editorId !== "sql" && editorId !== "postgresql") {
-      setOutput("Exécution indisponible : un bac à sable côté serveur doit être configuré pour Python.");
-      setImages([]);
-      return;
-    }
-    latestCode.current = code;
-    setBusy(true);
-    setOutput("Exécution sur le serveur…");
+    setOutput("Exécution SQL indisponible : le moteur serveur doit être configuré avant de lancer des requêtes.");
     setSqlRows(null);
     setExecutionMs(null);
     setImages([]);
-    try {
-      const result = await executeDemoSql({ data: { code } });
-      setOutput(result.output);
-      setImages([]);
-      setSqlRows(result.rows as SqlRow[]);
-      setExecutionMs(result.durationMs);
-      setQueryHistory((history) => [{ code, rowCount: result.rows.length, durationMs: result.durationMs, ranAt: new Date().toISOString() }, ...history].slice(0, 10));
-    } catch (error) {
-      setOutput(error instanceof Error ? error.message : "L’exécution SQL a échoué.");
-      setSqlRows(null);
-      setExecutionMs(null);
-    } finally {
-      setBusy(false);
-    }
   }
 
   async function exportSqlRows(format: "csv" | "xlsx") {
@@ -286,7 +264,7 @@ export function CodeWorkspace() {
     </div>
     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-muted/30 px-4 py-2">
       <input aria-label="Nom du fichier" value={name} onChange={(e) => setName(e.target.value)} className="min-w-0 max-w-full rounded border border-input bg-background px-2 py-1 text-sm" />
-      {editorId !== "excel" && editorId !== "dax" && <Button size="sm" disabled={busy || (editorId !== "sql" && editorId !== "postgresql")} onClick={() => void run()}>{busy ? <LoaderCircle className="animate-spin" /> : <Play />}{busy ? "Exécution…" : editorId === "sql" || editorId === "postgresql" ? "Exécuter" : "Sandbox requise"}</Button>}
+      {editorId !== "excel" && editorId !== "dax" && <Button size="sm" disabled onClick={() => void run()}>{busy ? <LoaderCircle className="animate-spin" /> : <Play />}{busy ? "Exécution…" : "Moteur requis"}</Button>}
       {editorId === "dax" && <span className="text-xs text-muted-foreground">DAX · édition uniquement, exécution dans Power BI</span>}
     </div>
     {editorId === "excel" ? <div className="p-4">
