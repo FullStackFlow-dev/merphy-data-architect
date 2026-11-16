@@ -21,7 +21,7 @@ const capabilities = [
   {
     title: "PostgreSQL",
     tag: "Démo disponible",
-    description: "Requêtes exécutées sur une base PostgreSQL en mémoire et des données synthétiques isolées. Aucune base privée n’est connectée.",
+    description: "Base de démonstration créée côté serveur pour chaque requête, avec données synthétiques. Les écritures ne persistent pas entre deux exécutions.",
     available: true,
   },
   {
