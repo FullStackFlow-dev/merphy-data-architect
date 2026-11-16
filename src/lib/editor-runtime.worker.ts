@@ -55,11 +55,17 @@ self.onmessage = async (event: MessageEvent<{ editorId: string; code: string; st
       self.postMessage({ status: "Chargement de la prise en charge Excel…" });
       await python.runPythonAsync("import micropip\nawait micropip.install('openpyxl')");
     }
-    await python.runPythonAsync("import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nplt.close('all')");
+    if (editorId === "matplotlib") {
+      await python.runPythonAsync("import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nplt.close('all')");
+    }
     const value = await python.runPythonAsync(code);
     if (value !== undefined && value !== null) logs.push(String(value));
-    const images = await python.runPythonAsync("import io, base64, json\n_images = []\nfor _n in plt.get_fignums():\n    _b = io.BytesIO()\n    plt.figure(_n).savefig(_b, format='png', bbox_inches='tight')\n    _images.append(base64.b64encode(_b.getvalue()).decode())\njson.dumps(_images)");
-    self.postMessage({ output: logs.join("\n") || "Exécution terminée.", images: JSON.parse(String(images)), done: true });
+    let images: string[] = [];
+    if (editorId === "matplotlib") {
+      const result = await python.runPythonAsync("import io, base64, json\n_images = []\nfor _n in plt.get_fignums():\n    _b = io.BytesIO()\n    plt.figure(_n).savefig(_b, format='png', bbox_inches='tight')\n    _images.append(base64.b64encode(_b.getvalue()).decode())\njson.dumps(_images)");
+      images = JSON.parse(String(result));
+    }
+    self.postMessage({ output: logs.join("\n") || "Exécution terminée.", images, done: true });
   } catch (error) {
     self.postMessage({ output: [...logs, error instanceof Error ? error.message : String(error)].join("\n"), done: true, error: true });
   }
