@@ -30,7 +30,7 @@ export type CertGroup = {
 
 export const certGroups: CertGroup[] = [
   {
-    title: "Data Engineering & Databases",
+    title: "Ingénierie des données et bases de données",
     desc: "Conception de pipelines et administration de bases de données.",
     icon: "database",
     items: [
@@ -89,7 +89,7 @@ export const certGroups: CertGroup[] = [
     ],
   },
   {
-    title: "Analytics & Business Intelligence",
+    title: "Analyse de données et aide à la décision",
     desc: "Analyse descriptive, modélisation et restitution décisionnelle.",
     icon: "chart",
     items: [
