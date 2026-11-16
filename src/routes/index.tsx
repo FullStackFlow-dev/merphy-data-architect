@@ -243,7 +243,7 @@ function SkillMark({ name }: { name: string }) {
 }
 
 function Index() {
-  const featured = projects.slice(0, 3);
+  const featured = projects.filter((project) => ["dakar-weather-intelligence", "wal-transit-engine", "artenova-shop"].includes(project.slug));
   return (
     <SiteLayout>
       {/* Hero */}
