@@ -23,37 +23,77 @@ function escapeHtml(value: string) {
   return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
+function isWordStart(character: string) {
+  return (character >= "a" && character <= "z") || (character >= "A" && character <= "Z") || character === "_";
+}
+
+function isWordPart(character: string) {
+  return isWordStart(character) || (character >= "0" && character <= "9");
+}
+
 function highlightCode(source: string, editorId: string) {
   const language = ["sql", "postgresql"].includes(editorId) ? "sql" : editorId === "dax" ? "dax" : "python";
   const keywords = language === "sql"
     ? new Set("select from where and or not like ilike order by desc asc limit offset join inner left right outer on group having count sum avg min max as distinct insert into values update set delete create table drop alter returning null is case when then else end union all with".split(" "))
     : language === "dax"
       ? new Set("calculate sum sumx average averagex count countrows filter all allexcept related relatedtable divide if switch return var true false blank".split(" "))
-      : new Set("and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield True False None".split(" "));
+      : new Set("and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield true false none".split(" "));
 
-  const tokenPattern = /(\/\*[\s\S]*?\*\/|--[^\n]*|#[^\n]*)|("""[\s\S]*?"""|'''[\s\S]*?'''|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")|(\b\d+(?:\.\d+)?\b)|([A-Za-z_][A-Za-z0-9_]*)/g;
   let html = "";
-  let cursor = 0;
-
-  for (const match of source.matchAll(tokenPattern)) {
-    const token = match[0];
-    const index = match.index ?? 0;
-    html += escapeHtml(source.slice(cursor, index));
+  let index = 0;
+  while (index < source.length) {
+    const start = index;
+    const character = source[index];
     let color = "";
 
-    if (match[1]) color = "text-amber-300";
-    else if (match[2]) color = "text-emerald-300";
-    else if (match[3]) color = "text-sky-300";
-    else if (match[4]) {
-      if (keywords.has(token.toLowerCase()) || keywords.has(token)) color = "text-purple-300";
-      else if (/\s*\(/.test(source.slice(index + token.length))) color = "text-cyan-300";
+    if ((language !== "python" && character === "-" && source[index + 1] === "-") || character === "#") {
+      color = "text-amber-300";
+      while (index < source.length && source[index] !== "\n") index += 1;
+    } else if (language !== "python" && character === "/" && source[index + 1] === "*") {
+      color = "text-amber-300";
+      index += 2;
+      while (index < source.length && !(source[index] === "*" && source[index + 1] === "/")) index += 1;
+      if (index < source.length) index += 2;
+    } else if (character === "'" || character === '"') {
+      color = "text-emerald-300";
+      const delimiter = language === "python" && source.slice(index, index + 3) === character.repeat(3) ? character.repeat(3) : character;
+      index += delimiter.length;
+      while (index < source.length) {
+        if (source[index] === "\\") {
+          index += Math.min(2, source.length - index);
+        } else if (source.slice(index, index + delimiter.length) === delimiter) {
+          index += delimiter.length;
+          break;
+        } else {
+          index += 1;
+        }
+      }
+    } else if (character >= "0" && character <= "9") {
+      color = "text-sky-300";
+      index += 1;
+      while (index < source.length && source[index] >= "0" && source[index] <= "9") index += 1;
+      if (source[index] === "." && source[index + 1] >= "0" && source[index + 1] <= "9") {
+        index += 1;
+        while (index < source.length && source[index] >= "0" && source[index] <= "9") index += 1;
+      }
+    } else if (isWordStart(character)) {
+      index += 1;
+      while (index < source.length && isWordPart(source[index])) index += 1;
+      const word = source.slice(start, index);
+      let next = index;
+      while (next < source.length && source[next].trim() === "") next += 1;
+      if (keywords.has(word.toLowerCase())) color = "text-purple-300";
+      else if (source[next] === "(") color = "text-cyan-300";
+    } else {
+      index += 1;
     }
 
-    html += color ? `<span class="${color}">${escapeHtml(token)}</span>` : escapeHtml(token);
-    cursor = index + token.length;
+    const token = source.slice(start, index);
+    const escaped = escapeHtml(token);
+    html += color ? \`<span class="\${color}">\${escaped}</span>\` : escaped;
   }
 
-  return html + escapeHtml(source.slice(cursor));
+  return html;
 }
 
 export function CodeWorkspace() {
