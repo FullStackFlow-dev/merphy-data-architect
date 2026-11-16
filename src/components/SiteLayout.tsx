@@ -6,7 +6,7 @@ import cvPdf from "../assets/cv.pdf";
 const nav = [
   { to: "/", label: "Accueil" },
   { to: "/projects", label: "Projets" },
-  { to: "/demos", label: "Démos IA" },
+  { to: "/demos", label: "Data Lab" },
   { to: "/blog", label: "Écrits" },
   { to: "/about", label: "À propos" },
   { to: "/contact", label: "Contact" },
