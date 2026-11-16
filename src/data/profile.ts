@@ -3,14 +3,29 @@ export type Experience = {
   role: string;
   org: string;
   desc: string;
+  type?: string;
+  responsibilities?: string[];
 };
 
 export const experiences: Experience[] = [
   {
-    period: "Depuis août 2026 · Stage",
-    role: "Ingénieur de données et architecte de bases de données",
-    org: "Plateforme de Business Intelligence multi-sources",
-    desc: "Création de bases de test et génération de données synthétiques réalistes avec Faker. Tests de volumétrie et de robustesse des ingestions et DAGs Airflow, stabilisation des connexions, gouvernance des accès et contrôles qualité dans une architecture Bronze / Silver / Gold.",
+    period: "Depuis août 2026",
+    role: "Ingénieur de données et ingénieur bases de données",
+    org: "MIRAHTEC · Équipe Data / BI · Plateforme MIRAH-BI",
+    type: "Stage",
+    desc: "Contribution à la conception et à l’évolution d’une plateforme BI multi-sources : modélisation des données, développement de flux de préparation et validation de connecteurs dans des environnements de test.",
+    responsibilities: [
+      "Concevoir et modéliser les bases de données et leurs schémas.",
+      "Structurer des données issues de sources multiples.",
+      "Développer des traitements ETL / ELT avec Python et SQL.",
+      "Mettre en œuvre une organisation Bronze / Silver / Gold.",
+      "Concevoir et valider des schémas de bases de données.",
+      "Tester des connecteurs PostgreSQL, MySQL, SQL Server et Snowflake en environnement de développement.",
+      "Contrôler la qualité, la cohérence et l’intégrité des données.",
+      "Préparer les données destinées aux analyses décisionnelles et à Power BI.",
+      "Documenter les choix techniques et contribuer à la gouvernance des données.",
+      "Contribuer à la conception et à l’évolution de la plateforme MIRAH-BI.",
+    ],
   },
 ];
 
