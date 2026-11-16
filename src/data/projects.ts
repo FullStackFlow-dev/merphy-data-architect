@@ -236,6 +236,7 @@ export const projects: Project[] = [
     previewIsIllustration: true,
     title: "Automatisation ETL en Python",
     domain: "Développement Python",
+    domains: ["Data Engineering", "Backend"],
     summary: "Scripts Python d'extraction, transformation et chargement de données.",
     tags: ["Python", "Pandas", "SQL", "Airflow", "Git"],
     year: "2023",
