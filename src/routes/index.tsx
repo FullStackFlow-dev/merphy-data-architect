@@ -136,7 +136,7 @@ function SkillGrid() {
     .filter((use) => use.project);
 
   return (
-    <div onKeyDown={(event) => { if (event.key === "Escape") { setActiveSkill(null); setPinnedSkill(null); } }}>
+    <div onKeyDown={(event) => { if (event.key === "Escape") { setActiveSkill(null); setPinnedSkill(null); } }} onMouseLeave={() => { if (!pinnedSkill) setActiveSkill(null); }}>
       <div className="grid gap-5 md:grid-cols-2">
         {skillGroups.map((group) => {
           const GroupIcon = group.icon;
@@ -186,7 +186,6 @@ function SkillGrid() {
         role="region"
         aria-live="polite"
         aria-label="Projets utilisant la compétence sélectionnée"
-        onMouseLeave={() => { if (!pinnedSkill) setActiveSkill(null); }}
         className="mt-5 min-h-24 rounded-2xl border border-border/80 bg-card/60 p-5 md:p-6"
       >
         <div className="flex items-start gap-3">
@@ -218,15 +217,25 @@ function SkillGrid() {
 }
 
 function SkillMark({ name }: { name: string }) {
-  const technologyIcon = <TechIcon name={name} className="h-7 w-7" />;
-  if (technologyIcon.props.children) return technologyIcon;
-  const Icon = /SQL|base|PostgreSQL|MySQL|MariaDB|Oracle|MongoDB/i.test(name)
+  const aliases: Record<string, string> = {
+    "Apache Airflow": "Airflow",
+    "Apache Spark": "Spark",
+    "Apache Kafka": "Kafka",
+  };
+  const iconName = aliases[name] ?? name;
+  const brandedNames = new Set([
+    "Python", "PostgreSQL", "Spark", "Docker", "Airflow", "dbt", "SQL", "Snowflake",
+    "FastAPI", "Django", "Git", "Pandas", "Power BI", "Excel", "Flask", "Kafka", "Databricks",
+  ]);
+  if (brandedNames.has(iconName)) return <TechIcon name={iconName} className="h-7 w-7" />;
+
+  const Icon = /SQL|base|MySQL|MariaDB|Oracle|MongoDB/i.test(name)
     ? Database
-    : /statistique|KPI|Power BI|Excel|visualisation/i.test(name)
+    : /statistique|KPI|visualisation/i.test(name)
       ? Sigma
       : /Machine|Deep Learning|LLM|TensorFlow|Keras|Scikit/i.test(name)
         ? BrainCircuit
-        : /ETL|Airflow|dbt|Spark|Kafka|Hadoop|Databricks|BigQuery|Snowflake|Pandas|NumPy|Faker/i.test(name)
+        : /ETL|dbt|Hadoop|BigQuery|NumPy|Faker/i.test(name)
           ? Layers3
           : /Docker|cloud|GCP|AWS|Git|CI|tests/i.test(name)
             ? GitBranch
