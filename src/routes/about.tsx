@@ -5,6 +5,7 @@ import profileImg from "../assets/profile.jpg";
 import cvPdf from "../assets/cv.pdf";
 import { Download } from "lucide-react";
 import { Button } from "../components/ui/button";
+import { experiences, skills } from "../data/profile";
 
 
 export const Route = createFileRoute("/about")({
@@ -20,50 +21,6 @@ export const Route = createFileRoute("/about")({
   }),
   component: AboutPage,
 });
-
-const experiences = [
-  {
-    period: "Depuis août 2026 · Stage",
-    role: "Ingénieur de données et architecte de bases de données",
-    org: "Plateforme de Business Intelligence multi-sources",
-    desc: "Création de bases de test et génération de données synthétiques réalistes avec Faker. Tests de volumétrie et de robustesse des ingestions et DAGs Airflow, stabilisation des connexions, gouvernance des accès et contrôles qualité dans une architecture Bronze / Silver / Gold.",
-  },
-];
-
-const skills = {
-  "Développement Python": [
-    "Python",
-    "FastAPI",
-    "Django",
-    "Flask",
-    "SQL",
-    "Git",
-    "Web scraping",
-    "JavaScript", "Node.js", "Express", "React Native",
-  ],
-  "Data Analyste": [
-    "Power BI",
-    "Excel",
-    "Pandas",
-    "Python",
-    "Statistiques",
-    "Visualisation",
-    "SQL",
-  ],
-  "Ingénierie de données": [
-    "ETL/ELT",
-    "Airflow",
-    "dbt",
-    "Snowflake",
-    "BigQuery",
-    "SQL",
-    "Docker",
-    "Kafka", "Spark", "Hadoop", "Databricks", "Faker", "Bronze / Silver / Gold",
-  ],
-  "Bases de données & sources": ["PostgreSQL", "MySQL", "MariaDB", "SQL Server", "Oracle", "MongoDB", "SAP HANA", "API REST", "SharePoint"],
-  "Machine Learning & Deep Learning": ["Pandas", "NumPy", "Scikit-learn", "TensorFlow", "Keras"],
-  "DevOps & Cloud": ["Docker", "GitHub Actions", "CI/CD", "Tests automatisés", "AWS", "GCP", "Poetry"],
-};
 
 function AboutPage() {
   return (
