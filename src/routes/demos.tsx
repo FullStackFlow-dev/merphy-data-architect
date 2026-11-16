@@ -20,9 +20,9 @@ export const Route = createFileRoute("/demos")({
 const capabilities = [
   {
     title: "PostgreSQL",
-    tag: "Démo disponible",
-    description: "Base de démonstration créée côté serveur pour chaque requête, avec données synthétiques. Les écritures ne persistent pas entre deux exécutions.",
-    available: true,
+    tag: "Moteur serveur requis",
+    description: "L’éditeur et la coloration restent disponibles. L’exécution sera activée après configuration et vérification du moteur PostgreSQL côté serveur.",
+    available: false,
   },
   {
     title: "Python et analyse de données",
@@ -71,8 +71,7 @@ function DemosPage() {
         <div className="mb-5">
           <h2 id="sql-lab-title" className="text-2xl font-semibold">Éditeur SQL</h2>
           <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
-            PostgreSQL utilise une base de démonstration en mémoire. L’exécution reste limitée à des données synthétiques et ne se connecte pas à MIRAHTEC.
-            MySQL et SQL Server attendent la configuration de leurs instances isolées.
+            La coloration et l’édition SQL sont disponibles. L’exécution est désactivée jusqu’à la configuration et la vérification d’un moteur côté serveur. Aucune connexion à MIRAHTEC n’est utilisée.
           </p>
         </div>
         <CodeWorkspace />
