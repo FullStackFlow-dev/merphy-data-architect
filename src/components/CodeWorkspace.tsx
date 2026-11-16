@@ -198,6 +198,11 @@ export function CodeWorkspace() {
   }
 
   function run() {
+    if (editorId !== "sql" && editorId !== "postgresql") {
+      setOutput("Exécution indisponible : un bac à sable côté serveur doit être configuré pour Python.");
+      setImages([]);
+      return;
+    }
     if (!worker.current) {
       worker.current = new Worker(new URL("../lib/editor-runtime.worker.ts", import.meta.url), { type: "module" });
       worker.current.onmessage = (event) => {
@@ -227,7 +232,7 @@ export function CodeWorkspace() {
     </div>
     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-muted/30 px-4 py-2">
       <input aria-label="Nom du fichier" value={name} onChange={(e) => setName(e.target.value)} className="min-w-0 max-w-full rounded border border-input bg-background px-2 py-1 text-sm" />
-      {editorId !== "excel" && editorId !== "dax" && <Button size="sm" onClick={busy ? () => { worker.current?.terminate(); worker.current = null; setBusy(false); setOutput("Exécution arrêtée."); } : run}>{busy ? <Square /> : <Play />}{busy ? "Arrêter" : "Exécuter"}</Button>}
+      {editorId !== "excel" && editorId !== "dax" && <Button size="sm" disabled={busy || (editorId !== "sql" && editorId !== "postgresql")} onClick={busy ? () => { worker.current?.terminate(); worker.current = null; setBusy(false); setOutput("Exécution arrêtée."); } : run}>{busy ? <Square /> : <Play />}{busy ? "Arrêter" : editorId === "sql" || editorId === "postgresql" ? "Exécuter" : "Sandbox requise"}</Button>}
       {editorId === "dax" && <span className="text-xs text-muted-foreground">DAX · édition uniquement, exécution dans Power BI</span>}
     </div>
     {editorId === "excel" ? <div className="p-4">
@@ -237,7 +242,7 @@ export function CodeWorkspace() {
       <pre aria-hidden="true" className="pointer-events-none absolute inset-0 m-0 overflow-auto whitespace-pre p-4 font-mono text-sm leading-6 text-foreground"><code dangerouslySetInnerHTML={{ __html: highlightCode(code, editorId) + "\n" }} /></pre>
       <textarea spellCheck={false} aria-label="Code source" value={code} onChange={(e) => setCode(e.target.value)} onScroll={(e) => { const layer = e.currentTarget.previousElementSibling; if (layer instanceof HTMLElement) { layer.scrollTop = e.currentTarget.scrollTop; layer.scrollLeft = e.currentTarget.scrollLeft; } }} className="absolute inset-0 z-10 block h-full w-full resize-none overflow-auto bg-transparent p-4 font-mono text-sm leading-6 text-transparent caret-foreground selection:bg-primary/25 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-ring" />
     </div>}
-    {["python", "pandas", "numpy", "matplotlib"].includes(editorId) && <div className="border-t border-border p-4"><label className="text-xs text-muted-foreground" htmlFor="workspace-stdin">Entrées standard</label><textarea id="workspace-stdin" value={stdin} onChange={(e) => setStdin(e.target.value)} className="mt-1 block h-16 w-full rounded border border-input bg-background px-2 py-1 font-mono text-sm" /></div>}
+    {["python", "pandas", "numpy", "matplotlib"].includes(editorId) && <div className="border-t border-border p-4"><p className="mb-3 rounded-md border border-warning/35 bg-warning/10 px-3 py-2 text-sm text-muted-foreground">L’exécution Python est désactivée dans le navigateur. Un service de bac à sable côté serveur doit être configuré avant de lancer du code.</p><label className="text-xs text-muted-foreground" htmlFor="workspace-stdin">Entrées standard</label><textarea id="workspace-stdin" value={stdin} onChange={(e) => setStdin(e.target.value)} className="mt-1 block h-16 w-full rounded border border-input bg-background px-2 py-1 font-mono text-sm" /></div>}
     {files.length > 0 && <div className="flex flex-wrap gap-2 border-t border-border px-4 py-2">{files.map((f) => <span key={f.name} className="inline-flex max-w-full items-center gap-1 text-xs text-muted-foreground"><span className="truncate">{f.name}</span><Button variant="ghost" size="icon" aria-label={`Retirer ${f.name}`} title="Retirer le fichier" onClick={() => setFiles(files.filter((file) => file.name !== f.name))}><Trash2 /></Button></span>)}</div>}
     {output && <pre aria-label="Résultat d’exécution" aria-live="polite" className="max-h-80 overflow-auto whitespace-pre-wrap break-words border-t border-border bg-muted/30 p-4 font-mono text-sm">{output}</pre>}
     {images.map((image, i) => <img key={i} src={`data:image/png;base64,${image}`} alt={`Graphique ${i + 1}`} className="max-h-96 w-full object-contain" />)}
