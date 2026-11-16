@@ -63,13 +63,6 @@ export const skills = {
     "API REST",
     "SharePoint",
   ],
-  "Apprentissage automatique": [
-    "Pandas",
-    "NumPy",
-    "Scikit-learn",
-    "TensorFlow",
-    "Keras",
-  ],
   "DevOps et cloud": [
     "Docker",
     "GitHub Actions",
