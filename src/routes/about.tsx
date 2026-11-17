@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { MotionCard } from "../components/motion";
+import { SkillsSection } from "../components/SkillsSection";
 import profileImg from "../assets/profile.jpg";
 import cvPdf from "../assets/cv.pdf";
 import { Download } from "lucide-react";
 import { Button } from "../components/ui/button";
-import { experiences, skills } from "../data/profile";
+import { experiences } from "../data/profile";
 
 
 export const Route = createFileRoute("/about")({
@@ -82,26 +83,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 py-10">
-        <h2 className="text-2xl font-semibold tracking-tight">Compétences</h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          {Object.entries(skills).map(([cat, items], i) => (
-            <MotionCard key={cat} delay={i * 80} className="rounded-xl border border-border bg-card p-5">
-              <h3 className="font-semibold">{cat}</h3>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {items.map((s) => (
-                  <span
-                    key={s}
-                    className="text-xs rounded-md border border-border px-2 py-0.5 text-muted-foreground"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </MotionCard>
-          ))}
-        </div>
-      </section>
+      <SkillsSection />
 
       <section className="mx-auto max-w-3xl px-6 py-10 pb-24">
         <h2 className="text-2xl font-semibold tracking-tight">Formation</h2>

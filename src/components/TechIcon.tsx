@@ -1,6 +1,6 @@
 import type { IconType } from "react-icons";
 import {
-  SiPython, SiPostgresql, SiApachenifi, SiApachespark, SiDocker, SiApacheairflow,
+  SiPython, SiPostgresql, SiMysql, SiApachenifi, SiApachespark, SiDocker, SiApacheairflow,
   SiSnowflake, SiFastapi, SiDjango, SiGit, SiPandas, SiCoursera, SiDatacamp, SiMeta,
   SiFlask, SiApachekafka, SiDatabricks,
 } from "react-icons/si";
@@ -11,7 +11,9 @@ import {
 } from "react-icons/tb";
 
 const map: Record<string, IconType> = {
-  Python: SiPython, PostgreSQL: SiPostgresql, NiFi: SiApachenifi, Spark: SiApachespark,
+  Python: SiPython, PostgreSQL: SiPostgresql, MySQL: SiMysql,
+  "SQL Server": TbBrandWindows,
+  NiFi: SiApachenifi, Spark: SiApachespark,
   Docker: SiDocker, Airflow: SiApacheairflow, dbt: TbStack2, SQL: TbSql, Snowflake: SiSnowflake,
   FastAPI: SiFastapi, Django: SiDjango, Git: SiGit, "Web scraping": TbWorldWww,
   "Power BI": TbChartBar, "Cubes OLAP/ROLAP": TbCube, Pandas: SiPandas,
