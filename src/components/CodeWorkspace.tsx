@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Download, History, LoaderCircle, Play, Plus, Save, Share2, Trash2, Upload } from "lucide-react";
+import { PGliteWorker } from "@electric-sql/pglite/worker";
 import { Button } from "./ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
@@ -121,11 +122,13 @@ export function CodeWorkspace() {
   const [images, setImages] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
+  const [pgReady, setPgReady] = useState(false);
   const [stdin, setStdin] = useState("Alice\n30");
   const [files, setFiles] = useState<{ name: string; bytes: Uint8Array }[]>([]);
   const input = useRef<HTMLInputElement | null>(null);
   const drafts = useRef<Record<string, { code: string; name: string }>>({});
   const latestCode = useRef(code);
+  const pgRef = useRef<PGliteWorker | null>(null);
   latestCode.current = code;
   const editor = codeEditors.find((e) => e.id === editorId) ?? codeEditors[0];
 
@@ -147,6 +150,14 @@ export function CodeWorkspace() {
         setMessage("Document partagé chargé.");
       }
     } catch { setMessage("La sauvegarde ou le lien partagé est invalide."); }
+
+    // Initialiser PGlite dans un Worker dédié
+    const pg = new PGliteWorker(
+      new Worker(new URL("../lib/pglite-worker.ts", import.meta.url), { type: "module" })
+    );
+    pgRef.current = pg;
+    pg.waitReady.then(() => setPgReady(true)).catch(() => setMessage("Échec de l'initialisation du moteur PostgreSQL."));
+    return () => { pg.close().catch(() => {}); };
   }, []);
 
   function changeEditor(id: string) {
@@ -212,10 +223,48 @@ export function CodeWorkspace() {
   }
 
   async function run() {
-    setOutput("Exécution SQL indisponible : le moteur serveur doit être configuré avant de lancer des requêtes.");
+    const pg = pgRef.current;
+    if (!pg || !pgReady) {
+      setOutput("Le moteur PostgreSQL n'est pas encore prêt. Patientez un instant.");
+      return;
+    }
+    setBusy(true);
     setSqlRows(null);
-    setExecutionMs(null);
+    setOutput("");
     setImages([]);
+    const start = performance.now();
+    try {
+      const results = await pg.exec(code);
+      const durationMs = Math.round(performance.now() - start);
+      setExecutionMs(durationMs);
+      // exec() retourne un tableau de Results (une par instruction)
+      const last = results[results.length - 1];
+      if (last && last.rows.length > 0) {
+        setSqlRows(last.rows as SqlRow[]);
+        setOutput(`OK — ${last.rows.length} ligne(s)`);
+        setQueryHistory((prev) => [
+          { code, rowCount: last.rows.length, durationMs, ranAt: new Date().toISOString() },
+          ...prev.slice(0, 49),
+        ]);
+      } else {
+        // Requête DDL/DML sans résultat tabulaire
+        const affectedCmd = last?.affectedRows != null ? ` (${last.affectedRows} ligne(s) affectée(s))` : "";
+        setOutput(`Requête exécutée avec succès${affectedCmd}.`);
+        setSqlRows([]);
+        setQueryHistory((prev) => [
+          { code, rowCount: 0, durationMs, ranAt: new Date().toISOString() },
+          ...prev.slice(0, 49),
+        ]);
+      }
+    } catch (err) {
+      const durationMs = Math.round(performance.now() - start);
+      setExecutionMs(durationMs);
+      const msg = err instanceof Error ? err.message : String(err);
+      setOutput(`Erreur PostgreSQL :\n${msg}`);
+      setSqlRows(null);
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function exportSqlRows(format: "csv" | "xlsx") {
@@ -264,7 +313,16 @@ export function CodeWorkspace() {
     </div>
     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-muted/30 px-4 py-2">
       <input aria-label="Nom du fichier" value={name} onChange={(e) => setName(e.target.value)} className="min-w-0 max-w-full rounded border border-input bg-background px-2 py-1 text-sm" />
-      {editorId !== "excel" && editorId !== "dax" && <Button size="sm" disabled onClick={() => void run()}>{busy ? <LoaderCircle className="animate-spin" /> : <Play />}{busy ? "Exécution…" : "Moteur requis"}</Button>}
+      {editorId !== "excel" && editorId !== "dax" && (
+        ["postgresql", "sql"].includes(editorId)
+          ? <Button size="sm" disabled={busy || !pgReady} onClick={() => void run()}>
+              {busy ? <LoaderCircle className="animate-spin" /> : <Play />}
+              {busy ? "Exécution…" : pgReady ? "Exécuter" : "Chargement…"}
+            </Button>
+          : <Button size="sm" disabled title="Exécution Python non disponible dans le navigateur">
+              <Play /> Bac à sable requis
+            </Button>
+      )}
       {editorId === "dax" && <span className="text-xs text-muted-foreground">DAX · édition uniquement, exécution dans Power BI</span>}
     </div>
     {editorId === "excel" ? <div className="p-4">

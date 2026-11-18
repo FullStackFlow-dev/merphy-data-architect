@@ -20,9 +20,9 @@ export const Route = createFileRoute("/demos")({
 const capabilities = [
   {
     title: "PostgreSQL",
-    tag: "Moteur serveur requis",
-    description: "L’éditeur et la coloration restent disponibles. L’exécution sera activée après configuration et vérification du moteur PostgreSQL côté serveur.",
-    available: false,
+    tag: "Exécution disponible",
+    description: "Moteur PostgreSQL intégré via WebAssembly (PGlite). Exécutez des requêtes SELECT, CREATE, INSERT et plus directement dans le navigateur, sans connexion serveur. Les données sont en mémoire et réinitialisées à chaque session.",
+    available: true,
   },
   {
     title: "Python et analyse de données",
@@ -71,7 +71,7 @@ function DemosPage() {
         <div className="mb-5">
           <h2 id="sql-lab-title" className="text-2xl font-semibold">Éditeur SQL</h2>
           <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
-            La coloration et l’édition SQL sont disponibles. L’exécution est désactivée jusqu’à la configuration et la vérification d’un moteur côté serveur. Aucune connexion à MIRAHTEC n’est utilisée.
+            Éditeur SQL avec moteur PostgreSQL intégré (PGlite / WebAssembly). Écrivez et exécutez des requêtes directement dans le navigateur. Les données sont en mémoire : elles sont réinitialisées à chaque chargement de page. Aucune connexion à MIRAHTEC n'est utilisée.
           </p>
         </div>
         <CodeWorkspace />
