@@ -208,27 +208,70 @@ function SkillGrid() {
   );
 }
 
+/** Couleurs officielles de chaque technologie/stack (icône dans la tuile). */
+const SKILL_ICON_COLOR: Record<string, string> = {
+  // Langages
+  Python:            "text-yellow-400",
+  SQL:               "text-orange-300",
+  // Bases de données
+  PostgreSQL:        "text-sky-400",
+  MySQL:             "text-blue-400",
+  MariaDB:           "text-amber-700",
+  "SQL Server":      "text-red-400",
+  Oracle:            "text-red-500",
+  MongoDB:           "text-green-500",
+  Snowflake:         "text-cyan-400",
+  BigQuery:          "text-blue-500",
+  // Data Engineering
+  Airflow:           "text-teal-400",
+  "Apache Airflow":  "text-teal-400",
+  Pandas:            "text-violet-400",
+  NumPy:             "text-sky-500",
+  dbt:               "text-orange-400",
+  Spark:             "text-orange-500",
+  "Apache Spark":    "text-orange-500",
+  Kafka:             "text-zinc-300",
+  Hadoop:            "text-yellow-500",
+  Databricks:        "text-red-400",
+  // Dev & DevOps
+  Docker:            "text-sky-400",
+  Git:               "text-orange-500",
+  "GitHub Actions":  "text-purple-400",
+  "Node.js":         "text-green-500",
+  Express:           "text-zinc-300",
+  FastAPI:           "text-teal-400",
+  Django:            "text-green-600",
+  Flask:             "text-zinc-300",
+  GCP:               "text-blue-400",
+  // BI
+  "Power BI":        "text-yellow-400",
+  Excel:             "text-green-500",
+};
+
 function SkillMark({ name }: { name: string }) {
+  const aliases: Record<string, string> = {
+    "Apache Airflow": "Airflow",
+    "Apache Spark":   "Spark",
+    "Apache Kafka":   "Kafka",
+    "Apache Hadoop":  "Hadoop",
+  };
+  const iconName = aliases[name] ?? name;
+  const color = SKILL_ICON_COLOR[name] ?? SKILL_ICON_COLOR[iconName] ?? "text-muted-foreground";
+
   const logos: Record<string, ComponentType<{ className?: string; "aria-hidden"?: boolean }>> = {
-    NumPy: SiNumpy, MySQL: SiMysql, MariaDB: SiMariadb, MongoDB: SiMongodb, BigQuery: SiGooglebigquery, Hadoop: SiApachehadoop,
+    NumPy: SiNumpy, MySQL: SiMysql, MariaDB: SiMariadb, MongoDB: SiMongodb,
+    BigQuery: SiGooglebigquery, Hadoop: SiApachehadoop,
     "Node.js": SiNodedotjs, Express: SiExpress, "GitHub Actions": SiGithubactions,
     GCP: SiGooglecloud,
   };
   const Logo = logos[name];
-  if (Logo) return <Logo aria-hidden="true" className="h-7 w-7" />;
+  if (Logo) return <Logo aria-hidden="true" className={`h-7 w-7 ${color}`} />;
 
-  const aliases: Record<string, string> = {
-    "Apache Airflow": "Airflow",
-    "Apache Spark": "Spark",
-    "Apache Kafka": "Kafka",
-    "Apache Hadoop": "Hadoop",
-  };
-  const iconName = aliases[name] ?? name;
   const brandedNames = new Set([
     "Python", "PostgreSQL", "Spark", "Docker", "Airflow", "dbt", "SQL", "Snowflake",
     "FastAPI", "Django", "Git", "Pandas", "Excel", "Flask", "Kafka", "Databricks",
   ]);
-  if (brandedNames.has(iconName)) return <TechIcon name={iconName} className="h-7 w-7" />;
+  if (brandedNames.has(iconName)) return <TechIcon name={iconName} className={`h-7 w-7 ${color}`} />;
 
   const Icon = /SQL|base|modélisation|architecture/i.test(name)
     ? Database
@@ -239,7 +282,7 @@ function SkillMark({ name }: { name: string }) {
           : /cloud|CI|tests/i.test(name)
             ? GitBranch
             : Code2;
-  return <Icon aria-hidden="true" className="h-7 w-7" />;
+  return <Icon aria-hidden="true" className={`h-7 w-7 ${color}`} />;
 }
 
 function Index() {
