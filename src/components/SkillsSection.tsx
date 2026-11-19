@@ -31,6 +31,35 @@ const ACCENT_ICON_BG: Record<string, string> = {
   "text-amber-400": "bg-amber-400/10",
 };
 
+/**
+ * Couleurs officielles de chaque technologie/stack.
+ * iconColor  → classe Tailwind pour l'icône SVG (text-*)
+ * badgeStyle → classes pour la bordure + fond du badge pill
+ * Toutes les valeurs sont des chaînes complètes pour que Tailwind les détecte.
+ */
+const TECH_COLOR: Record<string, { iconColor: string; badgeStyle: string }> = {
+  // ── Langages ──────────────────────────────────────────────────────────────
+  Python:          { iconColor: "text-yellow-400",  badgeStyle: "border-yellow-400/40 bg-yellow-400/8" },
+  SQL:             { iconColor: "text-orange-300",   badgeStyle: "border-orange-300/40 bg-orange-300/8" },
+  // ── Bases de données ───────────────────────────────────────────────────────
+  PostgreSQL:      { iconColor: "text-sky-400",      badgeStyle: "border-sky-400/40 bg-sky-400/8" },
+  MySQL:           { iconColor: "text-blue-400",     badgeStyle: "border-blue-400/40 bg-blue-400/8" },
+  "SQL Server":    { iconColor: "text-red-400",      badgeStyle: "border-red-400/40 bg-red-400/8" },
+  Snowflake:       { iconColor: "text-cyan-400",     badgeStyle: "border-cyan-400/40 bg-cyan-400/8" },
+  // ── Outils data ───────────────────────────────────────────────────────────
+  Airflow:         { iconColor: "text-teal-400",     badgeStyle: "border-teal-400/40 bg-teal-400/8" },
+  "Apache Airflow":{ iconColor: "text-teal-400",     badgeStyle: "border-teal-400/40 bg-teal-400/8" },
+  Pandas:          { iconColor: "text-violet-400",   badgeStyle: "border-violet-400/40 bg-violet-400/8" },
+  dbt:             { iconColor: "text-orange-400",   badgeStyle: "border-orange-400/40 bg-orange-400/8" },
+  "ETL / ELT Pipelines": { iconColor: "text-orange-400", badgeStyle: "border-orange-400/40 bg-orange-400/8" },
+  "Workflow Orchestration": { iconColor: "text-teal-400", badgeStyle: "border-teal-400/40 bg-teal-400/8" },
+  // ── BI & visualisation ────────────────────────────────────────────────────
+  "Power BI":      { iconColor: "text-yellow-400",   badgeStyle: "border-yellow-400/40 bg-yellow-400/8" },
+  Excel:           { iconColor: "text-green-500",    badgeStyle: "border-green-500/40 bg-green-500/8" },
+  Statistiques:    { iconColor: "text-purple-400",   badgeStyle: "border-purple-400/40 bg-purple-400/8" },
+  "Statistical Analysis": { iconColor: "text-purple-400", badgeStyle: "border-purple-400/40 bg-purple-400/8" },
+};
+
 function DomainCard({
   domain,
   delay,
@@ -76,20 +105,27 @@ function DomainCard({
               {group.label}
             </p>
             <div className="flex flex-wrap gap-1.5">
-              {group.items.map((item) => (
-                <span
-                  key={item.name}
-                  className="inline-flex items-center gap-1.5 rounded-md border border-border bg-secondary/40 px-2.5 py-1 text-xs text-foreground/85 transition-colors hover:border-border/80 hover:bg-secondary/70"
-                >
-                  {item.icon && (
-                    <TechIcon
-                      name={item.icon}
-                      className={`h-3.5 w-3.5 shrink-0 ${domain.accentClass} opacity-80`}
-                    />
-                  )}
-                  {item.name}
-                </span>
-              ))}
+              {group.items.map((item) => {
+                const tech = item.icon ? TECH_COLOR[item.icon] ?? TECH_COLOR[item.name] : TECH_COLOR[item.name];
+                const iconColor = tech?.iconColor ?? domain.accentClass;
+                const badgeStyle = tech?.badgeStyle
+                  ? `border ${tech.badgeStyle}`
+                  : "border border-border bg-secondary/40";
+                return (
+                  <span
+                    key={item.name}
+                    className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs text-foreground/85 transition-colors hover:brightness-110 ${badgeStyle}`}
+                  >
+                    {item.icon && (
+                      <TechIcon
+                        name={item.icon}
+                        className={`h-3.5 w-3.5 shrink-0 ${iconColor}`}
+                      />
+                    )}
+                    {item.name}
+                  </span>
+                );
+              })}
             </div>
           </div>
         ))}
