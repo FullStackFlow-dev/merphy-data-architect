@@ -284,6 +284,7 @@ function SkillMark({ name }: { name: string }) {
   const brandedNames = new Set([
     "Python", "PostgreSQL", "Spark", "Docker", "Airflow", "dbt", "SQL", "Snowflake",
     "FastAPI", "Django", "Git", "Pandas", "Excel", "Flask", "Kafka", "Databricks",
+    "Power BI",
   ]);
   if (brandedNames.has(iconName)) return <TechIcon name={iconName} className={`h-7 w-7 ${color}`} />;
 
