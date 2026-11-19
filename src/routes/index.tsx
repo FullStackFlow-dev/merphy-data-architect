@@ -230,7 +230,7 @@ const SKILL_ICON_COLOR: Record<string, string> = {
   dbt:               "text-orange-400",
   Spark:             "text-orange-500",
   "Apache Spark":    "text-orange-500",
-  Kafka:             "text-zinc-300",
+  Kafka:             "text-slate-200",
   Hadoop:            "text-yellow-500",
   Databricks:        "text-red-400",
   // Dev & DevOps
@@ -238,10 +238,10 @@ const SKILL_ICON_COLOR: Record<string, string> = {
   Git:               "text-orange-500",
   "GitHub Actions":  "text-purple-400",
   "Node.js":         "text-green-500",
-  Express:           "text-zinc-300",
+  Express:           "text-slate-300",
   FastAPI:           "text-teal-400",
   Django:            "text-green-600",
-  Flask:             "text-zinc-300",
+  Flask:             "text-slate-300",
   GCP:               "text-blue-400",
   // BI
   "Power BI":        "text-yellow-400",
