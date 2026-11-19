@@ -243,9 +243,23 @@ const SKILL_ICON_COLOR: Record<string, string> = {
   Django:            "text-green-600",
   Flask:             "text-slate-300",
   GCP:               "text-blue-400",
-  // BI
+  AWS:               "text-orange-400",
+  // Dev & API
+  "API REST":        "text-sky-400",
+  "CI / CD":         "text-violet-400",
+  "Tests automatisés": "text-green-400",
+  // Data
+  "ETL / ELT":       "text-orange-400",
+  Faker:             "text-teal-400",
+  // BI & analyse
   "Power BI":        "text-yellow-400",
   Excel:             "text-green-500",
+  KPI:               "text-violet-400",
+  "Visualisation de données": "text-cyan-400",
+  Statistiques:      "text-purple-400",
+  // Architecture & modélisation
+  "Modélisation des données":           "text-blue-400",
+  "Architecture des bases de données":  "text-sky-400",
 };
 
 function SkillMark({ name }: { name: string }) {
