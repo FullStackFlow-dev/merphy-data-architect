@@ -174,18 +174,39 @@ export const projects: Project[] = [
     domain: "Full Stack",
     domains: ["Full Stack"],
     summary: "Vitrine e-commerce responsive dédiée aux créations, vêtements, chaussures et accessoires, avec catalogue et parcours panier.",
-    tags: ["JavaScript", "HTML5", "CSS3", "Responsive Design", "E-commerce"],
+    tags: ["JavaScript", "HTML5", "CSS3", "Responsive Design", "E-commerce", "Next.js", "FastAPI", "PostgreSQL", "Vercel"],
     year: "2026",
     status: "En développement",
     githubUrl: "https://github.com/FullStackFlow-dev/Projet-Site-E-commerce-ArteNova-Shop",
     demoUrl: "https://artenova-shoponline.vercel.app",
     previewImage: analyticsPreview,
     previewIsIllustration: true,
-    content: "Site e-commerce responsive développé avec HTML5, CSS3 et JavaScript natif. Le dépôt présente une vitrine de produits, des pages de catalogue et de détail, ainsi qu’un parcours autour du panier. La démonstration en ligne est annoncée dans le README du dépôt.",
+    content: "ArtéNova Shop est une boutique e-commerce responsive dédiée aux créations artisanales, vêtements, chaussures et accessoires. La version actuelle, développée en HTML5, CSS3 et JavaScript natif, pose les bases de l'interface : vitrine produits, catalogue, pages de détail et parcours panier.\n\nL'architecture cible prévoit une évolution vers une stack moderne et adaptée au marché sénégalais : frontend Next.js déployé sur Vercel, backend FastAPI (Python) connecté à une base PostgreSQL, et intégration d'un agrégateur de paiement local pour encaisser Wave, Orange Money, cartes bancaires et le paiement instantané PI-SPI de la BCEAO.\n\nAu Sénégal, un agrégateur de paiement est indispensable pour couvrir les usages réels : il permet d'accepter en un seul point d'intégration l'ensemble des moyens de paiement locaux (mobile money, cartes Visa/Mastercard, paiement instantané interbancaire) sans multiplier les connexions directes avec chaque opérateur.",
     modules: [
-      { name: "Interface et responsive design", description: "Structure HTML et styles CSS adaptatifs pour les écrans mobiles et desktop." },
-      { name: "Catalogue", description: "Pages de produits et de détail organisées pour la navigation." },
-      { name: "Interactions", description: "Comportements côté navigateur implémentés en JavaScript natif." },
+      {
+        name: "Interface et responsive design (état actuel)",
+        description: "Structure HTML et styles CSS adaptatifs pour les écrans mobiles et desktop. Navigation catalogue, pages de détail produit et parcours panier développés en JavaScript natif.",
+      },
+      {
+        name: "Architecture cible — Frontend",
+        description: "Migration vers Next.js (SSR/SSG) pour le SEO e-commerce, le rendu serveur et les performances. Déploiement continu sur Vercel avec preview par branche, CDN global et HTTPS automatique. Domaine professionnel avec sitemap généré, balises Open Graph et données structurées JSON-LD pour les produits.",
+      },
+      {
+        name: "Architecture cible — Backend API",
+        description: "API REST développée avec FastAPI (Python) hébergée sur Railway ou Render. Modules : authentification clients (JWT + OAuth Google), gestion du catalogue et des stocks, traitement des commandes, intégration des paiements via agrégateur local. Base de données PostgreSQL managée via Supabase ou Neon.",
+      },
+      {
+        name: "Architecture cible — Base de données PostgreSQL",
+        description: "Modèle relationnel structuré autour de cinq entités principales : produits (catalogue, prix, images, catégories), clients (comptes, adresses), stocks (SKU, alertes de rupture), commandes (statuts, lignes) et paiements (transactions, références externes). Hébergement recommandé : Supabase (PostgreSQL managé, démarrage gratuit).",
+      },
+      {
+        name: "Paiements — Agrégateurs actifs au Sénégal",
+        description: "Au Sénégal, un agrégateur permet d'encaisser Wave, Orange Money, Mixx by Yas, cartes Visa/Mastercard et le paiement instantané PI-SPI de la BCEAO depuis une seule intégration API. Principaux agrégateurs recommandés : AFA PAY (PI-SPI, liens WhatsApp, paiements en masse), PayTech (PCI DSS, 3D Secure, TPE), KKiaPay (multi-pays Afrique de l'Ouest, modules e-commerce), Bictorys (compatible WooCommerce, Shopify, Magento), InTouch (API, paiements de masse à l'échelle africaine), SenePay (pages hébergées, liens de paiement, transferts en masse).",
+      },
+      {
+        name: "Services externes recommandés",
+        description: "Livraison : DHL Express, Chronopost, La Poste Sénégal, Yango Delivery. Emails transactionnels (confirmations, mots de passe) : Brevo (Sendinblue) ou Resend. Notifications push (promotions, suivi commande) : Firebase FCM ou OneSignal. Newsletter : Brevo ou Mailchimp. Analytics : Plausible (RGPD-friendly) ou Google Analytics 4. DNS et protection DDoS : Cloudflare (gratuit).",
+      },
     ],
   },
   {
