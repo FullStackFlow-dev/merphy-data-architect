@@ -204,7 +204,7 @@ export const projects: Project[] = [
         description: "Au Sénégal, un agrégateur permet d'encaisser Wave, Orange Money, Mixx by Yas, cartes Visa/Mastercard et le paiement instantané PI-SPI de la BCEAO depuis une seule intégration API. Principaux agrégateurs recommandés : AFA PAY (PI-SPI, liens WhatsApp, paiements en masse), PayTech (PCI DSS, 3D Secure, TPE), KKiaPay (multi-pays Afrique de l'Ouest, modules e-commerce), Bictorys (compatible WooCommerce, Shopify, Magento), InTouch (API, paiements de masse à l'échelle africaine), SenePay (pages hébergées, liens de paiement, transferts en masse).",
       },
       {
-        name: "Services externes recommandés",
+        name: "Services externes",
         description: "Livraison : DHL Express, Chronopost, La Poste Sénégal, Yango Delivery. Emails transactionnels (confirmations, mots de passe) : Brevo (Sendinblue) ou Resend. Notifications push (promotions, suivi commande) : Firebase FCM ou OneSignal. Newsletter : Brevo ou Mailchimp. Analytics : Plausible (RGPD-friendly) ou Google Analytics 4. DNS et protection DDoS : Cloudflare (gratuit).",
       },
     ],
