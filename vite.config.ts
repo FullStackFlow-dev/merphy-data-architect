@@ -15,6 +15,10 @@ const projectSlugs = [
   "analyse-sentiments-reviews",
   "moteur-recommandation",
   "automatisation-etl-python",
+  "wal-transit-engine",
+  "artenova-shop",
+  "mirah-bi-urban-mobility-analytics",
+  "mirah-bi-test-platform",
 ];
 
 const postSlugs = [

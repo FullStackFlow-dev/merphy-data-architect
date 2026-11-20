@@ -39,7 +39,7 @@ function ProjectDetail() {
           ← Tous les projets
         </Link>
         <div className="mt-6 text-xs text-muted-foreground">
-          {project.domain} · {project.year}
+          {project.domains?.join(" · ") ?? project.domain} · {project.year}
         </div>
         <h1 className="mt-2 text-4xl md:text-5xl font-semibold tracking-tight">
           {project.title}
@@ -60,14 +60,7 @@ function ProjectDetail() {
         </div>
         <div className="mt-10 prose prose-neutral dark:prose-invert max-w-none">
           <p>{project.content}</p>
-          {project.modules ? null : <>
-          <h2>Contexte</h2>
-          <p>Contexte du projet — contenu provisoire à remplacer.</p>
-          <h2>Approche</h2>
-          <p>Choix techniques et méthodologiques — contenu provisoire.</p>
-          <h2>Résultats</h2>
-          <p>Impact et métriques — contenu provisoire.</p>
-          </>}
+          
         </div>
         {project.modules ? <section className="mt-10" aria-labelledby="project-modules-title">
           <h2 id="project-modules-title" className="text-2xl font-semibold">Modules du projet</h2>

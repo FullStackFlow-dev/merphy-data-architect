@@ -6,10 +6,13 @@ import dwiCold from "../assets/dwi-cold-weather.jpg";
 import dwiEtl from "../assets/dwi-etl-pipeline.jpg";
 import dwiAnalytics from "../assets/dwi-analytics.jpg";
 
+export type ProjectDomain = "Data Engineering" | "Database Engineering" | "BI" | "Backend" | "Full Stack";
+
 export type Project = {
   slug: string;
   title: string;
-  domain: "Développement Python" | "Data Analyste" | "Data Engineer";
+  domain: "Développement Python" | "Data Analyste" | "Data Engineer" | "Database Engineering" | "Full Stack";
+  domains?: ProjectDomain[];
   summary: string;
   tags: string[];
   year: string;
@@ -31,6 +34,7 @@ export const projects: Project[] = [
     slug: "dakar-weather-intelligence",
     title: "Dakar Weather Intelligence (DWI)",
     domain: "Data Engineer",
+    domains: ["Data Engineering", "BI"],
     summary: "Plateforme intelligente de collecte, d'analyse et de prévision météorologique pour Dakar.",
     tags: ["Data Engineering", "ETL", "Analyse de données", "Power BI", "Météorologie"],
     year: "2026",
@@ -56,6 +60,7 @@ export const projects: Project[] = [
     slug: "mobilite-urbaine-senegal",
     title: "Mobilité urbaine au Sénégal",
     domain: "Data Engineer",
+    domains: ["Data Engineering", "Database Engineering", "BI"],
     summary: "Données synthétiques réalistes de VTC au Sénégal et pipeline Bronze / Silver / Gold pour tester une plateforme BI multi-sources.",
     tags: ["Python", "Faker", "SQL Server", "ETL/ELT", "pytest"],
     year: "2026",
@@ -72,6 +77,7 @@ export const projects: Project[] = [
     previewIsIllustration: true,
     title: "API métier avec FastAPI",
     domain: "Développement Python",
+    domains: ["Backend", "Full Stack"],
     summary:
       "API REST robuste et documentée, authentification, tests et déploiement continu.",
     tags: ["Python", "FastAPI", "PostgreSQL", "Docker", "Git"],
@@ -87,6 +93,7 @@ export const projects: Project[] = [
     previewIsIllustration: true,
     title: "Pipeline ETL analytique",
     domain: "Data Engineer",
+    domains: ["Data Engineering"],
     summary:
       "Ingestion, nettoyage et modélisation de millions de lignes pour dashboards décisionnels.",
     tags: ["Python", "Airflow", "dbt", "Snowflake", "SQL"],
@@ -102,6 +109,7 @@ export const projects: Project[] = [
     previewIsIllustration: true,
     title: "Dashboard de ventes Power BI",
     domain: "Data Analyste",
+    domains: ["BI"],
     summary:
       "Analyse descriptive et visualisation interactive des performances commerciales.",
     tags: ["Power BI", "Excel", "Python", "Pandas", "Statistiques"],
@@ -141,6 +149,107 @@ export const projects: Project[] = [
       "Feature store, embeddings, ranking et livraison des données. Contenu provisoire à remplacer.",
   },
   {
+    slug: "wal-transit-engine",
+    title: "WAL Transit Engine — West Africa Logistics Analytics",
+    domain: "Data Engineer",
+    domains: ["Data Engineering", "Database Engineering", "BI"],
+    summary: "Plateforme analytique logistique couvrant dix pays d’Afrique de l’Ouest, conçue pour expérimenter les pipelines et alimenter MIRAH-BI.",
+    tags: ["Python", "SQL", "Snowflake", "Bronze / Silver / Gold", "Data Quality"],
+    year: "2026",
+    status: "En développement",
+    githubUrl: "https://github.com/FullStackFlow-dev/WAL-Transit-Engine-West-Africa-Logistics-Transit-Engine-",
+    previewImage: engineeringPreview,
+    previewIsIllustration: true,
+    content: "Projet en développement pour la génération et l’analyse de données logistiques couvrant dix pays d’Afrique de l’Ouest. Le dépôt documente une architecture Bronze / Silver / Gold, le chargement Snowflake, la modélisation dimensionnelle et des KPI logistiques. Les données sont prévues pour des essais et démonstrations de la plateforme MIRAH-BI.",
+    modules: [
+      { name: "Données logistiques", description: "Génération de scénarios autour des chauffeurs, véhicules, entrepôts, expéditions et livraisons." },
+      { name: "Pipeline analytique", description: "Organisation des transformations dans les couches Bronze, Silver et Gold." },
+      { name: "Entrepôt Snowflake", description: "Chargement et modélisation des données pour l’analyse; la configuration reste propre à l’environnement de développement." },
+      { name: "Qualité et indicateurs", description: "Documentation des contrôles de données et des KPI logistiques." },
+    ],
+  },
+  {
+    slug: "artenova-shop",
+    title: "ArtéNova Shop",
+    domain: "Full Stack",
+    domains: ["Full Stack"],
+    summary: "Vitrine e-commerce responsive dédiée aux créations, vêtements, chaussures et accessoires, avec catalogue et parcours panier.",
+    tags: ["JavaScript", "HTML5", "CSS3", "Responsive Design", "E-commerce", "Next.js", "FastAPI", "PostgreSQL", "Vercel"],
+    year: "2026",
+    status: "En développement",
+    githubUrl: "https://github.com/FullStackFlow-dev/Projet-Site-E-commerce-ArteNova-Shop",
+    demoUrl: "https://artenova-shoponline.vercel.app",
+    previewImage: analyticsPreview,
+    previewIsIllustration: true,
+    content: "ArtéNova Shop est une boutique e-commerce responsive dédiée aux créations artisanales, vêtements, chaussures et accessoires. La version actuelle, développée en HTML5, CSS3 et JavaScript natif, pose les bases de l'interface : vitrine produits, catalogue, pages de détail et parcours panier.\n\nL'architecture cible prévoit une évolution vers une stack moderne et adaptée au marché sénégalais : frontend Next.js déployé sur Vercel, backend FastAPI (Python) connecté à une base PostgreSQL, et intégration d'un agrégateur de paiement local pour encaisser Wave, Orange Money, cartes bancaires et le paiement instantané PI-SPI de la BCEAO.\n\nAu Sénégal, un agrégateur de paiement est indispensable pour couvrir les usages réels : il permet d'accepter en un seul point d'intégration l'ensemble des moyens de paiement locaux (mobile money, cartes Visa/Mastercard, paiement instantané interbancaire) sans multiplier les connexions directes avec chaque opérateur.",
+    modules: [
+      {
+        name: "Interface et responsive design (état actuel)",
+        description: "Structure HTML et styles CSS adaptatifs pour les écrans mobiles et desktop. Navigation catalogue, pages de détail produit et parcours panier développés en JavaScript natif.",
+      },
+      {
+        name: "Architecture cible — Frontend",
+        description: "Migration vers Next.js (SSR/SSG) pour le SEO e-commerce, le rendu serveur et les performances. Déploiement continu sur Vercel avec preview par branche, CDN global et HTTPS automatique. Domaine professionnel avec sitemap généré, balises Open Graph et données structurées JSON-LD pour les produits.",
+      },
+      {
+        name: "Architecture cible — Backend API",
+        description: "API REST développée avec FastAPI (Python) hébergée sur Railway ou Render. Modules : authentification clients (JWT + OAuth Google), gestion du catalogue et des stocks, traitement des commandes, intégration des paiements via agrégateur local. Base de données PostgreSQL managée via Supabase ou Neon.",
+      },
+      {
+        name: "Architecture cible — Base de données PostgreSQL",
+        description: "Modèle relationnel structuré autour de cinq entités principales : produits (catalogue, prix, images, catégories), clients (comptes, adresses), stocks (SKU, alertes de rupture), commandes (statuts, lignes) et paiements (transactions, références externes). Hébergement recommandé : Supabase (PostgreSQL managé, démarrage gratuit).",
+      },
+      {
+        name: "Paiements — Agrégateurs actifs au Sénégal",
+        description: "Au Sénégal, un agrégateur permet d'encaisser Wave, Orange Money, Mixx by Yas, cartes Visa/Mastercard et le paiement instantané PI-SPI de la BCEAO depuis une seule intégration API. Principaux agrégateurs recommandés : AFA PAY (PI-SPI, liens WhatsApp, paiements en masse), PayTech (PCI DSS, 3D Secure, TPE), KKiaPay (multi-pays Afrique de l'Ouest, modules e-commerce), Bictorys (compatible WooCommerce, Shopify, Magento), InTouch (API, paiements de masse à l'échelle africaine), SenePay (pages hébergées, liens de paiement, transferts en masse).",
+      },
+      {
+        name: "Services externes",
+        description: "Livraison : DHL Express, Chronopost, La Poste Sénégal, Yango Delivery. Emails transactionnels (confirmations, mots de passe) : Brevo (Sendinblue) ou Resend. Notifications push (promotions, suivi commande) : Firebase FCM ou OneSignal. Newsletter : Brevo ou Mailchimp. Analytics : Plausible (RGPD-friendly) ou Google Analytics 4. DNS et protection DDoS : Cloudflare (gratuit).",
+      },
+    ],
+  },
+  {
+    slug: "mirah-bi-urban-mobility-analytics",
+    title: "MIRAH-BI Urban Mobility Analytics",
+    domain: "Data Engineer",
+    domains: ["Data Engineering", "Database Engineering", "BI"],
+    summary: "Jeu de données synthétiques de mobilité urbaine privée au Sénégal, conçu comme référence pour développer et valider MIRAH-BI.",
+    tags: ["Python", "Faker", "SQL Server", "Bronze / Silver / Gold", "Data Quality"],
+    year: "2026",
+    status: "En développement",
+    githubUrl: "https://github.com/FullStackFlow-dev/Urban-Mobility-Analytics",
+    previewImage: engineeringPreview,
+    previewIsIllustration: true,
+    content: "Projet de référence pour la génération, la structuration et l’analyse de données synthétiques de mobilité urbaine privée au Sénégal. Le dépôt précise que les données réelles de plateformes sont confidentielles. SQL Server reçoit la couche Bronze de MIRAH-BI; les couches Silver et Gold servent de référence technique et méthodologique.",
+    modules: [
+      { name: "Génération synthétique", description: "Données de mobilité produites avec Python et Faker selon des règles métier documentées." },
+      { name: "Couche Bronze", description: "Contrat d’échange destiné à la réception dans SQL Server." },
+      { name: "Couches Silver et Gold", description: "Référence documentée pour le nettoyage, l’enrichissement, la modélisation et les KPI." },
+      { name: "Qualité des données", description: "Contrôles et conventions décrits dans le dépôt pour fiabiliser les jeux de démonstration." },
+    ],
+  },
+  {
+    slug: "mirah-bi-test-platform",
+    title: "MIRAH-BI Test Platform",
+    domain: "Data Engineer",
+    domains: ["Data Engineering", "Database Engineering", "BI"],
+    summary: "Environnement de données synthétiques pour préparer, tester et valider les pipelines et connecteurs de la plateforme MIRAH-BI.",
+    tags: ["Python", "Pandas", "NumPy", "PostgreSQL", "MySQL", "SQL Server", "Snowflake", "Airflow"],
+    year: "2026",
+    status: "En développement",
+    githubUrl: "https://github.com/FullStackFlow-dev/MIRAH-BI-Test-Platform",
+    previewImage: engineeringPreview,
+    previewIsIllustration: true,
+    content: "Environnement de test et de validation de données décrit dans le dépôt MIRAH-BI Test Platform. Il vise à produire des jeux de données réalistes et reproductibles pour développer les pipelines, tester des connecteurs PostgreSQL, MySQL, SQL Server et Snowflake, valider les processus ETL / ELT et les tableaux de bord Power BI.",
+    modules: [
+      { name: "Données synthétiques", description: "Jeux de données reproductibles destinés aux phases de conception et de validation." },
+      { name: "Connecteurs et pipelines", description: "Scénarios de test pour plusieurs SGBD et les processus ETL / ELT." },
+      { name: "Orchestration et BI", description: "Expérimentation avec Apache Airflow et validation de tableaux de bord Power BI." },
+      { name: "Contrôles", description: "Vérifications de qualité et tests automatisés prévus par le projet." },
+    ],
+  },
+  {
     slug: "automatisation-etl-python",
     githubUrl: "",
     demoUrl: "",
@@ -148,6 +257,7 @@ export const projects: Project[] = [
     previewIsIllustration: true,
     title: "Automatisation ETL en Python",
     domain: "Développement Python",
+    domains: ["Data Engineering", "Backend"],
     summary: "Scripts Python d'extraction, transformation et chargement de données.",
     tags: ["Python", "Pandas", "SQL", "Airflow", "Git"],
     year: "2023",

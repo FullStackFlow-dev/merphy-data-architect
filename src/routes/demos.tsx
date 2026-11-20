@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import { SiteLayout } from "../components/SiteLayout";
 import { MotionCard } from "../components/motion";
 import { CodeWorkspace } from "../components/CodeWorkspace";
@@ -7,10 +6,10 @@ import { CodeWorkspace } from "../components/CodeWorkspace";
 export const Route = createFileRoute("/demos")({
   head: () => ({
     meta: [
-      { title: "Démos IA & Éditeur SQL — Merphy Mademba" },
-      { name: "description", content: "Testez des démonstrations IA et un éditeur interactif PostgreSQL, Python, Pandas, NumPy, Matplotlib, Excel, DAX et SQL." },
-      { property: "og:title", content: "Démos IA & Éditeur SQL — Merphy Mademba" },
-      { property: "og:description", content: "Démos IA et éditeur PostgreSQL, Python, Pandas, NumPy, Matplotlib, Excel, DAX et SQL en ligne." },
+      { title: "Data Lab — Merphy Mademba" },
+      { name: "description", content: "Environnements de démonstration pour les données, les bases SQL et l’analyse." },
+      { property: "og:title", content: "Data Lab — Merphy Mademba" },
+      { property: "og:description", content: "Démonstrations de données et environnements en cours de configuration." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -18,30 +17,42 @@ export const Route = createFileRoute("/demos")({
   component: DemosPage,
 });
 
-const demos = [
+const capabilities = [
   {
-    id: "sentiment",
-    title: "Analyse de sentiment",
-    desc: "Classifie un texte en positif / négatif / neutre.",
-    tag: "NLP",
+    title: "PostgreSQL",
+    tag: "Exécution disponible",
+    description: "Moteur PostgreSQL intégré via WebAssembly (PGlite). Exécutez des requêtes SELECT, CREATE, INSERT et plus directement dans le navigateur, sans connexion serveur. Les données sont en mémoire et réinitialisées à chaque session.",
+    available: true,
   },
   {
-    id: "vision",
-    title: "Classification d'image",
-    desc: "Prédit la classe d'une image téléchargée.",
-    tag: "Vision",
+    title: "Python et analyse de données",
+    tag: "Bac à sable requis",
+    description: "L’exécution est désactivée tant qu’un service serveur isolé avec limites de ressources n’est pas configuré.",
+    available: false,
   },
   {
-    id: "forecast",
-    title: "Prévision de séries temporelles",
-    desc: "Prédit les prochaines valeurs d'une série.",
-    tag: "ML",
+    title: "MySQL et SQL Server",
+    tag: "Connexions requises",
+    description: "Les instances de démonstration et leurs connexions sécurisées ne sont pas encore configurées.",
+    available: false,
   },
   {
-    id: "llm",
-    title: "Résumé de texte (LLM)",
-    desc: "Résume automatiquement un texte long.",
-    tag: "LLM",
+    title: "Tableur Excel & CSV",
+    tag: "Édition disponible",
+    description: "Importer un fichier XLSX ou CSV, modifier les cellules et exporter la feuille en XLSX. Le nettoyage avancé, les graphiques et l’export CSV restent à intégrer.",
+    available: true,
+  },
+  {
+    title: "Visualisation et pipelines",
+    tag: "En préparation",
+    description: "Les tableaux, graphiques et étapes ETL seront affichés à partir de résultats réels lorsque leurs traitements seront intégrés.",
+    available: false,
+  },
+  {
+    title: "Modèles et services IA",
+    tag: "Indisponible",
+    description: "Aucun modèle ni endpoint n’est configuré. Aucun résultat simulé n’est présenté.",
+    available: false,
   },
 ];
 
@@ -49,94 +60,36 @@ function DemosPage() {
   return (
     <SiteLayout>
       <section className="mx-auto max-w-6xl px-6 pt-20 pb-10">
-        <p className="text-sm uppercase tracking-widest text-muted-foreground mb-3">
-          Démos IA &amp; SQL
-        </p>
-        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
-          Testez les modèles en direct
-        </h1>
-        <p className="mt-4 text-muted-foreground max-w-2xl">
-          Démonstrations interactives. Les modèles sont simulés — contenu
-          provisoire à brancher sur les vrais endpoints.
+        <p className="mb-3 text-sm uppercase tracking-widest text-primary">Laboratoire de données</p>
+        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">Data Lab</h1>
+        <p className="mt-4 max-w-2xl text-muted-foreground">
+          Un espace de démonstration construit autour de données synthétiques. Les fonctions non reliées à un moteur réel sont signalées comme indisponibles.
         </p>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-10">
+      <section className="mx-auto max-w-6xl px-6 pb-10" aria-labelledby="sql-lab-title">
+        <div className="mb-5">
+          <h2 id="sql-lab-title" className="text-2xl font-semibold">Éditeur SQL</h2>
+          <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
+            Éditeur SQL avec moteur PostgreSQL intégré (PGlite / WebAssembly). Écrivez et exécutez des requêtes directement dans le navigateur. Les données sont en mémoire : elles sont réinitialisées à chaque chargement de page. Aucune connexion à MIRAHTEC n'est utilisée.
+          </p>
+        </div>
         <CodeWorkspace />
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-10 grid gap-6 md:grid-cols-2">
-        {demos.map((d, i) => (
-          <MotionCard key={d.id} delay={(i % 2) * 90} className="rounded-xl border border-border bg-card p-6">
-            <div className="flex items-center justify-between">
-              <span className="inline-flex items-center rounded-full bg-secondary text-secondary-foreground px-2.5 py-0.5 text-xs font-medium">
-                {d.tag}
+      <section className="mx-auto grid max-w-6xl gap-5 px-6 pb-20 sm:grid-cols-2 lg:grid-cols-3" aria-label="État des environnements Data Lab">
+        {capabilities.map((capability, index) => (
+          <MotionCard key={capability.title} delay={(index % 3) * 70} className="rounded-xl border border-border bg-card p-5">
+            <div className="flex items-start justify-between gap-3">
+              <h2 className="font-semibold">{capability.title}</h2>
+              <span className={`shrink-0 rounded-full border px-2.5 py-1 text-[11px] font-medium ${capability.available ? "border-success/35 bg-success/10 text-success" : "border-warning/35 bg-warning/10 text-warning"}`}>
+                {capability.tag}
               </span>
             </div>
-            <h2 className="mt-3 text-lg font-semibold">{d.title}</h2>
-            <p className="mt-1 text-sm text-muted-foreground">{d.desc}</p>
-            <div className="mt-5">
-              <DemoRunner id={d.id} />
-            </div>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{capability.description}</p>
           </MotionCard>
         ))}
       </section>
     </SiteLayout>
-  );
-}
-
-function DemoRunner({ id }: { id: string }) {
-  const [input, setInput] = useState("");
-  const [result, setResult] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  const run = async () => {
-    setLoading(true);
-    setResult(null);
-    await new Promise((r) => setTimeout(r, 600));
-    if (id === "sentiment") {
-      const positive = /bon|super|génial|adore|excellent/i.test(input);
-      const negative = /mauvais|nul|horrible|déteste|pire/i.test(input);
-      setResult(positive ? "Positif (0.92)" : negative ? "Négatif (0.88)" : "Neutre (0.61)");
-    } else if (id === "vision") {
-      setResult("Prédiction (démo) : chat (0.87) · chien (0.09) · autre (0.04)");
-    } else if (id === "forecast") {
-      const nums = input.split(/[,\s]+/).map(Number).filter((n) => !isNaN(n));
-      const last = nums[nums.length - 1] ?? 0;
-      const next = [last + 1.2, last + 2.1, last + 3.0].map((n) => n.toFixed(2)).join(", ");
-      setResult(nums.length ? `Prévisions : ${next}` : "Entrez une série de nombres.");
-    } else {
-      setResult(input ? `Résumé (démo) : ${input.slice(0, 80)}…` : "Entrez un texte à résumer.");
-    }
-    setLoading(false);
-  };
-
-  return (
-    <div className="space-y-3">
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={
-          id === "forecast"
-            ? "ex : 1, 2, 3, 4, 5"
-            : id === "vision"
-            ? "(démo) collez une URL d'image"
-            : "Saisissez du texte…"
-        }
-        className="w-full min-h-24 rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-      />
-      <button
-        onClick={run}
-        disabled={loading}
-        className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
-      >
-        {loading ? "Analyse…" : "Lancer"}
-      </button>
-      {result && (
-        <div className="rounded-md border border-border bg-muted/40 p-3 text-sm">
-          {result}
-        </div>
-      )}
-    </div>
   );
 }

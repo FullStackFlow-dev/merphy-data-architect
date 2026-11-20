@@ -44,7 +44,7 @@ export function ProjectCard({ project, delay = 0 }: { project: Project; delay?: 
         <ProjectPreview project={project} />
       </Link>
       <div className="flex flex-1 flex-col p-6">
-        <div className="text-xs text-muted-foreground">{project.domain} · {project.year}</div>
+        <div className="text-xs text-muted-foreground">{project.domains?.join(" · ") ?? project.domain} · {project.year}</div>
         {project.status ? <span className="mt-2 self-start rounded-md border border-warning/35 bg-warning/12 px-2 py-1 text-xs text-warning">{project.status}</span> : null}
         <Link to="/projects/$slug" params={{ slug: project.slug }} className="mt-2 hover:text-primary transition-colors">
           <h3 className="text-lg font-semibold">{project.title}</h3>

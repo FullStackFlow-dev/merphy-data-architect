@@ -1,9 +1,10 @@
 import type { IconType } from "react-icons";
 import {
-  SiPython, SiPostgresql, SiApachenifi, SiApachespark, SiDocker, SiApacheairflow,
+  SiPython, SiPostgresql, SiMysql, SiApachenifi, SiApachespark, SiDocker, SiApacheairflow,
   SiSnowflake, SiFastapi, SiDjango, SiGit, SiPandas, SiCoursera, SiDatacamp, SiMeta,
   SiFlask, SiApachekafka, SiDatabricks,
 } from "react-icons/si";
+import { FaAws } from "react-icons/fa";
 import { PiMicrosoftExcelLogo } from "react-icons/pi";
 import {
   TbCube, TbMathFunction, TbSql, TbWorldWww, TbChartBar, TbStack2,
@@ -11,11 +12,14 @@ import {
 } from "react-icons/tb";
 
 const map: Record<string, IconType> = {
-  Python: SiPython, PostgreSQL: SiPostgresql, NiFi: SiApachenifi, Spark: SiApachespark,
+  Python: SiPython, PostgreSQL: SiPostgresql, MySQL: SiMysql,
+  "SQL Server": TbBrandWindows,
+  NiFi: SiApachenifi, Spark: SiApachespark,
   Docker: SiDocker, Airflow: SiApacheairflow, dbt: TbStack2, SQL: TbSql, Snowflake: SiSnowflake,
   FastAPI: SiFastapi, Django: SiDjango, Git: SiGit, "Web scraping": TbWorldWww,
   "Power BI": TbChartBar, "Cubes OLAP/ROLAP": TbCube, Pandas: SiPandas,
   Statistiques: TbMathFunction, Excel: PiMicrosoftExcelLogo,
+  AWS: FaAws,
   // Fournisseurs de certifications
   Coursera: SiCoursera, DataCamp: SiDatacamp, Meta: SiMeta,
   Microsoft: TbBrandWindows, IBM: TbBuildingSkyscraper,

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Download, History, Play, Plus, Save, Share2, Square, Trash2, Upload } from "lucide-react";
+import { Download, History, LoaderCircle, Play, Plus, Save, Share2, Trash2, Upload } from "lucide-react";
+import { PGliteWorker } from "@electric-sql/pglite/worker";
 import { Button } from "./ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
@@ -8,6 +9,17 @@ import { decodeWorkspace, encodeWorkspace, type EditorSnapshot } from "../lib/ed
 
 const STORAGE = "merphy-editor-history-v1";
 const initialRows = [["Ville", "Température", "Humidité"], ["Dakar", "28", "75"], ["Thiès", "30", "65"]];
+type SqlRow = Record<string, unknown>;
+function displayCell(value: unknown) {
+  if (value === null || value === undefined) return "NULL";
+  return typeof value === "object" ? JSON.stringify(value) : String(value);
+}
+function displayType(value: unknown) {
+  if (value === null || value === undefined) return "NULL";
+  if (typeof value === "number") return "Numérique";
+  if (typeof value === "boolean") return "Booléen";
+  return value instanceof Date ? "Date" : "Texte";
+}
 function sample(id: string) {
   const item = codeEditors.find((e) => e.id === id);
   if (!item) return "";
@@ -19,6 +31,83 @@ function sample(id: string) {
   return "";
 }
 
+function escapeHtml(value: string) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function isWordStart(character: string) {
+  return (character >= "a" && character <= "z") || (character >= "A" && character <= "Z") || character === "_";
+}
+
+function isWordPart(character: string) {
+  return isWordStart(character) || (character >= "0" && character <= "9");
+}
+
+function highlightCode(source: string, editorId: string) {
+  const language = ["sql", "postgresql"].includes(editorId) ? "sql" : editorId === "dax" ? "dax" : "python";
+  const keywords = language === "sql"
+    ? new Set("select from where and or not like ilike order by desc asc limit offset join inner left right outer on group having count sum avg min max as distinct insert into values update set delete create table drop alter returning null is case when then else end union all with".split(" "))
+    : language === "dax"
+      ? new Set("calculate sum sumx average averagex count countrows filter all allexcept related relatedtable divide if switch return var true false blank".split(" "))
+      : new Set("and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield true false none".split(" "));
+
+  let html = "";
+  let index = 0;
+  while (index < source.length) {
+    const start = index;
+    const character = source[index];
+    let color = "";
+
+    if ((language !== "python" && character === "-" && source[index + 1] === "-") || character === "#") {
+      color = "text-amber-300";
+      while (index < source.length && source[index] !== "\n") index += 1;
+    } else if (language !== "python" && character === "/" && source[index + 1] === "*") {
+      color = "text-amber-300";
+      index += 2;
+      while (index < source.length && !(source[index] === "*" && source[index + 1] === "/")) index += 1;
+      if (index < source.length) index += 2;
+    } else if (character === "'" || character === '"') {
+      color = "text-emerald-300";
+      const delimiter = language === "python" && source.slice(index, index + 3) === character.repeat(3) ? character.repeat(3) : character;
+      index += delimiter.length;
+      while (index < source.length) {
+        if (source[index] === "\\") {
+          index += Math.min(2, source.length - index);
+        } else if (source.slice(index, index + delimiter.length) === delimiter) {
+          index += delimiter.length;
+          break;
+        } else {
+          index += 1;
+        }
+      }
+    } else if (character >= "0" && character <= "9") {
+      color = "text-sky-300";
+      index += 1;
+      while (index < source.length && source[index] >= "0" && source[index] <= "9") index += 1;
+      if (source[index] === "." && source[index + 1] >= "0" && source[index + 1] <= "9") {
+        index += 1;
+        while (index < source.length && source[index] >= "0" && source[index] <= "9") index += 1;
+      }
+    } else if (isWordStart(character)) {
+      index += 1;
+      while (index < source.length && isWordPart(source[index])) index += 1;
+      const word = source.slice(start, index);
+      let next = index;
+      while (next < source.length && source[next].trim() === "") next += 1;
+      if (keywords.has(word.toLowerCase())) color = "text-purple-300";
+      else if (source[next] === "(") color = "text-cyan-300";
+    } else {
+      index += 1;
+    }
+
+    const token = source.slice(start, index);
+    const escaped = escapeHtml(token);
+    html += color ? `<span class="${color}">${escaped}</span>` : escaped;
+  }
+
+  return html;
+}
+
 export function CodeWorkspace() {
   const [editorId, setEditorId] = useState("postgresql");
   const [code, setCode] = useState("");
@@ -27,14 +116,20 @@ export function CodeWorkspace() {
   const [history, setHistory] = useState<EditorSnapshot[]>([]);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [output, setOutput] = useState("");
+  const [sqlRows, setSqlRows] = useState<SqlRow[] | null>(null);
+  const [executionMs, setExecutionMs] = useState<number | null>(null);
+  const [queryHistory, setQueryHistory] = useState<{ code: string; rowCount: number; durationMs: number; ranAt: string }[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
+  const [pgReady, setPgReady] = useState(false);
   const [stdin, setStdin] = useState("Alice\n30");
   const [files, setFiles] = useState<{ name: string; bytes: Uint8Array }[]>([]);
-  const worker = useRef<Worker | null>(null);
   const input = useRef<HTMLInputElement | null>(null);
   const drafts = useRef<Record<string, { code: string; name: string }>>({});
+  const latestCode = useRef(code);
+  const pgRef = useRef<PGliteWorker | null>(null);
+  latestCode.current = code;
   const editor = codeEditors.find((e) => e.id === editorId) ?? codeEditors[0];
 
   useEffect(() => {
@@ -55,7 +150,14 @@ export function CodeWorkspace() {
         setMessage("Document partagé chargé.");
       }
     } catch { setMessage("La sauvegarde ou le lien partagé est invalide."); }
-    return () => worker.current?.terminate();
+
+    // Initialiser PGlite dans un Worker dédié
+    const pg = new PGliteWorker(
+      new Worker(new URL("../lib/pglite-worker.ts", import.meta.url), { type: "module" })
+    );
+    pgRef.current = pg;
+    pg.waitReady.then(() => setPgReady(true)).catch(() => setMessage("Échec de l'initialisation du moteur PostgreSQL."));
+    return () => { pg.close().catch(() => {}); };
   }, []);
 
   function changeEditor(id: string) {
@@ -120,17 +222,78 @@ export function CodeWorkspace() {
     } catch { setMessage("Impossible de lire ce fichier."); }
   }
 
-  function run() {
-    if (!worker.current) {
-      worker.current = new Worker(new URL("../lib/editor-runtime.worker.ts", import.meta.url), { type: "module" });
-      worker.current.onmessage = (event) => {
-        if (event.data.status) setOutput(event.data.status);
-        if (event.data.done) { setOutput(event.data.output); setImages(event.data.images ?? []); setBusy(false); }
-      };
-      worker.current.onerror = () => { setOutput("Le moteur n’a pas pu démarrer. Vérifiez votre connexion et réessayez."); setBusy(false); worker.current?.terminate(); worker.current = null; };
+  async function run() {
+    const pg = pgRef.current;
+    if (!pg || !pgReady) {
+      setOutput("Le moteur PostgreSQL n'est pas encore prêt. Patientez un instant.");
+      return;
     }
-    setBusy(true); setOutput("Exécution…"); setImages([]);
-    worker.current.postMessage({ editorId, code, stdin, files });
+    setBusy(true);
+    setSqlRows(null);
+    setOutput("");
+    setImages([]);
+    const start = performance.now();
+    try {
+      const results = await pg.exec(code);
+      const durationMs = Math.round(performance.now() - start);
+      setExecutionMs(durationMs);
+      // exec() retourne un tableau de Results (une par instruction)
+      const last = results[results.length - 1];
+      if (last && last.rows.length > 0) {
+        setSqlRows(last.rows as SqlRow[]);
+        setOutput(`OK — ${last.rows.length} ligne(s)`);
+        setQueryHistory((prev) => [
+          { code, rowCount: last.rows.length, durationMs, ranAt: new Date().toISOString() },
+          ...prev.slice(0, 49),
+        ]);
+      } else {
+        // Requête DDL/DML sans résultat tabulaire
+        const affectedCmd = last?.affectedRows != null ? ` (${last.affectedRows} ligne(s) affectée(s))` : "";
+        setOutput(`Requête exécutée avec succès${affectedCmd}.`);
+        setSqlRows([]);
+        setQueryHistory((prev) => [
+          { code, rowCount: 0, durationMs, ranAt: new Date().toISOString() },
+          ...prev.slice(0, 49),
+        ]);
+      }
+    } catch (err) {
+      const durationMs = Math.round(performance.now() - start);
+      setExecutionMs(durationMs);
+      const msg = err instanceof Error ? err.message : String(err);
+      setOutput(`Erreur PostgreSQL :\n${msg}`);
+      setSqlRows(null);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function exportSqlRows(format: "csv" | "xlsx") {
+    if (!sqlRows) return;
+    try {
+      let blob: Blob;
+      if (format === "csv") {
+        const columns = Object.keys(sqlRows[0] ?? {});
+        const csv = [columns, ...sqlRows.map((row) => columns.map((column) => displayCell(row[column])))]
+          .map((line) => line.map((value) => `"${value.replace(/"/g, '""')}"`).join(","))
+          .join("\r\n");
+        blob = new Blob(["\\uFEFF", csv], { type: "text/csv;charset=utf-8" });
+      } else {
+        const XLSX = await import("xlsx");
+        const worksheet = XLSX.utils.json_to_sheet(sqlRows);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Résultats");
+        blob = new Blob([XLSX.write(workbook, { type: "array", bookType: "xlsx" })], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `resultats-sql.${format}`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setMessage(`Résultats exportés en ${format.toUpperCase()}.`);
+    } catch {
+      setMessage("L’export des résultats a échoué.");
+    }
   }
 
   return <div className="overflow-hidden rounded-lg border border-border bg-card">
@@ -150,16 +313,49 @@ export function CodeWorkspace() {
     </div>
     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-muted/30 px-4 py-2">
       <input aria-label="Nom du fichier" value={name} onChange={(e) => setName(e.target.value)} className="min-w-0 max-w-full rounded border border-input bg-background px-2 py-1 text-sm" />
-      {editorId !== "excel" && editorId !== "dax" && <Button size="sm" onClick={busy ? () => { worker.current?.terminate(); worker.current = null; setBusy(false); setOutput("Exécution arrêtée."); } : run}>{busy ? <Square /> : <Play />}{busy ? "Arrêter" : "Exécuter"}</Button>}
+      {editorId !== "excel" && editorId !== "dax" && (
+        ["postgresql", "sql"].includes(editorId)
+          ? <Button size="sm" disabled={busy || !pgReady} onClick={() => void run()}>
+              {busy ? <LoaderCircle className="animate-spin" /> : <Play />}
+              {busy ? "Exécution…" : pgReady ? "Exécuter" : "Chargement…"}
+            </Button>
+          : <Button size="sm" disabled title="Exécution Python non disponible dans le navigateur">
+              <Play /> Bac à sable requis
+            </Button>
+      )}
       {editorId === "dax" && <span className="text-xs text-muted-foreground">DAX · édition uniquement, exécution dans Power BI</span>}
     </div>
     {editorId === "excel" ? <div className="p-4">
       <div className="mb-3 flex gap-2"><Button size="sm" variant="outline" onClick={() => setRows([...rows, Array(Math.max(1, ...rows.map((r) => r.length))).fill("")])}><Plus />Ligne</Button><Button size="sm" variant="outline" onClick={() => setRows(rows.map((r) => [...r, ""]))}><Plus />Colonne</Button></div>
       <div className="max-h-[420px] overflow-auto"><table className="w-full border-collapse text-sm"><tbody>{rows.map((row, i) => <tr key={i}><th className="border border-border bg-muted px-2 text-muted-foreground">{i + 1}</th>{row.map((cell, j) => <td key={j} className="min-w-32 border border-border"><input className="w-full bg-background p-2" aria-label={`Cellule ${i + 1}, ${j + 1}`} value={cell} onChange={(e) => setRows(rows.map((r, ri) => ri === i ? r.map((c, ci) => ci === j ? e.target.value : c) : r))} /></td>)}</tr>)}</tbody></table></div>
-    </div> : <textarea spellCheck={false} aria-label="Code source" value={code} onChange={(e) => setCode(e.target.value)} className="block h-[360px] w-full resize-y bg-background p-4 font-mono text-sm leading-6 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-ring" />}
-    {["python", "pandas", "numpy", "matplotlib"].includes(editorId) && <div className="border-t border-border p-4"><label className="text-xs text-muted-foreground" htmlFor="workspace-stdin">Entrées standard</label><textarea id="workspace-stdin" value={stdin} onChange={(e) => setStdin(e.target.value)} className="mt-1 block h-16 w-full rounded border border-input bg-background px-2 py-1 font-mono text-sm" /></div>}
+    </div> : <div className="relative h-[360px] w-full resize-y overflow-hidden bg-background">
+      <pre aria-hidden="true" className="pointer-events-none absolute inset-0 m-0 overflow-auto whitespace-pre p-4 font-mono text-sm leading-6 text-foreground"><code dangerouslySetInnerHTML={{ __html: highlightCode(code, editorId) + "\n" }} /></pre>
+      <textarea spellCheck={false} aria-label="Code source" value={code} onChange={(e) => setCode(e.target.value)} onScroll={(e) => { const layer = e.currentTarget.previousElementSibling; if (layer instanceof HTMLElement) { layer.scrollTop = e.currentTarget.scrollTop; layer.scrollLeft = e.currentTarget.scrollLeft; } }} className="absolute inset-0 z-10 block h-full w-full resize-none overflow-auto bg-transparent p-4 font-mono text-sm leading-6 text-transparent caret-foreground selection:bg-primary/25 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-ring" />
+    </div>}
+    {["python", "pandas", "numpy", "matplotlib"].includes(editorId) && <div className="border-t border-border p-4"><p className="mb-3 rounded-md border border-warning/35 bg-warning/10 px-3 py-2 text-sm text-muted-foreground">L’exécution Python est désactivée dans le navigateur. Un service de bac à sable côté serveur doit être configuré avant de lancer du code.</p><label className="text-xs text-muted-foreground" htmlFor="workspace-stdin">Entrées standard</label><textarea id="workspace-stdin" value={stdin} onChange={(e) => setStdin(e.target.value)} className="mt-1 block h-16 w-full rounded border border-input bg-background px-2 py-1 font-mono text-sm" /></div>}
     {files.length > 0 && <div className="flex flex-wrap gap-2 border-t border-border px-4 py-2">{files.map((f) => <span key={f.name} className="inline-flex max-w-full items-center gap-1 text-xs text-muted-foreground"><span className="truncate">{f.name}</span><Button variant="ghost" size="icon" aria-label={`Retirer ${f.name}`} title="Retirer le fichier" onClick={() => setFiles(files.filter((file) => file.name !== f.name))}><Trash2 /></Button></span>)}</div>}
-    {output && <pre aria-label="Résultat d’exécution" aria-live="polite" className="max-h-80 overflow-auto whitespace-pre-wrap break-words border-t border-border bg-muted/30 p-4 font-mono text-sm">{output}</pre>}
+    {output && (sqlRows ? <section aria-label="Résultat d’exécution" aria-live="polite" className="border-t border-border bg-muted/20">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+        <p className="text-sm font-medium">{sqlRows.length} ligne{sqlRows.length === 1 ? "" : "s"} retournée{sqlRows.length === 1 ? "" : "s"}{executionMs !== null ? ` · ${executionMs} ms` : ""}</p>
+        {sqlRows.length > 0 && <div className="flex gap-2"><Button size="sm" variant="outline" onClick={() => void exportSqlRows("csv")}>Exporter CSV</Button><Button size="sm" variant="outline" onClick={() => void exportSqlRows("xlsx")}>Exporter Excel</Button></div>}
+      </div>
+      {sqlRows.length > 0 ? <div className="max-h-80 overflow-auto border-t border-border">
+        <table className="w-full border-collapse text-left text-sm">
+          <thead className="sticky top-0 bg-muted">
+            <tr>{Object.keys(sqlRows[0]).map((column) => <th key={column} className="border-b border-r border-border px-3 py-2 font-semibold">{column}</th>)}</tr>
+            <tr>{Object.keys(sqlRows[0]).map((column) => <th key={column} className="border-b border-r border-border px-3 py-1 text-[10px] font-normal uppercase tracking-wide text-muted-foreground">{displayType(sqlRows.find((row) => row[column] !== null)?.[column])}</th>)}</tr>
+          </thead>
+          <tbody>{sqlRows.map((row, rowIndex) => <tr key={rowIndex} className="odd:bg-background/50">{Object.keys(sqlRows[0]).map((column) => <td key={column} className="border-b border-r border-border/70 px-3 py-2 font-mono text-xs">{displayCell(row[column])}</td>)}</tr>)}</tbody>
+        </table>
+      </div> : <pre className="whitespace-pre-wrap border-t border-border px-4 py-3 font-mono text-sm">{output}</pre>}
+    </section> : <pre aria-label="Résultat d’exécution" aria-live="polite" className="max-h-80 overflow-auto whitespace-pre-wrap break-words border-t border-border bg-muted/30 p-4 font-mono text-sm">{output}</pre>)}
+    {queryHistory.length > 0 && <details className="border-t border-border px-4 py-3">
+      <summary className="cursor-pointer text-sm font-medium">Historique des requêtes ({queryHistory.length})</summary>
+      <ol className="mt-3 space-y-3">{queryHistory.map((entry, index) => <li key={`${entry.ranAt}-${index}`} className="rounded-md border border-border bg-background/60 p-3">
+        <p className="text-xs text-muted-foreground">{new Date(entry.ranAt).toLocaleString("fr-FR")} · {entry.rowCount} ligne(s) · {entry.durationMs} ms</p>
+        <pre className="mt-2 overflow-auto whitespace-pre-wrap font-mono text-xs">{entry.code}</pre>
+      </li>)}</ol>
+    </details>}
     {images.map((image, i) => <img key={i} src={`data:image/png;base64,${image}`} alt={`Graphique ${i + 1}`} className="max-h-96 w-full object-contain" />)}
     {message && <p role="status" className="border-t border-border px-4 py-2 text-sm text-muted-foreground">{message}</p>}
     <div className="border-t border-border bg-muted/30 px-4 py-2 text-right text-xs text-muted-foreground">Propulsé par <span className="font-semibold text-primary">Merphy Mademba</span></div>

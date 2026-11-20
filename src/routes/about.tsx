@@ -1,69 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "../components/SiteLayout";
 import { MotionCard } from "../components/motion";
+import { SkillsSection } from "../components/SkillsSection";
 import profileImg from "../assets/profile.jpg";
 import cvPdf from "../assets/cv.pdf";
 import { Download } from "lucide-react";
 import { Button } from "../components/ui/button";
+import { experiences } from "../data/profile";
 
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "À propos & CV — Merphy Mademba" },
-      { name: "description", content: "Parcours de Merphy Mademba, ingénieur de données et architecte de bases de données : plateforme BI multi-sources, Python, SQL, conception de pipelines ETL & ELT et intelligence artificielle." },
+      { name: "description", content: "Parcours de Merphy Mademba, ingénieur de données et architecte de bases de données : plateforme BI multi-sources, Python, SQL et conception de pipelines ETL & ELT." },
       { property: "og:title", content: "À propos & CV — Merphy Mademba" },
-      { property: "og:description", content: "Ingénieur de données et architecte de bases de données : expérience BI multi-sources, conception de pipelines ETL & ELT et compétences data, cloud et IA." },
+      { property: "og:description", content: "Ingénieur de données et architecte de bases de données : expérience BI multi-sources, conception de pipelines ETL & ELT et compétences data et cloud." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AboutPage,
 });
-
-const experiences = [
-  {
-    period: "Depuis août 2026 · Stage",
-    role: "Ingénieur de données et architecte de bases de données",
-    org: "Plateforme de Business Intelligence multi-sources",
-    desc: "Création de bases de test et génération de données synthétiques réalistes avec Faker. Tests de volumétrie et de robustesse des ingestions et DAGs Airflow, stabilisation des connexions, gouvernance des accès et contrôles qualité dans une architecture Bronze / Silver / Gold.",
-  },
-];
-
-const skills = {
-  "Développement Python": [
-    "Python",
-    "FastAPI",
-    "Django",
-    "Flask",
-    "SQL",
-    "Git",
-    "Web scraping",
-    "JavaScript", "Node.js", "Express", "React Native",
-  ],
-  "Data Analyste": [
-    "Power BI",
-    "Excel",
-    "Pandas",
-    "Python",
-    "Statistiques",
-    "Visualisation",
-    "SQL",
-  ],
-  "Ingénierie de données": [
-    "ETL/ELT",
-    "Airflow",
-    "dbt",
-    "Snowflake",
-    "BigQuery",
-    "SQL",
-    "Docker",
-    "Kafka", "Spark", "Hadoop", "Databricks", "Faker", "Bronze / Silver / Gold",
-  ],
-  "Bases de données & sources": ["PostgreSQL", "MySQL", "MariaDB", "SQL Server", "Oracle", "MongoDB", "SAP HANA", "API REST", "SharePoint"],
-  "Machine Learning & Deep Learning": ["Pandas", "NumPy", "Scikit-learn", "TensorFlow", "Keras"],
-  "DevOps & Cloud": ["Docker", "GitHub Actions", "CI/CD", "Tests automatisés", "AWS", "GCP", "Poetry"],
-};
 
 function AboutPage() {
   return (
@@ -113,35 +71,19 @@ function AboutPage() {
               <div className="text-xs uppercase tracking-wider text-muted-foreground">
                 {e.period}
               </div>
-              <div className="mt-1 font-semibold">
-                {e.role} · <span className="text-muted-foreground">{e.org}</span>
+              <div className="mt-1 flex flex-wrap items-center gap-2 font-semibold">
+                <span>{e.role}</span>
+                {e.type ? <span className="rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">{e.type}</span> : null}
               </div>
-              <p className="mt-1 text-sm text-muted-foreground">{e.desc}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{e.org}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{e.desc}</p>
+              {e.responsibilities?.length ? <ul className="mt-4 space-y-2 text-sm text-muted-foreground">{e.responsibilities.map((item) => <li key={item} className="flex gap-2"><span aria-hidden="true" className="text-primary">•</span><span>{item}</span></li>)}</ul> : null}
             </MotionCard>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 py-10">
-        <h2 className="text-2xl font-semibold tracking-tight">Compétences</h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          {Object.entries(skills).map(([cat, items], i) => (
-            <MotionCard key={cat} delay={i * 80} className="rounded-xl border border-border bg-card p-5">
-              <h3 className="font-semibold">{cat}</h3>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {items.map((s) => (
-                  <span
-                    key={s}
-                    className="text-xs rounded-md border border-border px-2 py-0.5 text-muted-foreground"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </MotionCard>
-          ))}
-        </div>
-      </section>
+      <SkillsSection />
 
       <section className="mx-auto max-w-3xl px-6 py-10 pb-24">
         <h2 className="text-2xl font-semibold tracking-tight">Formation</h2>
@@ -149,10 +91,6 @@ function AboutPage() {
           <div>
             <div className="font-semibold">Développement logiciel, données & bases de données</div>
             <div className="text-muted-foreground">Parcours de formation et apprentissage continu auprès de Meta, IBM, Microsoft et DataCamp.</div>
-          </div>
-          <div>
-            <div className="font-semibold">Objectifs de spécialisation</div>
-            <div className="text-muted-foreground">DevOps & Software Engineering, Machine Learning et Deep Learning avec DeepLearning.AI.</div>
           </div>
         </div>
         <blockquote className="mt-8 border-l-2 border-primary pl-5 text-muted-foreground">
